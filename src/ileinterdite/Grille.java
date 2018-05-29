@@ -7,6 +7,7 @@ public abstract class Grille {
 	private Tuile[][] tuiles;
         
         Grille() {
+            tuiles = new Tuile[6][6];
             tuiles[0][0] = null;
             tuiles[0][1] = null;
             tuiles[0][2] = new Tuile(NomTuile.PONTABIMES);
