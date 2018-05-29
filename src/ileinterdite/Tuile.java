@@ -29,9 +29,9 @@ public class Tuile {
 		this.etat = etat;
 	}
 
-	public void setAssecher() {
+	public void setAssecher(Tuile tuile) {
 		// TODO - implement Tuile.setAssecher
-		throw new UnsupportedOperationException();
+		tuile.setEtat(Etat.NORMAL);
 	}
 
 	/**

@@ -65,7 +65,25 @@ public abstract class Aventurier {
 	}
 
     private Tuile getSpawn(ArrayList tuiles) {
-        return tuiles.getNomApparition(this.couleur);
+        A FAIRE !!!!!
     }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public Tuile getEstSurTuile() {
+        return estSurTuile;
+    }
+
+    public void setEstSurTuile(Tuile estSurTuile) {
+        this.estSurTuile = estSurTuile;
+    }
+    
+    public void setRole(Role role) {
+        this.role = role;
+    }
+    
+    
 
 }

@@ -2,6 +2,6 @@ package ileinterdite;
 
 public enum Etat {
 	NORMAL,
-	ASSECHEE,
+	NOYEE,
 	COULEE
 }
