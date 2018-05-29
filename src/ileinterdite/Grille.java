@@ -44,4 +44,8 @@ public abstract class Grille {
             tuiles[5][4] = null;
             tuiles[5][5] = null;
         }
+        
+        public Tuile[][] getTuiles() {
+            return tuiles;
+        }
 }

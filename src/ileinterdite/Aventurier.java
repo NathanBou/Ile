@@ -59,9 +59,11 @@ public abstract class Aventurier {
 		throw new UnsupportedOperationException();
 	}
 
-	public ArrayList<Tuile> TuilesAssechables() {
+	public ArrayList<Tuile> TuilesAssechables(Grille g) {
 		// TODO - implement Aventurier.TuilesAssechables
-		throw new UnsupportedOperationException();
+		ArrayList<Tuile> tuilesAssechables = new ArrayList<>();
+                //tuilesAssechables.add(g[this.getEstSurTuile().][this.estSurTuile.hashCode()]);
+                return tuilesAssechables;
 	}
 
 
