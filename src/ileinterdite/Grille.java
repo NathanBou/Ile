@@ -1,7 +1,5 @@
 package ileinterdite;
 
-import java.util.HashMap;
-import ileinterdite.NomTuile;
 import ileinterdite.Utils.Pion;
 
 public abstract class Grille {
