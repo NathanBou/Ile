@@ -1,20 +1,23 @@
 package ileinterdite;
 
 import java.util.HashMap;
-
+import ileinterdite.NomTuile;
 
 public abstract class Grille {
 
-	private HashMap<int, Tuile> tuiles;
+	private Tuile[][] tuiles;
         
-        Grille(HashMap<int, Tuile> tuiles) {
-            this.tuiles = new HashMap();
+        Grille() {
             int nbTuile = 0;
             for (int col = 0; col<5; col++) {
                 for (int lig = 0; lig<5; lig++) {
-                    this.tuiles.add(new Tuile(lig, col, tuiles.getNb(nbTuile)));
+                    ajouterTuile(new Tuile(col, lig, Shuffle(NomTuile)));
                 }
             }
+        }
+        
+        public void ajouterTuile(Tuile tuile) {
+            tuiles[tuile.getX()][tuile.getY()] = tuile;
         }
 
 }

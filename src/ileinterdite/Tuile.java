@@ -1,23 +1,23 @@
 package ileinterdite;
 
 import java.util.*;
-
+import ileinterdite.Utils.EtatTuile;
 public class Tuile {
 
 	ArrayList<Aventurier> aSurTuile;
 	private int x;
 	private int y;
-	private Etat etat;
+	private EtatTuile etat;
 	private NomTuile nomTuile;
         
         Tuile(int x, int y, NomTuile nomTuile) {
             this.x = x;
             this.y = y;
             this.nomTuile = nomTuile;
-            etat = Etat.NORMAL;
+            etat = EtatTuile.ASSECHEE;
         }
 
-	public Etat getEtat() {
+	public EtatTuile getEtat() {
 		return this.etat;
 	}
 
@@ -25,13 +25,13 @@ public class Tuile {
 	 * 
 	 * @param Etat
 	 */
-	public void setEtat(Etat etat) {
+	public void setEtat(EtatTuile etat) {
 		this.etat = etat;
 	}
 
 	public void setAssecher(Tuile tuile) {
 		// TODO - implement Tuile.setAssecher
-		tuile.setEtat(Etat.NORMAL);
+		tuile.setEtat(EtatTuile.ASSECHEE);
 	}
 
 	/**
