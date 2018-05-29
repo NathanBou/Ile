@@ -1,12 +1,14 @@
 package ileinterdite;
 
+import ileinterdite.Utils.Pion;
+
 public class Role {
 
     private NomRole nomRole;
-    private Couleur couleur;
+    private Pion pion;
         
-    Role(NomRole nomRole, Couleur couleur) {
-        this.couleur = couleur;
+    Role(NomRole nomRole, Pion pion) {
+        this.pion = pion;
         this.nomRole = nomRole;
     }
 
@@ -18,12 +20,12 @@ public class Role {
         this.nomRole = nomRole;
     }
 
-    public Couleur getCouleur() {
-        return couleur;
+    public Pion getCouleur() {
+        return pion;
     }
 
-    public void setCouleur(Couleur couleur) {
-        this.couleur = couleur;
+    public void setCouleur(Pion pion) {
+        this.pion = pion;
     }
     
     

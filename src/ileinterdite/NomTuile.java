@@ -5,6 +5,8 @@
  */
 package ileinterdite;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author perrbeno
@@ -33,13 +35,15 @@ public enum NomTuile {
     PALAISMAREES("Palais des Marees"),
     VALCREPUSCULE("Cal du Crepuscule"),
     TOURDEGUET("Tour de Guet"),
-    JARDINMUEMURES("Jardin des Murmures");
+    JARDINMURMURES("Jardin des Murmures");
         
         String libelle ;
-        int rang;
+        ArrayList<NomTuile> arrayTuiles;
         
         NomTuile(String libelle) {
             this.libelle = libelle ;
+            
+            
         }
         NomTuile(int rang) {
             
