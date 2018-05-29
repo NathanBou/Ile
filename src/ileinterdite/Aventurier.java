@@ -64,9 +64,6 @@ public abstract class Aventurier {
 		throw new UnsupportedOperationException();
 	}
 
-    private Tuile getSpawn(ArrayList tuiles) {
-        A FAIRE !!!!!
-    }
 
     public Role getRole() {
         return role;

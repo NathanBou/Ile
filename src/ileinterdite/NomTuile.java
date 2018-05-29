@@ -54,7 +54,4 @@ public enum NomTuile {
             return this.libelle ;
         }
         
-        public ArrayList<NomTuile> jg() {
-            return 
-        }
 }
