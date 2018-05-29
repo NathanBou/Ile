@@ -36,13 +36,21 @@ public enum NomTuile {
     JARDINMUEMURES("Jardin des Murmures");
         
         String libelle ;
+        int rang;
         
         NomTuile(String libelle) {
             this.libelle = libelle ;
+        }
+        NomTuile(int rang) {
+            
         }
 
         @Override
         public String toString() {
             return this.libelle ;
+        }
+        
+        public ArrayList<NomTuile> jg() {
+            return 
         }
 }

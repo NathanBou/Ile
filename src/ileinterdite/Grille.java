@@ -11,7 +11,7 @@ public abstract class Grille {
             int nbTuile = 0;
             for (int col = 0; col<5; col++) {
                 for (int lig = 0; lig<5; lig++) {
-                    ajouterTuile(new Tuile(col, lig, Shuffle(NomTuile)));
+                    ajouterTuile(new Tuile(col, lig, shuffle(NomTuile)));
                 }
             }
         }
