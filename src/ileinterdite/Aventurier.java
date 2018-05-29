@@ -6,16 +6,23 @@ import java.util.ArrayList;
 public abstract class Aventurier {
 
 	private Tuile estSurTuile;
-	private int nbCarteMax = 6;
+	private int nbCarte = 0;
 	private Role role;
+        private ArrayList<Tuile> tuilesAssechables;
+        private ArrayList<Tuile> tuilesAccessibles;
         
-        Aventurier(Apparition spawn) {
-            estSurTuile = estSurTuile;
+        Aventurier(Role role) {
+            this.role = role;
+            ArrayList<Tuile> tuilesAssechables = new ArrayList<>();
+            ArrayList<Tuile> tuilesAccessibles = new ArrayList<>();
         }
 
-	public int getNbCarteMax() {
-		return this.nbCarteMax;
+	public int getNbCarte() {
+		return this.nbCarte;
 	}
+        public void setNbCarte(int nbCarte) {
+            this.nbCarte = nbCarte;
+        }
 
 	/**
 	 * 
@@ -54,15 +61,44 @@ public abstract class Aventurier {
 		throw new UnsupportedOperationException();
 	}
 
-	public ArrayList<Tuile> TuilesAccessibles() {
+	public ArrayList<Tuile> TuilesAccessibles(Grille g) {
 		// TODO - implement Aventurier.TuilesAccessibles
-		throw new UnsupportedOperationException();
+                boolean queSecs = false;
+		tuilesAccessibles.clear();
+                tuilesAccessibles.add(g.getTuiles()[this.getEstSurTuile().getLig(g)+1][this.getEstSurTuile().getCol(g)]);
+                tuilesAccessibles.add(g.getTuiles()[this.getEstSurTuile().getLig(g)-1][this.getEstSurTuile().getCol(g)]);
+                tuilesAccessibles.add(g.getTuiles()[this.getEstSurTuile().getLig(g)][this.getEstSurTuile().getCol(g)+1]);
+                tuilesAccessibles.add(g.getTuiles()[this.getEstSurTuile().getLig(g)][this.getEstSurTuile().getCol(g)-1]);
+                if("Explorateur".equals(this.getRole().getNomRole().toString())) {
+                    tuilesAccessibles.add(g.getTuiles()[this.getEstSurTuile().getLig(g)+1][this.getEstSurTuile().getCol(g)+1]);
+                    tuilesAccessibles.add(g.getTuiles()[this.getEstSurTuile().getLig(g)+1][this.getEstSurTuile().getCol(g)-1]);
+                    tuilesAccessibles.add(g.getTuiles()[this.getEstSurTuile().getLig(g)-1][this.getEstSurTuile().getCol(g)+1]);
+                    tuilesAccessibles.add(g.getTuiles()[this.getEstSurTuile().getLig(g)-1][this.getEstSurTuile().getCol(g)-1]);
+                } else if ("Plongeur".equals(this.getRole().getNomRole().toString())) {
+                    while (!queSecs) {
+                    for (int i=0; i<4; i++) {
+                        if(tuilesAccessibles.get(i).getEtat()!=Utils.EtatTuile.ASSECHEE) {
+                            
+                        }
+                    }
+                }
+                }
+                   
 	}
 
 	public ArrayList<Tuile> TuilesAssechables(Grille g) {
 		// TODO - implement Aventurier.TuilesAssechables
-		ArrayList<Tuile> tuilesAssechables = new ArrayList<>();
-                //tuilesAssechables.add(g[this.getEstSurTuile().][this.estSurTuile.hashCode()]);
+		tuilesAssechables.clear();
+                tuilesAssechables.add(g.getTuiles()[this.getEstSurTuile().getLig(g)+1][this.getEstSurTuile().getCol(g)]);
+                tuilesAssechables.add(g.getTuiles()[this.getEstSurTuile().getLig(g)-1][this.getEstSurTuile().getCol(g)]);
+                tuilesAssechables.add(g.getTuiles()[this.getEstSurTuile().getLig(g)][this.getEstSurTuile().getCol(g)+1]);
+                tuilesAssechables.add(g.getTuiles()[this.getEstSurTuile().getLig(g)][this.getEstSurTuile().getCol(g)-1]);
+                if ("Explorateur".equals(this.getRole().getNomRole().toString())) {
+                    tuilesAssechables.add(g.getTuiles()[this.getEstSurTuile().getLig(g)+1][this.getEstSurTuile().getCol(g)+1]);
+                    tuilesAssechables.add(g.getTuiles()[this.getEstSurTuile().getLig(g)+1][this.getEstSurTuile().getCol(g)-1]);
+                    tuilesAssechables.add(g.getTuiles()[this.getEstSurTuile().getLig(g)-1][this.getEstSurTuile().getCol(g)+1]);
+                    tuilesAssechables.add(g.getTuiles()[this.getEstSurTuile().getLig(g)-1][this.getEstSurTuile().getCol(g)-1]);
+                }
                 return tuilesAssechables;
 	}
 
