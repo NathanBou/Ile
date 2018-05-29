@@ -64,7 +64,53 @@ public class Vue {
                 }
                 panelCentre.add(panelGrille);
             }else{
-
+                // Panel Top
+                JPanel panelboutontop = new JPanel() ;
+                JLabel Tour = new JLabel("Tour numéro : ");
+                panelboutontop.add(Tour);
+                JLabel Niveau = new JLabel("Niveau d'eau : ");
+                panelboutontop.add(Niveau);
+                JLabel Joueur = new JLabel("Joueur numéro : ");
+                panelboutontop.add(Joueur);
+                Tour.setPreferredSize(new Dimension(200, 100));
+                Niveau.setPreferredSize(new Dimension(200, 100));
+                Joueur.setPreferredSize(new Dimension(200, 100));
+                
+                // Panel Centre
+                JPanel panelboutoncentre = new JPanel() ;
+                JPanel panelGrille = new JPanel(new GridLayout(3,2));
+                for (int v=0;v<=5;v++){
+                    if (v==0){
+                        JButton nrf = new JButton("Ne rien faire");
+                        panelGrille.add(nrf);
+                        nrf.setPreferredSize(new Dimension(200, 100));
+                    }
+                    if (v==1){
+                        JButton d = new JButton("Se déplacer");
+                        panelGrille.add(d);
+                        d.setPreferredSize(new Dimension(200, 100));
+                    }
+                    if (v==2){
+                        JButton a = new JButton("Assécher");
+                        panelGrille.add(a);
+                        a.setPreferredSize(new Dimension(200, 100));
+                    }
+                    if (v==3){
+                        JButton dn = new JButton("Donner une carte");
+                        panelGrille.add(dn);
+                        dn.setPreferredSize(new Dimension(200, 100));
+                    }
+                    if (v==4){
+                        JButton p = new JButton("Prendre trésor");
+                        panelGrille.add(p);
+                        p.setPreferredSize(new Dimension(200, 100));
+                    }
+                
+                }
+                panelboutoncentre.add(panelGrille);
+                panelCentre.add(panelboutontop, BorderLayout.NORTH);
+                panelCentre.add(panelboutoncentre, BorderLayout.CENTER);
+                
             }
         }
         panelMilieu.add(panelCentre);
