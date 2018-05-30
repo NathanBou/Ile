@@ -8,13 +8,11 @@ public abstract class Aventurier {
 	private Tuile estSurTuile;
 	private int nbCarte = 0;
 	private Role role;
-        private ArrayList<Tuile> tuilesAssechables;
-        private ArrayList<Tuile> tuilesAccessibles;
+        private ArrayList<Tuile> tuilesAdjacentes;
         
         Aventurier(Role role) {
             this.role = role;
-            ArrayList<Tuile> tuilesAssechables = new ArrayList<>();
-            ArrayList<Tuile> tuilesAccessibles = new ArrayList<>();
+            ArrayList<Tuile> tuilesAdjacentes = new ArrayList<>();
         }
 
 	public int getNbCarte() {
@@ -61,14 +59,12 @@ public abstract class Aventurier {
 		throw new UnsupportedOperationException();
 	}
 
-	public ArrayList<Tuile> TuilesAccessibles(Grille g) {
+	public ArrayList<Tuile> TuilesAccessibles() {
 		// TODO - implement Aventurier.TuilesAccessibles
                 boolean queSecs = false;
-		tuilesAccessibles.clear();
-                tuilesAccessibles.add(g.getTuiles()[this.getEstSurTuile().getLig(g)+1][this.getEstSurTuile().getCol(g)]);
-                tuilesAccessibles.add(g.getTuiles()[this.getEstSurTuile().getLig(g)-1][this.getEstSurTuile().getCol(g)]);
-                tuilesAccessibles.add(g.getTuiles()[this.getEstSurTuile().getLig(g)][this.getEstSurTuile().getCol(g)+1]);
-                tuilesAccessibles.add(g.getTuiles()[this.getEstSurTuile().getLig(g)][this.getEstSurTuile().getCol(g)-1]);
+		ArrayList<Tuile> tuilesAccessibles = new ArrayList();
+                tuilesAccessibles = getTuilesAssechees(tuilesAdjacentes);
+                for(Tuile tuile : tuil)
                 if("Explorateur".equals(this.getRole().getNomRole().toString())) {
                     tuilesAccessibles.add(g.getTuiles()[this.getEstSurTuile().getLig(g)+1][this.getEstSurTuile().getCol(g)+1]);
                     tuilesAccessibles.add(g.getTuiles()[this.getEstSurTuile().getLig(g)+1][this.getEstSurTuile().getCol(g)-1]);
@@ -85,21 +81,33 @@ public abstract class Aventurier {
                 }
                    
 	}
-
-	public ArrayList<Tuile> TuilesAssechables(Grille g) {
-		// TODO - implement Aventurier.TuilesAssechables
-		tuilesAssechables.clear();
-                tuilesAssechables.add(g.getTuiles()[this.getEstSurTuile().getLig(g)+1][this.getEstSurTuile().getCol(g)]);
-                tuilesAssechables.add(g.getTuiles()[this.getEstSurTuile().getLig(g)-1][this.getEstSurTuile().getCol(g)]);
-                tuilesAssechables.add(g.getTuiles()[this.getEstSurTuile().getLig(g)][this.getEstSurTuile().getCol(g)+1]);
-                tuilesAssechables.add(g.getTuiles()[this.getEstSurTuile().getLig(g)][this.getEstSurTuile().getCol(g)-1]);
-                if ("Explorateur".equals(this.getRole().getNomRole().toString())) {
-                    tuilesAssechables.add(g.getTuiles()[this.getEstSurTuile().getLig(g)+1][this.getEstSurTuile().getCol(g)+1]);
-                    tuilesAssechables.add(g.getTuiles()[this.getEstSurTuile().getLig(g)+1][this.getEstSurTuile().getCol(g)-1]);
-                    tuilesAssechables.add(g.getTuiles()[this.getEstSurTuile().getLig(g)-1][this.getEstSurTuile().getCol(g)+1]);
-                    tuilesAssechables.add(g.getTuiles()[this.getEstSurTuile().getLig(g)-1][this.getEstSurTuile().getCol(g)-1]);
+        
+        public ArrayList<Tuile> getTuilesAssechees(ArrayList<Tuile> tuilesAdjacentes) {
+            ArrayList<Tuile> tuilesAssechees = new ArrayList();
+            for (Tuile tuile : tuilesAdjacentes) {
+                if (tuile.getEtat()==Utils.EtatTuile.ASSECHEE) {
+                    tuilesAssechees.add(tuile);
+                } else if ("Plongeur".equals(this.getRole().getNomRole().toString())) {
+                    getTuilesAdjacentes
                 }
-                return tuilesAssechables;
+            }
+            return tuilesAssechees;
+        }
+
+	public ArrayList<Tuile> getTuilesAdjacentes(Grille g) {
+		// TODO - implement Aventurier.TuilesAssechables
+		tuilesAdjacentes.clear();
+                tuilesAdjacentes.add(g.getTuiles()[this.getEstSurTuile().getLig(g)+1][this.getEstSurTuile().getCol(g)]);
+                tuilesAdjacentes.add(g.getTuiles()[this.getEstSurTuile().getLig(g)-1][this.getEstSurTuile().getCol(g)]);
+                tuilesAdjacentes.add(g.getTuiles()[this.getEstSurTuile().getLig(g)][this.getEstSurTuile().getCol(g)+1]);
+                tuilesAdjacentes.add(g.getTuiles()[this.getEstSurTuile().getLig(g)][this.getEstSurTuile().getCol(g)-1]);
+                if ("Explorateur".equals(this.getRole().getNomRole().toString())) {
+                    tuilesAdjacentes.add(g.getTuiles()[this.getEstSurTuile().getLig(g)+1][this.getEstSurTuile().getCol(g)+1]);
+                    tuilesAdjacentes.add(g.getTuiles()[this.getEstSurTuile().getLig(g)+1][this.getEstSurTuile().getCol(g)-1]);
+                    tuilesAdjacentes.add(g.getTuiles()[this.getEstSurTuile().getLig(g)-1][this.getEstSurTuile().getCol(g)+1]);
+                    tuilesAdjacentes.add(g.getTuiles()[this.getEstSurTuile().getLig(g)-1][this.getEstSurTuile().getCol(g)-1]);
+                }
+                return tuilesAdjacentes;
 	}
 
 
