@@ -81,32 +81,27 @@ public class Vue {
 
 
                 // Panel Centre
-                JPanel panelGrilleBouton = new JPanel(new GridLayout(3,2));
+                JPanel panelGrilleBouton = new JPanel(new GridLayout(2,3));
                 for (int v=0;v<=5;v++){
                     if (v==0){
                         JButton nrf = new JButton("Ne rien faire"); 
                         nrf.setPreferredSize(new Dimension(100, 50));
                         panelGrilleBouton.add(nrf);
 
-                    }
-                    if (v==1){
+                    }else if (v==1){
                         JButton d = new JButton("Se déplacer");
                         d.setPreferredSize(new Dimension(100, 50));
                         panelGrilleBouton.add(d);
 
-                    }
-                    if (v==2){
+                    }else if (v==2){
                         JButton a = new JButton("Assécher");                     
                         a.setPreferredSize(new Dimension(100, 50));
                         panelGrilleBouton.add(a);
-                    }
-                    if (v==3){
+                    }else if (v==3){
                         JButton dn = new JButton("Donner une carte");
                         dn.setPreferredSize(new Dimension(100, 50));
-                        panelGrilleBouton.add(dn);
-
-                    }
-                    if (v==4){
+                        panelGrilleBouton.add(dn);      
+                    }else if (v==5){
                         JButton p = new JButton("Prendre trésor");                       
                         p.setPreferredSize(new Dimension(100, 50));
                         panelGrilleBouton.add(p);
