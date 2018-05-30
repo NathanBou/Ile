@@ -51,65 +51,71 @@ public class Vue {
         JPanel panelCentre = new JPanel(new GridLayout(0, 2)) ; //SEPARATION GRILLE / COMMANDE
         for (int j=0;j<=1;j++){
             if (j==0){
-                JPanel panelGrille = new JPanel(new GridLayout(6,6));
+                JPanel panelGrilleTuile = new JPanel(new GridLayout(6,6));
                 for (int i=0;i<=35;i++){
                     if (i==0 || i==1 || i==4 || i==5 || i==6 || i==11 || i==24 ||i==29 || i==30 || i==31 || i==34 || i==35){
-                        panelGrille.add(new JLabel("BRD"));
+                        panelGrilleTuile.add(new JLabel("BRD"));
                         
                     }else{
                         JButton tuile  = new JButton("Tuile n° "+i);
                         tuile.setPreferredSize(new Dimension(118, 118));
-                        panelGrille.add(tuile);
+                        panelGrilleTuile.add(tuile);
                     }
                 }
-                panelCentre.add(panelGrille);
+                panelCentre.add(panelGrilleTuile);
             }else{
                 // Panel Top
-                JPanel panelboutontop = new JPanel() ;
+                JPanel panelBouton = new JPanel(new BorderLayout()) ;
+                JPanel panelInfo = new JPanel(new GridLayout(0, 3)) ;
                 JLabel Tour = new JLabel("Tour numéro : ");
-                panelboutontop.add(Tour);
                 JLabel Niveau = new JLabel("Niveau d'eau : ");
-                panelboutontop.add(Niveau);
                 JLabel Joueur = new JLabel("Joueur numéro : ");
-                panelboutontop.add(Joueur);
                 Tour.setPreferredSize(new Dimension(200, 100));
                 Niveau.setPreferredSize(new Dimension(200, 100));
                 Joueur.setPreferredSize(new Dimension(200, 100));
-                
+                panelInfo.add(Joueur);
+                panelInfo.add(Niveau);
+                panelInfo.add(Tour);
+
+
+
+
                 // Panel Centre
-                JPanel panelboutoncentre = new JPanel() ;
-                JPanel panelGrille = new JPanel(new GridLayout(3,2));
+                JPanel panelGrilleBouton = new JPanel(new GridLayout(3,2));
                 for (int v=0;v<=5;v++){
                     if (v==0){
-                        JButton nrf = new JButton("Ne rien faire");
-                        panelGrille.add(nrf);
-                        nrf.setPreferredSize(new Dimension(200, 100));
+                        JButton nrf = new JButton("Ne rien faire"); 
+                        nrf.setPreferredSize(new Dimension(100, 50));
+                        panelGrilleBouton.add(nrf);
+
                     }
                     if (v==1){
                         JButton d = new JButton("Se déplacer");
-                        panelGrille.add(d);
-                        d.setPreferredSize(new Dimension(200, 100));
+                        d.setPreferredSize(new Dimension(100, 50));
+                        panelGrilleBouton.add(d);
+
                     }
                     if (v==2){
-                        JButton a = new JButton("Assécher");
-                        panelGrille.add(a);
-                        a.setPreferredSize(new Dimension(200, 100));
+                        JButton a = new JButton("Assécher");                     
+                        a.setPreferredSize(new Dimension(100, 50));
+                        panelGrilleBouton.add(a);
                     }
                     if (v==3){
                         JButton dn = new JButton("Donner une carte");
-                        panelGrille.add(dn);
-                        dn.setPreferredSize(new Dimension(200, 100));
+                        dn.setPreferredSize(new Dimension(100, 50));
+                        panelGrilleBouton.add(dn);
+
                     }
                     if (v==4){
-                        JButton p = new JButton("Prendre trésor");
-                        panelGrille.add(p);
-                        p.setPreferredSize(new Dimension(200, 100));
+                        JButton p = new JButton("Prendre trésor");                       
+                        p.setPreferredSize(new Dimension(100, 50));
+                        panelGrilleBouton.add(p);
                     }
                 
                 }
-                panelboutoncentre.add(panelGrille);
-                panelCentre.add(panelboutontop, BorderLayout.NORTH);
-                panelCentre.add(panelboutoncentre, BorderLayout.CENTER);
+                panelBouton.add(panelInfo, BorderLayout.NORTH);
+                panelBouton.add(panelGrilleBouton, BorderLayout.CENTER);
+                panelCentre.add(panelBouton);
                 
             }
         }
