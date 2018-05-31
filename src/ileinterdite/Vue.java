@@ -103,7 +103,7 @@ public class Vue implements Observe {
                             new ActionListener() {
                                  @Override
                             public void actionPerformed(ActionEvent e) {
-                                Message m = new Message();
+                                Message m = new Message(TypesMessage.FINIRTOUR);
                                 notifierObservateur(m);
                             }
                         });

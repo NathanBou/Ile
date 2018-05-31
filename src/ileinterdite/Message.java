@@ -10,5 +10,19 @@ package ileinterdite;
  * @author bouviern
  */
 public class Message {
+    TypesMessage type;
     
+    public Message(TypesMessage type) {
+        this.type = type;
+
+    }
+
+    public TypesMessage getType() {
+        return type;
+    }
+
+    public void setType(TypesMessage type) {
+        this.type = type;
+    }
+     
 }
