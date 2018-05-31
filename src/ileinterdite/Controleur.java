@@ -2,7 +2,7 @@ package ileinterdite;
 
 import java.util.ArrayList;
 
-public class Controleur {
+public class Controleur implements Observateur {
 
 	private VueAventurier vueAventurier;
 	private Vue vue;
@@ -31,7 +31,7 @@ public class Controleur {
 	 */
 	public void TraiterMessage(Message message) {
 		// TODO - implement Controleur.TraiterMessage
-		throw new UnsupportedOperationException();
+		
 	}
 
 }

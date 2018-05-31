@@ -6,13 +6,15 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import static java.awt.SystemColor.window;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-public class Vue {
+public class Vue implements Observe {
         private final JFrame window ;
         private JButton tuile;
 
@@ -97,6 +99,14 @@ public class Vue {
                         JButton nrf = new JButton("Fin tour"); 
                         nrf.setPreferredSize(new Dimension(40, 25));
                         panelGrilleBouton.add(nrf);
+                        nrf.addActionListener(
+                            new ActionListener() {
+                                 @Override
+                            public void actionPerformed(ActionEvent e) {
+                                Message m = new Message();
+                                notifierObservateur(m);
+                            }
+                        });
 
                     }else if (v==1){
                         JButton d = new JButton("Se déplacer");
@@ -136,5 +146,15 @@ public class Vue {
     public void afficher(){
         this.window.setVisible(true);
     }
+    private Observateur observateur;    
+        public void addObservateur(Observateur o) {
+            this.observateur = o;
+        }
+
+        public void notifierObservateur(Message m) {
+            if (observateur != null) {
+                observateur.traiterMessage(m);
+            }
+        }  
 }
    
