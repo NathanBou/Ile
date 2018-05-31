@@ -111,11 +111,27 @@ public class Vue implements Observe {
                     }else if (v==1){
                         JButton d = new JButton("Se déplacer");
                         d.setPreferredSize(new Dimension(40, 25));
+                        d.addActionListener(
+                            new ActionListener() {
+                                 @Override
+                            public void actionPerformed(ActionEvent e) {
+                                Message m = new Message(TypesMessage.DEPLACER);
+                                notifierObservateur(m);
+                            }
+                        });
                         panelGrilleBouton.add(d);
 
                     }else if (v==2){
                         JButton a = new JButton("Assécher");                     
                         a.setPreferredSize(new Dimension(40, 25));
+                        a.addActionListener(
+                            new ActionListener() {
+                                 @Override
+                            public void actionPerformed(ActionEvent e) {
+                                Message m = new Message(TypesMessage.ASSECHER);
+                                notifierObservateur(m);
+                            }
+                        });
                         panelGrilleBouton.add(a);
                     }else if (v==3){
                         JButton dn = new JButton("Donner une carte");
