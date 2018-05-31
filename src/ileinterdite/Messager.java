@@ -11,6 +11,6 @@ package ileinterdite;
  */
 public class Messager extends Aventurier{
     Messager() {
-        super()
+        super(new Role(NomRole.MESSAGER, Utils.Pion.ORANGE));
     }
 }

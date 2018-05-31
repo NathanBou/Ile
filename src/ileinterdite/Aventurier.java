@@ -59,36 +59,36 @@ public abstract class Aventurier {
 		throw new UnsupportedOperationException();
 	}
 
-	public ArrayList<Tuile> TuilesAccessibles() {
+	public ArrayList<Tuile> getTuilesAccessibles(Grille g) {
 		// TODO - implement Aventurier.TuilesAccessibles
-                boolean queSecs = false;
 		ArrayList<Tuile> tuilesAccessibles = new ArrayList();
                 tuilesAccessibles = getTuilesAssechees(tuilesAdjacentes);
-                for(Tuile tuile : tuil)
-                if("Explorateur".equals(this.getRole().getNomRole().toString())) {
-                    tuilesAccessibles.add(g.getTuiles()[this.getEstSurTuile().getLig(g)+1][this.getEstSurTuile().getCol(g)+1]);
-                    tuilesAccessibles.add(g.getTuiles()[this.getEstSurTuile().getLig(g)+1][this.getEstSurTuile().getCol(g)-1]);
-                    tuilesAccessibles.add(g.getTuiles()[this.getEstSurTuile().getLig(g)-1][this.getEstSurTuile().getCol(g)+1]);
-                    tuilesAccessibles.add(g.getTuiles()[this.getEstSurTuile().getLig(g)-1][this.getEstSurTuile().getCol(g)-1]);
-                } else if ("Plongeur".equals(this.getRole().getNomRole().toString())) {
-                    while (!queSecs) {
-                    for (int i=0; i<4; i++) {
-                        if(tuilesAccessibles.get(i).getEtat()!=Utils.EtatTuile.ASSECHEE) {
-                            
-                        }
-                    }
-                }
-                }
+                return tuilesAccessibles;
                    
 	}
+        
+        public ArrayList<Tuile> getTuilesAssechables(Grille g) {
+                ArrayList<Tuile> tuilesAssechables = new ArrayList();
+                tuilesAssechables = getTuilesInondees(tuilesAdjacentes);
+                return tuilesAssechables;
+                
+        }
+        
+        public ArrayList<Tuile> getTuilesInondees(ArrayList<Tuile> tuilesAdjacentes) {
+            ArrayList<Tuile> tuilesInondees = new ArrayList();
+            for (Tuile tuile : tuilesAdjacentes) {
+                if (tuile.getEtat()==Utils.EtatTuile.INONDEE) {
+                    tuilesInondees.add(tuile);
+                }
+            }
+            return tuilesInondees;
+        }
         
         public ArrayList<Tuile> getTuilesAssechees(ArrayList<Tuile> tuilesAdjacentes) {
             ArrayList<Tuile> tuilesAssechees = new ArrayList();
             for (Tuile tuile : tuilesAdjacentes) {
                 if (tuile.getEtat()==Utils.EtatTuile.ASSECHEE) {
                     tuilesAssechees.add(tuile);
-                } else if ("Plongeur".equals(this.getRole().getNomRole().toString())) {
-                    getTuilesAdjacentes
                 }
             }
             return tuilesAssechees;
@@ -101,14 +101,17 @@ public abstract class Aventurier {
                 tuilesAdjacentes.add(g.getTuiles()[this.getEstSurTuile().getLig(g)-1][this.getEstSurTuile().getCol(g)]);
                 tuilesAdjacentes.add(g.getTuiles()[this.getEstSurTuile().getLig(g)][this.getEstSurTuile().getCol(g)+1]);
                 tuilesAdjacentes.add(g.getTuiles()[this.getEstSurTuile().getLig(g)][this.getEstSurTuile().getCol(g)-1]);
-                if ("Explorateur".equals(this.getRole().getNomRole().toString())) {
-                    tuilesAdjacentes.add(g.getTuiles()[this.getEstSurTuile().getLig(g)+1][this.getEstSurTuile().getCol(g)+1]);
-                    tuilesAdjacentes.add(g.getTuiles()[this.getEstSurTuile().getLig(g)+1][this.getEstSurTuile().getCol(g)-1]);
-                    tuilesAdjacentes.add(g.getTuiles()[this.getEstSurTuile().getLig(g)-1][this.getEstSurTuile().getCol(g)+1]);
-                    tuilesAdjacentes.add(g.getTuiles()[this.getEstSurTuile().getLig(g)-1][this.getEstSurTuile().getCol(g)-1]);
-                }
                 return tuilesAdjacentes;
 	}
+        
+        public ArrayList<Tuile> getTuilesAdjacentes(Grille g, Tuile t) {
+            tuilesAdjacentes.add(g.getTuiles()[t.getLig(g)+1][t.getCol(g)]);
+            tuilesAdjacentes.add(g.getTuiles()[t.getLig(g)-1][t.getCol(g)]);
+            tuilesAdjacentes.add(g.getTuiles()[t.getLig(g)][t.getCol(g)+1]);
+            tuilesAdjacentes.add(g.getTuiles()[t.getLig(g)][t.getCol(g)-1]);
+            return tuilesAdjacentes;
+            
+        }
 
 
     public Role getRole() {

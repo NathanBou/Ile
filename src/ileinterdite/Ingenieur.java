@@ -9,6 +9,8 @@ package ileinterdite;
  *
  * @author perrbeno
  */
-public class Ingenieur {
-    
+public class Ingenieur extends Aventurier {
+    Ingenieur() {
+        super(new Role(NomRole.MESSAGER, Utils.Pion.ORANGE));
+    }
 }

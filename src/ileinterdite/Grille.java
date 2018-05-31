@@ -2,7 +2,7 @@ package ileinterdite;
 
 import ileinterdite.Utils.Pion;
 
-public abstract class Grille {
+public class Grille {
 
 	private Tuile[][] tuiles;
         
@@ -11,7 +11,7 @@ public abstract class Grille {
             tuiles[0][0] = null;
             tuiles[0][1] = null;
             tuiles[0][2] = new Tuile(NomTuile.PONTABIMES);
-            tuiles[0][3] = new Tuile(NomTuile.PORTEBRONZE);
+            tuiles[0][3] = new Apparition(NomTuile.PORTEBRONZE,new Role(NomRole.INGENIEUR, Pion.ROUGE));
             tuiles[0][4] = null;
             tuiles[0][5] = null;
             tuiles[1][0] = null;
