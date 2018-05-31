@@ -6,13 +6,15 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import static java.awt.SystemColor.window;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-public class Vue {
+public class Vue implements Observe {
         private final JFrame window ;
         private JButton tuile;
 
@@ -47,69 +49,104 @@ public class Vue {
 
   
         // Panel Millieu
-        JPanel panelMilieu = new JPanel(); // BorderLayout.CENTER
+        JPanel panelMilieu = new JPanel(new BorderLayout()); // BorderLayout.CENTER
         JPanel panelCentre = new JPanel(new GridLayout(0, 2)) ; //SEPARATION GRILLE / COMMANDE
+        JPanel panelGrille = new JPanel(new BorderLayout()); //Pânel contenant la grille
         for (int j=0;j<=1;j++){
             if (j==0){
-                JPanel panelGrille = new JPanel(new GridLayout(6,6));
+                JPanel panelGrilleTuile = new JPanel(new GridLayout(6,6)); //Grille
                 for (int i=0;i<=35;i++){
                     if (i==0 || i==1 || i==4 || i==5 || i==6 || i==11 || i==24 ||i==29 || i==30 || i==31 || i==34 || i==35){
-                        panelGrille.add(new JLabel("BRD"));
+                        panelGrilleTuile.add(new JLabel("BRD",SwingConstants.CENTER));
                         
                     }else{
                         JButton tuile  = new JButton("Tuile n° "+i);
                         tuile.setPreferredSize(new Dimension(118, 118));
-                        panelGrille.add(tuile);
+                        panelGrilleTuile.add(tuile);
                     }
                 }
+                panelGrille.add(panelGrilleTuile);
+                JPanel panelEstG = new JPanel() ;
+                JPanel panelOuestG = new JPanel() ;
+                panelEstG.setPreferredSize(new Dimension(10,950));
+                panelOuestG.setPreferredSize(new Dimension(10, 950));
+                panelEstG.setBackground(Color.blue);
+                panelOuestG.setBackground(Color.BLUE);
+                panelGrille.add(panelEstG, BorderLayout.EAST);
+                panelGrille.add(panelOuestG, BorderLayout.WEST);
                 panelCentre.add(panelGrille);
             }else{
                 // Panel Top
-                JPanel panelboutontop = new JPanel() ;
-                JLabel Tour = new JLabel("Tour numéro : ");
-                panelboutontop.add(Tour);
-                JLabel Niveau = new JLabel("Niveau d'eau : ");
-                panelboutontop.add(Niveau);
-                JLabel Joueur = new JLabel("Joueur numéro : ");
-                panelboutontop.add(Joueur);
+                JPanel panelBouton = new JPanel(new BorderLayout()) ;
+                JPanel panelInfo = new JPanel(new GridLayout(0, 3)) ;
+                JLabel Tour = new JLabel("Tour numéro : ",SwingConstants.CENTER);
+                JLabel Niveau = new JLabel("Niveau d'eau : ",SwingConstants.CENTER);
+                JLabel Joueur = new JLabel("Joueur numéro : ",SwingConstants.CENTER);
                 Tour.setPreferredSize(new Dimension(200, 100));
                 Niveau.setPreferredSize(new Dimension(200, 100));
                 Joueur.setPreferredSize(new Dimension(200, 100));
-                
+                panelInfo.add(Tour);
+                panelInfo.add(Niveau);
+                panelInfo.add(Joueur);
+
+
+
+
                 // Panel Centre
-                JPanel panelboutoncentre = new JPanel() ;
-                JPanel panelGrille = new JPanel(new GridLayout(3,2));
-                for (int v=0;v<=5;v++){
+                JPanel panelGrilleBouton = new JPanel(new GridLayout(2, 5));
+                for (int v=0;v<=4;v++){
                     if (v==0){
-                        JButton nrf = new JButton("Ne rien faire");
-                        panelGrille.add(nrf);
-                        nrf.setPreferredSize(new Dimension(200, 100));
-                    }
-                    if (v==1){
+                        JButton nrf = new JButton("Fin tour"); 
+                        nrf.setPreferredSize(new Dimension(40, 25));
+                        panelGrilleBouton.add(nrf);
+                        nrf.addActionListener(
+                            new ActionListener() {
+                                 @Override
+                            public void actionPerformed(ActionEvent e) {
+                                Message m = new Message(TypesMessage.FINIRTOUR);
+                                notifierObservateur(m);
+                            }
+                        });
+
+                    }else if (v==1){
                         JButton d = new JButton("Se déplacer");
-                        panelGrille.add(d);
-                        d.setPreferredSize(new Dimension(200, 100));
-                    }
-                    if (v==2){
-                        JButton a = new JButton("Assécher");
-                        panelGrille.add(a);
-                        a.setPreferredSize(new Dimension(200, 100));
-                    }
-                    if (v==3){
+                        d.setPreferredSize(new Dimension(40, 25));
+                        d.addActionListener(
+                            new ActionListener() {
+                                 @Override
+                            public void actionPerformed(ActionEvent e) {
+                                Message m = new Message(TypesMessage.DEPLACER);
+                                notifierObservateur(m);
+                            }
+                        });
+                        panelGrilleBouton.add(d);
+
+                    }else if (v==2){
+                        JButton a = new JButton("Assécher");                     
+                        a.setPreferredSize(new Dimension(40, 25));
+                        a.addActionListener(
+                            new ActionListener() {
+                                 @Override
+                            public void actionPerformed(ActionEvent e) {
+                                Message m = new Message(TypesMessage.ASSECHER);
+                                notifierObservateur(m);
+                            }
+                        });
+                        panelGrilleBouton.add(a);
+                    }else if (v==3){
                         JButton dn = new JButton("Donner une carte");
-                        panelGrille.add(dn);
-                        dn.setPreferredSize(new Dimension(200, 100));
-                    }
-                    if (v==4){
-                        JButton p = new JButton("Prendre trésor");
-                        panelGrille.add(p);
-                        p.setPreferredSize(new Dimension(200, 100));
+                        dn.setPreferredSize(new Dimension(40, 25));
+                        panelGrilleBouton.add(dn);      
+                    }else if (v==4){
+                        JButton p = new JButton("Prendre trésor");                       
+                        p.setPreferredSize(new Dimension(40, 25));
+                        panelGrilleBouton.add(p);
                     }
                 
                 }
-                panelboutoncentre.add(panelGrille);
-                panelCentre.add(panelboutontop, BorderLayout.NORTH);
-                panelCentre.add(panelboutoncentre, BorderLayout.CENTER);
+                panelBouton.add(panelInfo, BorderLayout.NORTH);
+                panelBouton.add(panelGrilleBouton, BorderLayout.SOUTH);
+                panelCentre.add(panelBouton);
                 
             }
         }
@@ -125,5 +162,15 @@ public class Vue {
     public void afficher(){
         this.window.setVisible(true);
     }
+    private Observateur observateur;    
+        public void addObservateur(Observateur o) {
+            this.observateur = o;
+        }
+
+        public void notifierObservateur(Message m) {
+            if (observateur != null) {
+                observateur.traiterMessage(m);
+            }
+        }  
 }
    
