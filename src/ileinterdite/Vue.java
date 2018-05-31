@@ -47,14 +47,15 @@ public class Vue {
 
   
         // Panel Millieu
-        JPanel panelMilieu = new JPanel(); // BorderLayout.CENTER
+        JPanel panelMilieu = new JPanel(new BorderLayout()); // BorderLayout.CENTER
         JPanel panelCentre = new JPanel(new GridLayout(0, 2)) ; //SEPARATION GRILLE / COMMANDE
+        JPanel panelGrille = new JPanel(new BorderLayout()); //Pânel contenant la grille
         for (int j=0;j<=1;j++){
             if (j==0){
-                JPanel panelGrilleTuile = new JPanel(new GridLayout(6,6));
+                JPanel panelGrilleTuile = new JPanel(new GridLayout(6,6)); //Grille
                 for (int i=0;i<=35;i++){
                     if (i==0 || i==1 || i==4 || i==5 || i==6 || i==11 || i==24 ||i==29 || i==30 || i==31 || i==34 || i==35){
-                        panelGrilleTuile.add(new JLabel("BRD"));
+                        panelGrilleTuile.add(new JLabel("BRD",SwingConstants.CENTER));
                         
                     }else{
                         JButton tuile  = new JButton("Tuile n° "+i);
@@ -62,54 +63,63 @@ public class Vue {
                         panelGrilleTuile.add(tuile);
                     }
                 }
-                panelCentre.add(panelGrilleTuile);
+                panelGrille.add(panelGrilleTuile);
+                JPanel panelEstG = new JPanel() ;
+                JPanel panelOuestG = new JPanel() ;
+                panelEstG.setPreferredSize(new Dimension(10,950));
+                panelOuestG.setPreferredSize(new Dimension(10, 950));
+                panelEstG.setBackground(Color.blue);
+                panelOuestG.setBackground(Color.BLUE);
+                panelGrille.add(panelEstG, BorderLayout.EAST);
+                panelGrille.add(panelOuestG, BorderLayout.WEST);
+                panelCentre.add(panelGrille);
             }else{
                 // Panel Top
                 JPanel panelBouton = new JPanel(new BorderLayout()) ;
                 JPanel panelInfo = new JPanel(new GridLayout(0, 3)) ;
-                JLabel Tour = new JLabel("Tour numéro : ");
-                JLabel Niveau = new JLabel("Niveau d'eau : ");
-                JLabel Joueur = new JLabel("Joueur numéro : ");
+                JLabel Tour = new JLabel("Tour numéro : ",SwingConstants.CENTER);
+                JLabel Niveau = new JLabel("Niveau d'eau : ",SwingConstants.CENTER);
+                JLabel Joueur = new JLabel("Joueur numéro : ",SwingConstants.CENTER);
                 Tour.setPreferredSize(new Dimension(200, 100));
                 Niveau.setPreferredSize(new Dimension(200, 100));
                 Joueur.setPreferredSize(new Dimension(200, 100));
-                panelInfo.add(Joueur);
-                panelInfo.add(Niveau);
                 panelInfo.add(Tour);
+                panelInfo.add(Niveau);
+                panelInfo.add(Joueur);
 
 
 
 
                 // Panel Centre
-                JPanel panelGrilleBouton = new JPanel(new GridLayout(2,3));
-                for (int v=0;v<=5;v++){
+                JPanel panelGrilleBouton = new JPanel(new GridLayout(2, 5));
+                for (int v=0;v<=4;v++){
                     if (v==0){
-                        JButton nrf = new JButton("Ne rien faire"); 
-                        nrf.setPreferredSize(new Dimension(100, 50));
+                        JButton nrf = new JButton("Fin tour"); 
+                        nrf.setPreferredSize(new Dimension(40, 25));
                         panelGrilleBouton.add(nrf);
 
                     }else if (v==1){
                         JButton d = new JButton("Se déplacer");
-                        d.setPreferredSize(new Dimension(100, 50));
+                        d.setPreferredSize(new Dimension(40, 25));
                         panelGrilleBouton.add(d);
 
                     }else if (v==2){
                         JButton a = new JButton("Assécher");                     
-                        a.setPreferredSize(new Dimension(100, 50));
+                        a.setPreferredSize(new Dimension(40, 25));
                         panelGrilleBouton.add(a);
                     }else if (v==3){
                         JButton dn = new JButton("Donner une carte");
-                        dn.setPreferredSize(new Dimension(100, 50));
+                        dn.setPreferredSize(new Dimension(40, 25));
                         panelGrilleBouton.add(dn);      
-                    }else if (v==5){
+                    }else if (v==4){
                         JButton p = new JButton("Prendre trésor");                       
-                        p.setPreferredSize(new Dimension(100, 50));
+                        p.setPreferredSize(new Dimension(40, 25));
                         panelGrilleBouton.add(p);
                     }
                 
                 }
                 panelBouton.add(panelInfo, BorderLayout.NORTH);
-                panelBouton.add(panelGrilleBouton, BorderLayout.CENTER);
+                panelBouton.add(panelGrilleBouton, BorderLayout.SOUTH);
                 panelCentre.add(panelBouton);
                 
             }
