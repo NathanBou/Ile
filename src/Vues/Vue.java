@@ -162,6 +162,7 @@ public class Vue implements Observe {
         panelBas.setPreferredSize(new Dimension(1650, 100));
         mainPanel.add(panelBas, BorderLayout.SOUTH);
 
+
     }
     public void afficher(){
         this.window.setVisible(true);

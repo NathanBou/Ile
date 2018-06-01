@@ -25,19 +25,19 @@ public class Controleur implements Observateur {
     private ArrayList<Innondation> defausse;
     private ArrayList<CTresor> pileCarte;
 
-
+    public Controleur(Vue ihm) {
+        this.vue = ihm;
+        ihm.addObservateur(this);
+    }
     @Override
     public void traiterMessage(Message m) {
         // TODO - implement Controleur.TraiterMessage
       if (TypesMessage.FINIRTOUR == m.type) {
-
+          System.out.println("Clic sur FINTOUR");
+      }else if (TypesMessage.DEPLACER == m.type){
+          System.out.println("Clic sur Deplacer");
+      }else if (TypesMessage.ASSECHER == m.type){
+          System.out.println("Clic sur ASSECHER");
       }
     }
-
-    public static void main(String[] args) {
-        // TODO code application logic here
-        Vue ihm = new Vue();
-        ihm.afficher();
-    }
-
 }
