@@ -123,7 +123,7 @@ public class Vue implements Observe {
                     if (i == 0 || i == 1 || i == 4 || i == 5 || i == 6 || i == 11 || i == 24 || i == 29 || i == 30 || i == 31 || i == 34 || i == 35) {
                         panelGrilleTuile.add(new JLabel("BRD", SwingConstants.CENTER));
 
-                    } else {
+                    } else {                       
                         JButton tuile = new JButton(grille.getTuiles().get(i).toString());
                         tuile.setPreferredSize(new Dimension(118, 118));
                         panelGrilleTuile.add(tuile);
