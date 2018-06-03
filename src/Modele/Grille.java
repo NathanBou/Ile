@@ -6,7 +6,7 @@ public class Grille {
 
 	private Tuile[][] tuiles;
         
-        Grille() {
+        public Grille() {
             tuiles = new Tuile[6][6];
             tuiles[0][0] = null;
             tuiles[0][1] = null;

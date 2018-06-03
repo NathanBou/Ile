@@ -5,6 +5,8 @@
  */
 package Controleur;
 
+import Modele.Grille;
+import Modele.GrilleTest;
 import Vues.Vue;
 
 /**
@@ -12,15 +14,16 @@ import Vues.Vue;
  * @author bouviern
  */
 public class Main {
-
+    private Vue ihm;
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        GrilleTest grille = new GrilleTest();
         Vue ihm = new Vue();
-        Controleur cont = new Controleur(ihm);
-        ihm.afficher();
+        Controleur cont = new Controleur(ihm,grille);
+      
     }
     
 }

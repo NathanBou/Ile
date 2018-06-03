@@ -12,6 +12,7 @@ import java.util.ArrayList;
  * @author perrbeno
  */
 public enum NomTuile {
+    BORDURE("Bordure"),
     PONTABIMES("Pont des Abimes"),
     PORTEBRONZE("Porte de Bronze"),
     CAVERNEOMBRES("Caverne des Ombres"),

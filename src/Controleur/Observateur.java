@@ -9,4 +9,5 @@ package Controleur;
 
 public interface Observateur {
     public void traiterMessage(Message m);
+    public void initJeu();
 }

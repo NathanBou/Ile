@@ -8,7 +8,9 @@ package Controleur;
 import Modele.Aventurier;
 import Modele.CTresor;
 import Modele.Grille;
+import Modele.GrilleTest;
 import Modele.Innondation;
+import Modele.Tuile;
 import Vues.Vue;
 import java.util.ArrayList;
 
@@ -19,25 +21,31 @@ import java.util.ArrayList;
 public class Controleur implements Observateur {
 
     private Vue vue;
-    private Grille grille;
+    private GrilleTest grille;
     private ArrayList<Aventurier> joueurs;
     private ArrayList<Innondation> pileCartes;
     private ArrayList<Innondation> defausse;
     private ArrayList<CTresor> pileCarte;
 
-    public Controleur(Vue ihm) {
-        this.vue = ihm;
-        ihm.addObservateur(this);
+    public Controleur(Vue vue, GrilleTest grille) {
+        this.vue = vue;
+        vue.addObservateur(this);
+        this.grille = grille;
+        
     }
     @Override
     public void traiterMessage(Message m) {
-        // TODO - implement Controleur.TraiterMessage
-      if (TypesMessage.FINIRTOUR == m.type) {
+      if (m.type == TypesMessage.FINIRTOUR) {
           System.out.println("Clic sur FINTOUR");
-      }else if (TypesMessage.DEPLACER == m.type){
+      }else if ( m.type == TypesMessage.DEPLACER){
           System.out.println("Clic sur Deplacer");
-      }else if (TypesMessage.ASSECHER == m.type){
+      }else if ( m.type == TypesMessage.ASSECHER){
           System.out.println("Clic sur ASSECHER");
       }
     }
+    public void initJeu(){
+        System.out.println("INITIALISATION");
+        vue.creeJeu(grille);
+    }
+
 }
