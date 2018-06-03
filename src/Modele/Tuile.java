@@ -93,7 +93,10 @@ public class Tuile {
         public void setNomTuile(NomTuile nomTuile) {
             this.nomTuile = nomTuile;
         }
-        
+        @Override
+        public String toString(){
+            return this.nomTuile.toString();
+        }
         
 
 }

@@ -9,6 +9,7 @@ import Modele.GrilleTest;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import static java.awt.SystemColor.window;
@@ -16,6 +17,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -29,7 +31,7 @@ public class Vue implements Observe {
     private Observateur observateur;
 
     public Vue() {
-        fenetreInit.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
+
         fenetreInit.setTitle("L 'ILE INTERDITE INITIALISATION");
         // Définit la taille de la fenêtre en pixels
         fenetreInit.setSize(600, 500);
@@ -46,7 +48,34 @@ public class Vue implements Observe {
                 panelJoueur.add(titreJeu,BorderLayout.NORTH);
                 mainPanelInit.add(panelJoueur);
             }else{
-                
+                JPanel panelAventurier = new JPanel(new BorderLayout()); 
+                JLabel saisirJ = new JLabel("Saisir le nombre de joueur");
+                panelAventurier.add(saisirJ,FlowLayout.LEFT);
+                JCheckBox explorateur = new JCheckBox("Explorateur");
+                JCheckBox ingenieur = new JCheckBox("Ingenieur");
+                JCheckBox messager = new JCheckBox("Messager");
+                JCheckBox navigateur = new JCheckBox("Navigateur");
+                JCheckBox pilote = new JCheckBox("Pilote");
+                JCheckBox plongeur = new JCheckBox("Plongeur");
+                panelAventurier.add(explorateur);
+                panelAventurier.add(ingenieur);
+                panelAventurier.add(messager);
+                panelAventurier.add(navigateur);
+                panelAventurier.add(pilote);
+                panelAventurier.add(plongeur);
+                panelAventurier.add(saisirJ);
+                JButton valider = new JButton ("Valider");
+                panelAventurier.add(valider, BorderLayout.SOUTH);
+                valider.addActionListener(
+                                new ActionListener() {
+                            @Override
+                            public void actionPerformed(ActionEvent e) {
+                                Message m = new Message(TypesMessage.INITIALISATIONGRILLE);
+                                notifierObservateur(m);
+                                fenetreInit.dispose();
+                            }
+                        });
+                mainPanelInit.add(panelAventurier);
             }
         }
         
@@ -95,7 +124,7 @@ public class Vue implements Observe {
                         panelGrilleTuile.add(new JLabel("BRD", SwingConstants.CENTER));
 
                     } else {
-                        JButton tuile = new JButton("Tuile n° " + i);
+                        JButton tuile = new JButton(grille.getTuiles().get(i).toString());
                         tuile.setPreferredSize(new Dimension(118, 118));
                         panelGrilleTuile.add(tuile);
                     }
@@ -189,7 +218,7 @@ public class Vue implements Observe {
         panelBas.setBackground(Color.RED);
         panelBas.setPreferredSize(new Dimension(1650, 100));
         mainPanel.add(panelBas, BorderLayout.SOUTH);
-        this.fenetreJeu.setVisible(true);
+        fenetreJeu.setVisible(true);
     }
 
     public void addObservateur(Observateur o) {

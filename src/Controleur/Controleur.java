@@ -31,21 +31,22 @@ public class Controleur implements Observateur {
         this.vue = vue;
         vue.addObservateur(this);
         this.grille = grille;
-        
+
     }
+
     @Override
     public void traiterMessage(Message m) {
-      if (m.type == TypesMessage.FINIRTOUR) {
-          System.out.println("Clic sur FINTOUR");
-      }else if ( m.type == TypesMessage.DEPLACER){
-          System.out.println("Clic sur Deplacer");
-      }else if ( m.type == TypesMessage.ASSECHER){
-          System.out.println("Clic sur ASSECHER");
-      }
-    }
-    public void initJeu(){
-        System.out.println("INITIALISATION");
-        vue.creeJeu(grille);
+        if (m.type == TypesMessage.FINIRTOUR) {
+            System.out.println("Clic sur FINTOUR");
+        } else if (m.type == TypesMessage.DEPLACER) {
+            System.out.println("Clic sur Deplacer");
+        } else if (m.type == TypesMessage.ASSECHER) {
+            System.out.println("Clic sur ASSECHER");
+        } else if (m.type == TypesMessage.INITIALISATIONGRILLE) {
+            System.out.println("INITIALISATION");
+            vue.creeJeu(grille);
+        }
+       
     }
 
 }
