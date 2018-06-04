@@ -34,7 +34,7 @@ public class Vue implements Observe {
 
         fenetreInit.setTitle("L 'ILE INTERDITE INITIALISATION");
         // Définit la taille de la fenêtre en pixels
-        fenetreInit.setSize(600, 500);
+        fenetreInit.setSize(650, 500);
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         fenetreInit.setLocation(dim.width / 2 - fenetreJeu.getSize().width / 2, dim.height / 2 - fenetreJeu.getSize().height / 2);
         JPanel mainPanelInit = new JPanel(new GridLayout(2,0));
@@ -49,21 +49,36 @@ public class Vue implements Observe {
                 mainPanelInit.add(panelJoueur);
             }else{
                 JPanel panelAventurier = new JPanel(new BorderLayout()); 
-                JLabel saisirJ = new JLabel("Saisir le nombre de joueur");
-                panelAventurier.add(saisirJ,FlowLayout.LEFT);
+                JLabel saisirJ = new JLabel("Cocher le nombre de joueur");
+                saisirJ.setHorizontalAlignment(JLabel.CENTER);
+                panelAventurier.add(saisirJ,BorderLayout.NORTH);
                 JCheckBox explorateur = new JCheckBox("Explorateur");
                 JCheckBox ingenieur = new JCheckBox("Ingenieur");
                 JCheckBox messager = new JCheckBox("Messager");
                 JCheckBox navigateur = new JCheckBox("Navigateur");
                 JCheckBox pilote = new JCheckBox("Pilote");
                 JCheckBox plongeur = new JCheckBox("Plongeur");
-                panelAventurier.add(explorateur);
-                panelAventurier.add(ingenieur);
-                panelAventurier.add(messager);
-                panelAventurier.add(navigateur);
-                panelAventurier.add(pilote);
-                panelAventurier.add(plongeur);
-                panelAventurier.add(saisirJ);
+                JPanel panelBAventu = new JPanel(new GridLayout(0,6));
+                for (int j=0;j<6;j++){
+                    if (j==0){
+                        panelBAventu.add(explorateur);
+                    }else if (j==1){
+                        panelBAventu.add(ingenieur);
+                    }else if (j==2){
+                        panelBAventu.add(messager);
+                    }else if (j==3){
+                        panelBAventu.add(navigateur);
+                    }else if (j==4){
+                        panelBAventu.add(plongeur);
+                    }else{
+                        panelBAventu.add(pilote);                   
+                    }
+                }
+                
+                
+                
+                
+                panelAventurier.add(panelBAventu, BorderLayout.CENTER);
                 JButton valider = new JButton ("Valider");
                 panelAventurier.add(valider, BorderLayout.SOUTH);
                 valider.addActionListener(
@@ -118,15 +133,17 @@ public class Vue implements Observe {
         JPanel panelGrille = new JPanel(new BorderLayout()); //Pânel contenant la grille
         for (int j = 0; j <= 1; j++) {
             if (j == 0) {
-                JPanel panelGrilleTuile = new JPanel(new GridLayout(6, 6)); //Grille
+                JPanel panelGrilleTuile = new JPanel(new GridLayout(6, 6, 2 ,2)); //Grille
                 for (int i = 0; i <= 35; i++) {
                     if (i == 0 || i == 1 || i == 4 || i == 5 || i == 6 || i == 11 || i == 24 || i == 29 || i == 30 || i == 31 || i == 34 || i == 35) {
-                        panelGrilleTuile.add(new JLabel("BRD", SwingConstants.CENTER));
+                        panelGrilleTuile.add(new JLabel("", SwingConstants.CENTER));
 
-                    } else {                       
-                        JButton tuile = new JButton(grille.getTuiles().get(i).toString());
-                        tuile.setPreferredSize(new Dimension(118, 118));
-                        panelGrilleTuile.add(tuile);
+                    } else {  
+                       // Tuile tuile = grille.getTuiles().get(i);
+                        JButton bTuile = new JButton(grille.getTuiles().get(i).toString());
+                        bTuile.setFont(new Font("Dialog",Font.BOLD,10));
+                        bTuile.setPreferredSize(new Dimension(118, 118));
+                        panelGrilleTuile.add(bTuile);
                     }
                 }
                 panelGrille.add(panelGrilleTuile);                         // Ajout de la grille dans le panel

@@ -54,11 +54,6 @@ public class GrilleTest {
         }
         
         public ArrayList getTuiles() {
-            for (Tuile tuile :tuiles){
-                System.out.println(tuile.getNomTuile());
-                
-            }
-            System.out.println(tuiles.size());
             return tuiles;
             
         }
