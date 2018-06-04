@@ -27,7 +27,7 @@ public class GrilleTest {
             tuiles.add(new Apparition(NomTuile.PORTEOR,new Role(NomRole.NAVIGATEUR, Utils.Pion.JAUNE)));
             tuiles.add(new Tuile(NomTuile.FALAISEOUBLI));
             tuiles.add(new Tuile(NomTuile.BORDURE));
-            tuiles.add(new Tuile(NomTuile.PALAISCORAIL));
+            tuiles.add(new Tuile(NomTuile.PALAISCORAIL));sexe
             tuiles.add(new Apparition(NomTuile.PORTEARGENT,new Role(NomRole.MESSAGER, Utils.Pion.ORANGE)));
             tuiles.add(new Tuile(NomTuile.DUNESILLUSION));
             tuiles.add(new Heliport());
