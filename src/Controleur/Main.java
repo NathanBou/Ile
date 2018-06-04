@@ -6,7 +6,7 @@
 package Controleur;
 
 import Modele.Grille;
-import Modele.GrilleTest;
+import Modele.Grille;
 import Vues.Vue;
 
 /**
@@ -20,7 +20,7 @@ public class Main {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        GrilleTest grille = new GrilleTest();
+        Grille grille = new Grille();
         Vue ihm = new Vue();
         Controleur cont = new Controleur(ihm,grille);
       

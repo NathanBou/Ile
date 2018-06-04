@@ -5,7 +5,7 @@ import Controleur.TypesMessage;
 import Controleur.Observateur;
 import Controleur.Observe;
 import Modele.Grille;
-import Modele.GrilleTest;
+import Modele.Grille;
 import Modele.Tuile;
 import Modele.Utils;
 import java.awt.BorderLayout;
@@ -103,7 +103,7 @@ public class Vue implements Observe {
         fenetreInit.setVisible(true);
     }
 
-    public void creeJeu(GrilleTest grille) {
+    public void creeJeu(Grille grille) {
 
         fenetreJeu.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
         fenetreJeu.setTitle("L 'ILE INTERDITE");

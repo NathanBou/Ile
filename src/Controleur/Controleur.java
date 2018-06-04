@@ -8,7 +8,7 @@ package Controleur;
 import Modele.Aventurier;
 import Modele.CTresor;
 import Modele.Grille;
-import Modele.GrilleTest;
+import Modele.Grille;
 import Modele.Innondation;
 import Modele.Tuile;
 import Vues.Vue;
@@ -21,14 +21,14 @@ import java.util.ArrayList;
 public class Controleur implements Observateur {
 
     private Vue vue;
-    private GrilleTest grille;
+    private Grille grille;
     private ArrayList<Aventurier> joueurs;
     private ArrayList<Innondation> pileInnondation;
     private ArrayList<Innondation> defausseInnondation;
     private ArrayList<CTresor> pileCarte;
     private ArrayList<CTresor> defausseCarte;
 
-    public Controleur(Vue vue, GrilleTest grille) {
+    public Controleur(Vue vue, Grille grille) {
         this.vue = vue;
         vue.addObservateur(this);
         this.grille = grille;
@@ -55,7 +55,7 @@ public class Controleur implements Observateur {
     }
 
 
-    public GrilleTest getGrille() {
+    public Grille getGrille() {
         return grille;
     }
 
