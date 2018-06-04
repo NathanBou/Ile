@@ -5,6 +5,10 @@
  */
 package Modele;
 
+import static Modele.Utils.EtatTuile.ASSECHEE;
+import static Modele.Utils.EtatTuile.INONDEE;
+import static Modele.Utils.EtatTuile.COULEE;
+
 import java.util.ArrayList;
 
 /**
@@ -12,25 +16,36 @@ import java.util.ArrayList;
  * @author perrbeno
  */
 public class Plongeur extends Aventurier {
+
     Plongeur() {
         super(new Role(NomRole.PLONGEUR, Utils.Pion.VIOLET));
     }
-    
+
     @Override
-    public ArrayList<Tuile> getTuilesAccessibles() {
-        boolean queSecs = false;
+    public ArrayList<Tuile> getTuilesAccessibles(Grille g) {
+        boolean queAccessibles = false;
         ArrayList<Tuile> tuilesAccessibles = new ArrayList();
-        tuilesAccessibles = super.getTuilesAccessibles();
-        while(!queSecs) {
-            queSecs = true;
-            for (Tuile tuile : tuilesAccessibles) {
-                if(tuile.getEtat()!= Utils.EtatTuile.ASSECHEE) {
-                    queSecs = false;
-                    tuilesAccessibles = getTuilesAdjacentes(g, tuile);
-                }
+        tuilesAccessibles = getTuilesAdjacentes(g);
+        while (!queAccessibles) {
+            queAccessibles= true;
+        }
+        for (Tuile tuile : tuilesAccessibles) {
+            if (tuile.getEtat() == ASSECHEE) {
+                tuilesAccessibles.add(tuile);
+            } else if (tuile.getEtat() == COULEE) {
+                
+                queAccessibles = false;
+            } else if(tuile.getEtat()== INONDEE) {
+                tuilesAccessibles.add(tuile);
+                tuilesAccessibles = getTuilesAdjacentes(g,tuile);
+                
             }
         }
         return tuilesAccessibles;
-        
+        //Si jamais ya quelqu'un..
+        //sms : "et sinon comment ça va mal ?"
+        //on verra si tu peux m'aider..
+        //Plus aucune motivation.
+
     }
 }

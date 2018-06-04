@@ -18,12 +18,31 @@ public class Explorateur extends Aventurier {
     
     @Override
     public ArrayList<Tuile> getTuilesAdjacentes(Grille g) {
-        ArrayList<Tuile> tuilesAdjacentes = new ArrayList();
-        tuilesAdjacentes = super.getTuilesAdjacentes(g);
-        tuilesAdjacentes.add(g.getTuiles()[this.getEstSurTuile().getLig(g)+1][this.getEstSurTuile().getCol(g)+1]);
-        tuilesAdjacentes.add(g.getTuiles()[this.getEstSurTuile().getLig(g)+1][this.getEstSurTuile().getCol(g)-1]);
-        tuilesAdjacentes.add(g.getTuiles()[this.getEstSurTuile().getLig(g)-1][this.getEstSurTuile().getCol(g)+1]);
-        tuilesAdjacentes.add(g.getTuiles()[this.getEstSurTuile().getLig(g)-1][this.getEstSurTuile().getCol(g)-1]);
+        tuilesAdjacentes.clear();
+        if (g.getTuiles().get(g.getTuiles().indexOf(this.estSurTuile) + 1) != null && g.getTuiles().get(g.getTuiles().indexOf(this.estSurTuile) + 1).getEtat() != Utils.EtatTuile.COULEE) {
+            tuilesAdjacentes.add(g.getTuiles().get(g.getTuiles().indexOf(this.estSurTuile) + 1));
+        }
+        if (g.getTuiles().get(g.getTuiles().indexOf(this.estSurTuile) - 1) != null && g.getTuiles().get(g.getTuiles().indexOf(this.estSurTuile) - 1).getEtat() != Utils.EtatTuile.COULEE) {
+            tuilesAdjacentes.add(g.getTuiles().get(g.getTuiles().indexOf(this.estSurTuile) - 1));
+        }
+        if (g.getTuiles().get(g.getTuiles().indexOf(this.estSurTuile) + 6) != null && g.getTuiles().get(g.getTuiles().indexOf(this.estSurTuile) + 6).getEtat() != Utils.EtatTuile.COULEE) {
+            tuilesAdjacentes.add(g.getTuiles().get(g.getTuiles().indexOf(this.estSurTuile) + 6));
+        }
+        if (g.getTuiles().get(g.getTuiles().indexOf(this.estSurTuile) - 6) != null && g.getTuiles().get(g.getTuiles().indexOf(this.estSurTuile) - 6).getEtat() != Utils.EtatTuile.COULEE) {
+            tuilesAdjacentes.add(g.getTuiles().get(g.getTuiles().indexOf(this.estSurTuile) - 6));
+        }
+        if (g.getTuiles().get(g.getTuiles().indexOf(this.estSurTuile) - 5) != null && g.getTuiles().get(g.getTuiles().indexOf(this.estSurTuile) - 5).getEtat() != Utils.EtatTuile.COULEE) {
+            tuilesAdjacentes.add(g.getTuiles().get(g.getTuiles().indexOf(this.estSurTuile) - 5));
+        }
+        if (g.getTuiles().get(g.getTuiles().indexOf(this.estSurTuile) + 5) != null && g.getTuiles().get(g.getTuiles().indexOf(this.estSurTuile) + 5).getEtat() != Utils.EtatTuile.COULEE) {
+            tuilesAdjacentes.add(g.getTuiles().get(g.getTuiles().indexOf(this.estSurTuile) + 5));
+        }
+        if (g.getTuiles().get(g.getTuiles().indexOf(this.estSurTuile) - 7) != null && g.getTuiles().get(g.getTuiles().indexOf(this.estSurTuile) - 7).getEtat() != Utils.EtatTuile.COULEE) {
+            tuilesAdjacentes.add(g.getTuiles().get(g.getTuiles().indexOf(this.estSurTuile) - 7));
+        }
+        if (g.getTuiles().get(g.getTuiles().indexOf(this.estSurTuile) + 7) != null && g.getTuiles().get(g.getTuiles().indexOf(this.estSurTuile) + 7).getEtat() != Utils.EtatTuile.COULEE) {
+            tuilesAdjacentes.add(g.getTuiles().get(g.getTuiles().indexOf(this.estSurTuile) + 7));
+        }
         return tuilesAdjacentes;
     }
 }

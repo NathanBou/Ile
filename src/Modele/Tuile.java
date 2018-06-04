@@ -26,34 +26,7 @@ public class Tuile {
 		this.etat = etat;
 	}
         
-        public int getCol(Grille g){
-            int col = 0;
-            int lig = 0;
-            boolean found = false;
-            while (lig<5 | !found) {
-                col = 0;
-                while(col<5 | !found) {
-                    found = this == g.getTuiles()[lig][col];
-                    col++;
-                }
-                lig++;
-            }
-            return col;
-        }
-        
-        public int getLig(Grille g){
-            int lig = 0;
-            boolean found = false;
-            while (lig<5 | !found) {
-                int col = 0;
-                while(col<5 | !found) {
-                    found = this == g.getTuiles()[lig][col];
-                    col++;
-                }
-                lig++;
-            }
-            return lig;
-        }
+
 
 	public void Assecher() {
 		// TODO - implement Tuile.setAssecher
