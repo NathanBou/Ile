@@ -12,7 +12,7 @@ import java.util.ArrayList;
  * @author perrbeno
  */
 public class Pilote extends Aventurier{
-    Pilote () {
+    public Pilote () {
         super(new Role(NomRole.PILOTE, Utils.Pion.BLEU));
     }
     

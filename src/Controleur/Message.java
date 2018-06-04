@@ -6,6 +6,8 @@
 package Controleur;
 
 import Controleur.TypesMessage;
+import Modele.NomRole;
+import java.util.ArrayList;
 
 /**
  *
@@ -13,10 +15,10 @@ import Controleur.TypesMessage;
  */
 public class Message {
     TypesMessage type;
-    
+    ArrayList<NomRole> joueurs = new ArrayList<NomRole>();
+    int nbJoueur=0;
     public Message(TypesMessage type) {
-        this.type = type;
-
+        this.type = type;    
     }
 
     public TypesMessage getType() {
@@ -26,5 +28,8 @@ public class Message {
     public void setType(TypesMessage type) {
         this.type = type;
     }
-     
+    public void ajouterJoueur(NomRole joueur){
+        joueurs.add(joueur);
+        nbJoueur++;
+    }
 }

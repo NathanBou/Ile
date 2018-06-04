@@ -12,7 +12,8 @@ import java.util.ArrayList;
  * @author perrbeno
  */
 public class Plongeur extends Aventurier {
-    Plongeur() {
+    
+    public Plongeur() {
         super(new Role(NomRole.PLONGEUR, Utils.Pion.VIOLET));
     }
     

@@ -12,7 +12,7 @@ import java.util.ArrayList;
  * @author perrbeno
  */
 public class Explorateur extends Aventurier {
-    Explorateur() {
+    public Explorateur() {
         super(new Role(NomRole.EXPLORATEUR, Utils.Pion.VERT));
     }
     

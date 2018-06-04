@@ -10,7 +10,7 @@ package Modele;
  * @author perrbeno
  */
 public class Ingenieur extends Aventurier {
-    Ingenieur() {
+    public Ingenieur() {
         super(new Role(NomRole.MESSAGER, Utils.Pion.ORANGE));
     }
 }

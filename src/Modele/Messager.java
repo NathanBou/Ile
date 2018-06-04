@@ -10,7 +10,7 @@ package Modele;
  * @author perrbeno
  */
 public class Messager extends Aventurier{
-    Messager() {
+    public Messager() {
         super(new Role(NomRole.MESSAGER, Utils.Pion.ORANGE));
     }
 }

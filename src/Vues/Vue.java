@@ -6,6 +6,7 @@ import Controleur.Observateur;
 import Controleur.Observe;
 import Modele.Grille;
 import Modele.Grille;
+import Modele.NomRole;
 import Modele.Tuile;
 import Modele.Utils;
 import java.awt.BorderLayout;
@@ -88,6 +89,24 @@ public class Vue implements Observe {
                             @Override
                             public void actionPerformed(ActionEvent e) {
                                 Message m = new Message(TypesMessage.INITIALISATIONGRILLE);
+                                if (explorateur.isSelected()){
+                                    m.ajouterJoueur(NomRole.EXPLORATEUR);
+                                }
+                                if(ingenieur.isSelected()){
+                                    m.ajouterJoueur(NomRole.INGENIEUR);
+                                }
+                                if(messager.isSelected()){
+                                    m.ajouterJoueur(NomRole.MESSAGER);
+                                }
+                                if(navigateur.isSelected()){
+                                    m.ajouterJoueur(NomRole.NAVIGATEUR);
+                                }
+                                if(pilote.isSelected()){
+                                    m.ajouterJoueur(NomRole.PILOTE);
+                                }
+                                if(plongeur.isSelected()){
+                                    m.ajouterJoueur(NomRole.PLONGEUR);
+                                }
                                 notifierObservateur(m);
                                 fenetreInit.dispose();
                             }
