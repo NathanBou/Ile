@@ -8,9 +8,9 @@ public class Tuile {
 	private EtatTuile etat;
 	private NomTuile nomTuile;
         
-        Tuile(NomTuile nomTuile) {
+        Tuile(NomTuile nomTuile, EtatTuile etat) {
             this.nomTuile = nomTuile;
-            etat = EtatTuile.ASSECHEE;
+            this.etat = etat;
             ArrayList<Aventurier> aSurTuile = new ArrayList<>();
         }
 

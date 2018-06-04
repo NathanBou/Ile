@@ -89,15 +89,19 @@ public abstract class Aventurier {
                 }
         }
 
-	public ArrayList<Tuile> getTuilesAccessibles(Grille g) {
+	public ArrayList<Tuile> getTuilesAccessibles() {
 		// TODO - implement Aventurier.TuilesAccessibles
 		ArrayList<Tuile> tuilesAccessibles = new ArrayList();
-                tuilesAccessibles = getTuilesAssechees(tuilesAdjacentes);
+                for(Tuile tuile : tuilesAdjacentes) {
+                    if(tuile.getEtat()!=Utils.EtatTuile.COULEE) {
+                        tuilesAccessibles.add(tuile);
+                    }
+                }
                 return tuilesAccessibles;
                    
 	}
         
-        public ArrayList<Tuile> getTuilesAssechables(Grille g) {
+        public ArrayList<Tuile> getTuilesAssechables() {
                 ArrayList<Tuile> tuilesAssechables = new ArrayList();
                 tuilesAssechables = getTuilesInondees(tuilesAdjacentes);
                 return tuilesAssechables;
@@ -113,16 +117,7 @@ public abstract class Aventurier {
             }
             return tuilesInondees;
         }
-        
-        public ArrayList<Tuile> getTuilesAssechees(ArrayList<Tuile> tuilesAdjacentes) {
-            ArrayList<Tuile> tuilesAssechees = new ArrayList();
-            for (Tuile tuile : tuilesAdjacentes) {
-                if (tuile.getEtat()==Utils.EtatTuile.ASSECHEE) {
-                    tuilesAssechees.add(tuile);
-                }
-            }
-            return tuilesAssechees;
-        }
+
 
 	public ArrayList<Tuile> getTuilesAdjacentes(Grille g) {
 		// TODO - implement Aventurier.TuilesAssechables

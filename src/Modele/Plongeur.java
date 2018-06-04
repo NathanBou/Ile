@@ -17,10 +17,10 @@ public class Plongeur extends Aventurier {
     }
     
     @Override
-    public ArrayList<Tuile> getTuilesAccessibles(Grille g) {
+    public ArrayList<Tuile> getTuilesAccessibles() {
         boolean queSecs = false;
         ArrayList<Tuile> tuilesAccessibles = new ArrayList();
-        tuilesAccessibles = super.getTuilesAdjacentes(g);
+        tuilesAccessibles = super.getTuilesAccessibles();
         while(!queSecs) {
             queSecs = true;
             for (Tuile tuile : tuilesAccessibles) {
