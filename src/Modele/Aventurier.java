@@ -5,10 +5,12 @@ import java.util.ArrayList;
 
 public abstract class Aventurier {
 
+        private int nbAction = 3;
 	private Tuile estSurTuile;
 	private int nbCarte = 0;
 	private Role role;
         private ArrayList<Tuile> tuilesAdjacentes;
+        private boolean monTour = false;
         
         Aventurier(Role role) {
             this.role = role;
@@ -22,13 +24,28 @@ public abstract class Aventurier {
             this.nbCarte = nbCarte;
         }
 
+    public int getNbAction() {
+        return nbAction;
+    }
+
+    public ArrayList<Tuile> getTuilesAdjacentes() {
+        return tuilesAdjacentes;
+    }
+        
+
 	/**
 	 * 
 	 * @param Tuile
 	 */
-	public void Deplacement(Tuile Tuile) {
+	public void Deplacement(Tuile tuile) {
 		// TODO - implement Aventurier.Deplacement
-		throw new UnsupportedOperationException();
+                if(nbAction>=3) {
+                    System.out.println("Deplacement impossible, nombre d'actions disponibles insuffisants.");
+                } else {
+                    this.getEstSurTuile().EstPlusSurTuile(this);
+                    tuile.getASurTuile().add(this);
+                    nbAction++;
+                }
 	}
 
 	/**
@@ -36,28 +53,41 @@ public abstract class Aventurier {
 	 * @param Aventurier
 	 * @param Carte
 	 */
-	public void DonnerCarte(Aventurier Aventurier, CTresor Carte) {
-		// TODO - implement Aventurier.DonnerCarte
-		throw new UnsupportedOperationException();
-	}
-
+	public void DonnerCarte(Aventurier joueur, CTresor carte) {
+                if(nbAction>=3) {
+                    System.out.println("Action impossible, nombre d'actions disponibles insuffisants.");
+                } else {
+                    
+                    nbAction++;
+                }
+        }
 	/**
 	 * 
 	 * @param Tuile
 	 */
-	public void Assecher(Tuile Tuile) {
+	public void Assecher(Tuile tuile) {
 		// TODO - implement Aventurier.Assecher
-		throw new UnsupportedOperationException();
+                if(nbAction>=3) {
+                    System.out.println("Assechage impossible, nombre d'actions disponibles insuffisants.");
+                } else {
+                    tuile.Assecher();
+                    nbAction++;
+                }
 	}
 
 	/**
 	 * 
 	 * @param Tresor
 	 */
-	public void PrendreTresor(Tresor Tresor) {
+	public void PrendreTresor(Tresor tresor) {
 		// TODO - implement Aventurier.PrendreTresor
-		throw new UnsupportedOperationException();
-	}
+                if(nbAction>=3) {
+                    System.out.println("Action impossible, nombre d'actions disponibles insuffisants.");
+                } else {
+                    
+                    nbAction++;
+                }
+        }
 
 	public ArrayList<Tuile> getTuilesAccessibles(Grille g) {
 		// TODO - implement Aventurier.TuilesAccessibles
@@ -112,6 +142,10 @@ public abstract class Aventurier {
             return tuilesAdjacentes;
             
         }
+        public void debutTour() {
+            nbAction = 0;
+            monTour = true;
+        }
 
 
     public Role getRole() {
@@ -130,6 +164,9 @@ public abstract class Aventurier {
         this.role = role;
     }
     
-    
+    public void finTour() {
+        nbAction = 3;
+        monTour = false;
+    }
 
 }

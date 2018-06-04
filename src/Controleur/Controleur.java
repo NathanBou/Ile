@@ -23,9 +23,10 @@ public class Controleur implements Observateur {
     private Vue vue;
     private GrilleTest grille;
     private ArrayList<Aventurier> joueurs;
-    private ArrayList<Innondation> pileCartes;
-    private ArrayList<Innondation> defausse;
+    private ArrayList<Innondation> pileInnondation;
+    private ArrayList<Innondation> defausseInnondation;
     private ArrayList<CTresor> pileCarte;
+    private ArrayList<CTresor> defausseCarte;
 
     public Controleur(Vue vue, GrilleTest grille) {
         this.vue = vue;
@@ -48,5 +49,41 @@ public class Controleur implements Observateur {
         }
        
     }
+    
+    public ArrayList<Aventurier> getJoueurs() {
+        return joueurs;
+    }
 
+
+    public GrilleTest getGrille() {
+        return grille;
+    }
+
+    public ArrayList<CTresor> getPileCarte() {
+        return pileCarte;
+    }
+
+
+    public Vue getVue() {
+        return vue;
+    }
+
+    public ArrayList<Innondation> getPileInnondation() {
+        return pileInnondation;
+    }
+
+    public ArrayList<Innondation> getDefausseInnondation() {
+        return defausseInnondation;
+    }
+
+    public ArrayList<CTresor> getDefausseCarte() {
+        return defausseCarte;
+    }
+
+    public void TourDeJeu(Aventurier joueur, Grille grille) {
+        boolean finTour = false;
+        while (!finTour || joueur.getNbAction()<=2){
+            
+        }
+    }
 }

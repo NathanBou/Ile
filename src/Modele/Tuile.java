@@ -4,7 +4,7 @@ import java.util.*;
 import Modele.Utils.EtatTuile;
 public class Tuile {
 
-	ArrayList<Aventurier> aSurTuile;
+	private ArrayList<Aventurier> aSurTuile;
 	private EtatTuile etat;
 	private NomTuile nomTuile;
         
@@ -16,7 +16,7 @@ public class Tuile {
 
 	public EtatTuile getEtat() {
 		return this.etat;
-	}
+	} 
 
 	/**
 	 * 
@@ -55,16 +55,16 @@ public class Tuile {
             return lig;
         }
 
-	public void setAssecher(Tuile tuile) {
+	public void Assecher() {
 		// TODO - implement Tuile.setAssecher
-		tuile.setEtat(EtatTuile.ASSECHEE);
+		this.setEtat(EtatTuile.ASSECHEE);
 	}
 
 	/**
 	 * 
 	 * @param Joueur
 	 */
-	public void EstSurTuile(Aventurier Joueur) {
+	public void EstSurTuile(Aventurier joueur) {
 		// TODO - implement Tuile.EstSurTuile
 		throw new UnsupportedOperationException();
 	}
@@ -73,16 +73,20 @@ public class Tuile {
 	 * 
 	 * @param Joueur
 	 */
-	public void EstPlusSurTuile(Aventurier Joueur) {
+	public void EstPlusSurTuile(Aventurier joueur) {
 		// TODO - implement Tuile.EstPlusSurTuile
-		throw new UnsupportedOperationException();
+                if(aSurTuile.contains(joueur)) {
+                    aSurTuile.remove(joueur);
+                } else {
+                    System.out.println("Le joueur n'est pas sur la tuile.");
+                }
 	}
 
-        public ArrayList<Aventurier> getaSurTuile() {
+        public ArrayList<Aventurier> getASurTuile() {
             return aSurTuile;
         }
 
-        public void setaSurTuile(ArrayList<Aventurier> aSurTuile) {
+        public void setASurTuile(ArrayList<Aventurier> aSurTuile) {
             this.aSurTuile = aSurTuile;
         }
 
