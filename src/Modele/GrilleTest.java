@@ -53,7 +53,7 @@ public class GrilleTest {
             tuiles.add(new Tuile(NomTuile.BORDURE));
         }
         
-        public ArrayList getTuiles() {
+        public ArrayList<Tuile> getTuiles() {
             return tuiles;
             
         }
