@@ -6,6 +6,8 @@ import Controleur.Observateur;
 import Controleur.Observe;
 import Modele.Grille;
 import Modele.GrilleTest;
+import Modele.Tuile;
+import Modele.Utils;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -139,8 +141,13 @@ public class Vue implements Observe {
                         panelGrilleTuile.add(new JLabel("", SwingConstants.CENTER));
 
                     } else {  
-                       // Tuile tuile = grille.getTuiles().get(i);
-                        JButton bTuile = new JButton(grille.getTuiles().get(i).toString());
+                        JButton bTuile = new JButton(grille.getTuiles().get(i).getNomTuile().toString());
+                        if (grille.getTuiles().get(i).getEtat()== Utils.EtatTuile.COULEE){
+                            bTuile.setBackground(Color.BLUE);
+                        }else if (grille.getTuiles().get(i).getEtat()== Utils.EtatTuile.INONDEE){
+                            bTuile.setBackground(Color.YELLOW);
+                        }
+                                
                         bTuile.setFont(new Font("Dialog",Font.BOLD,10));
                         bTuile.setPreferredSize(new Dimension(118, 118));
                         panelGrilleTuile.add(bTuile);
