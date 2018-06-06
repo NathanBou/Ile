@@ -59,31 +59,38 @@ public class Controleur implements Observateur {
                     Explorateur explorateur = new Explorateur();
                     joueurs.add(explorateur);
                     explorateur.setApparition(grille.getTuiles().get(16));
+                    grille.getTuiles().get(16).estSurTuile(explorateur);
                     System.out.println("EXPLORATEUR");
+                    System.out.println(grille.getTuiles().get(16).getASurTuile());
                 } else if (joueur == NomRole.PLONGEUR) {
                     Plongeur plongeur = new Plongeur();
                     joueurs.add(plongeur);
                     plongeur.setApparition(grille.getTuiles().get(8));
+                    grille.getTuiles().get(8).estSurTuile(plongeur);
                     System.out.println("PLONGEUR");
                 } else if (joueur == NomRole.INGENIEUR) {
                     Ingenieur ingenieur = new Ingenieur();
                     joueurs.add(ingenieur);
                     ingenieur.setApparition(grille.getTuiles().get(3));
+                    grille.getTuiles().get(3).estSurTuile(ingenieur);
                     System.out.println("INGENIEUR");
                 } else if (joueur == NomRole.MESSAGER) {
                     Messager messager = new Messager();
                     joueurs.add(messager);
                     messager.setApparition(grille.getTuiles().get(13));
+                    grille.getTuiles().get(13).estSurTuile(messager);
                     System.out.println("MESSAGER");
                 } else if (joueur == NomRole.NAVIGATEUR) {
                     Navigateur navigateur = new Navigateur();
                     joueurs.add(navigateur);
                     navigateur.setApparition(grille.getTuiles().get(9));
+                    grille.getTuiles().get(9).estSurTuile(navigateur);
                     System.out.println("NAVIGATEUR");
                 } else if (joueur == NomRole.PILOTE) {
                     Pilote pilote = new Pilote();
                     joueurs.add(pilote);
                     pilote.setApparition(grille.getTuiles().get(15));
+                    grille.getTuiles().get(15).estSurTuile(pilote);
                     System.out.println("PILOTE");
                 }
             }

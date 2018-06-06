@@ -165,6 +165,7 @@ public class Vue implements Observe {
                         }else if (grille.getTuiles().get(i).getEtat()== Utils.EtatTuile.INONDEE){
                             bTuile.setBackground(Color.YELLOW);
                         }
+                     //   if(grille.getTuiles().get(i).)
                         bTuile.setEnabled(false);
                         bTuile.setFont(new Font("Dialog",Font.BOLD,10));
                         bTuile.setPreferredSize(new Dimension(118, 118));

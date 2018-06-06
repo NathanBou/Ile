@@ -37,7 +37,7 @@ public abstract class Aventurier {
         if (nbAction >= 3) {
             System.out.println("Deplacement impossible, nombre d'actions disponibles insuffisants.");
         } else {
-            this.getEstSurTuile().EstPlusSurTuile(this);
+            this.getEstSurTuile().estPlusSurTuile(this);
             tuile.getASurTuile().add(this);
             nbAction++;
         }

@@ -11,7 +11,7 @@ public class Tuile {
         Tuile(NomTuile nomTuile, EtatTuile etat) {
             this.nomTuile = nomTuile;
             this.etat = etat;
-            ArrayList<Aventurier> aSurTuile = new ArrayList<>();
+
         }
 
 	public EtatTuile getEtat() {
@@ -33,22 +33,7 @@ public class Tuile {
 		this.setEtat(EtatTuile.ASSECHEE);
 	}
 
-	/**
-	 * 
-	 * @param Joueur
-	 */
-	public void EstSurTuile(Aventurier joueur) {
-		// TODO - implement Tuile.EstSurTuile
-                if(! aSurTuile.contains(joueur)){
-                    aSurTuile.add(joueur);
-                }
-	}
-
-	/**
-	 * 
-	 * @param Joueur
-	 */
-	public void EstPlusSurTuile(Aventurier joueur) {
+	public void estPlusSurTuile(Aventurier joueur) {
 		// TODO - implement Tuile.EstPlusSurTuile
                 if(aSurTuile.contains(joueur)) {
                     aSurTuile.remove(joueur);
@@ -61,9 +46,6 @@ public class Tuile {
             return aSurTuile;
         }
 
-        public void setASurTuile(ArrayList<Aventurier> aSurTuile) {
-            this.aSurTuile = aSurTuile;
-        }
 
         public NomTuile getNomTuile() {
             return nomTuile;
@@ -76,6 +58,10 @@ public class Tuile {
         public String toString(){
             return this.nomTuile.toString();
         }
-        
+        public void estSurTuile(Aventurier joueur) {
+		// TODO - implement Tuile.EstSurTuile
+                 aSurTuile.add(joueur);
+
+	}
 
 }
