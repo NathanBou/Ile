@@ -165,8 +165,12 @@ public class Vue implements Observe {
                         }else if (grille.getTuiles().get(i).getEtat()== Utils.EtatTuile.INONDEE){
                             bTuile.setBackground(Color.YELLOW);
                         }
-                     //   if(grille.getTuiles().get(i).)
-                        bTuile.setEnabled(false);
+                        if(!grille.getTuiles().get(i).getASurTuile().isEmpty()){
+                            System.out.println("Tuile numero : "+i);
+                            bTuile.setForeground(grille.getTuiles().get(i).getASurTuile().get(0).getRole().getCouleur().getCouleur());            
+                        }
+                        
+                        bTuile.setEnabled(true);
                         bTuile.setFont(new Font("Dialog",Font.BOLD,10));
                         bTuile.setPreferredSize(new Dimension(118, 118));
                         panelGrilleTuile.add(bTuile);
