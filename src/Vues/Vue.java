@@ -77,10 +77,6 @@ public class Vue implements Observe {
                         panelBAventu.add(pilote);                   
                     }
                 }
-                
-                
-                
-                
                 panelAventurier.add(panelBAventu, BorderLayout.CENTER);
                 JButton valider = new JButton ("Valider");
                 panelAventurier.add(valider, BorderLayout.SOUTH);
@@ -155,18 +151,21 @@ public class Vue implements Observe {
         for (int j = 0; j <= 1; j++) {
             if (j == 0) {
                 JPanel panelGrilleTuile = new JPanel(new GridLayout(6, 6, 2 ,2)); //Grille
+                JButton[] tabTuile = new JButton[36];
                 for (int i = 0; i <= 35; i++) {
                     if (i == 0 || i == 1 || i == 4 || i == 5 || i == 6 || i == 11 || i == 24 || i == 29 || i == 30 || i == 31 || i == 34 || i == 35) {
                         panelGrilleTuile.add(new JLabel("", SwingConstants.CENTER));
-
+                        CelluleTuile tuile = new CelluleTuile(i);
+                        
                     } else {  
-                        JButton bTuile = new JButton(grille.getTuiles().get(i).getNomTuile().toString());
+                        CelluleTuile bTuile = new CelluleTuile(i);
+                        bTuile.setText(grille.getTuiles().get(i).getNomTuile().toString());
                         if (grille.getTuiles().get(i).getEtat()== Utils.EtatTuile.COULEE){
                             bTuile.setBackground(Color.BLUE);
                         }else if (grille.getTuiles().get(i).getEtat()== Utils.EtatTuile.INONDEE){
                             bTuile.setBackground(Color.YELLOW);
                         }
-                                
+                        bTuile.setEnabled(false);
                         bTuile.setFont(new Font("Dialog",Font.BOLD,10));
                         bTuile.setPreferredSize(new Dimension(118, 118));
                         panelGrilleTuile.add(bTuile);

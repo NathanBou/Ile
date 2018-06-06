@@ -19,20 +19,20 @@ public class Grille {
             tuiles.add(new Tuile(NomTuile.BORDURE,EtatTuile.COULEE));
             tuiles.add(new Tuile(NomTuile.BORDURE,EtatTuile.COULEE));
             tuiles.add(new Tuile(NomTuile.PONTABIMES,EtatTuile.ASSECHEE));
-            tuiles.add(new Apparition(NomTuile.PORTEBRONZE,new Role(NomRole.INGENIEUR, Utils.Pion.ROUGE),EtatTuile.INONDEE));
+            tuiles.add(new Apparition(NomTuile.PORTEBRONZE,new Role(NomRole.INGENIEUR, Utils.Pion.ROUGE),EtatTuile.INONDEE));//3
             tuiles.add(new Tuile(NomTuile.BORDURE,EtatTuile.COULEE));
             tuiles.add(new Tuile(NomTuile.BORDURE,EtatTuile.COULEE));
             tuiles.add(new Tuile(NomTuile.BORDURE,EtatTuile.COULEE));
             tuiles.add(new Tuile(NomTuile.CAVERNEOMBRES,EtatTuile.ASSECHEE));
-            tuiles.add(new Apparition(NomTuile.PORTEFER,new Role(NomRole.PLONGEUR, Utils.Pion.VIOLET),EtatTuile.ASSECHEE));
-            tuiles.add(new Apparition(NomTuile.PORTEOR,new Role(NomRole.NAVIGATEUR, Utils.Pion.JAUNE),EtatTuile.ASSECHEE));
+            tuiles.add(new Apparition(NomTuile.PORTEFER,new Role(NomRole.PLONGEUR, Utils.Pion.VIOLET),EtatTuile.ASSECHEE));//8
+            tuiles.add(new Apparition(NomTuile.PORTEOR,new Role(NomRole.NAVIGATEUR, Utils.Pion.JAUNE),EtatTuile.ASSECHEE));//9
             tuiles.add(new Tuile(NomTuile.FALAISEOUBLI,EtatTuile.ASSECHEE));
             tuiles.add(new Tuile(NomTuile.BORDURE,EtatTuile.COULEE));
             tuiles.add(new Tuile(NomTuile.PALAISCORAIL,EtatTuile.ASSECHEE));
-            tuiles.add(new Apparition(NomTuile.PORTEARGENT,new Role(NomRole.MESSAGER, Utils.Pion.ORANGE),EtatTuile.ASSECHEE));
+            tuiles.add(new Apparition(NomTuile.PORTEARGENT,new Role(NomRole.MESSAGER, Utils.Pion.ORANGE),EtatTuile.ASSECHEE));//13
             tuiles.add(new Tuile(NomTuile.DUNESILLUSION,EtatTuile.COULEE));
-            tuiles.add(new Heliport());
-            tuiles.add(new Apparition(NomTuile.PORTECUIVRE,new Role(NomRole.EXPLORATEUR, Utils.Pion.VERT),EtatTuile.ASSECHEE));
+            tuiles.add(new Heliport());//15
+            tuiles.add(new Apparition(NomTuile.PORTECUIVRE,new Role(NomRole.EXPLORATEUR, Utils.Pion.VERT),EtatTuile.ASSECHEE));//16
             tuiles.add(new Tuile(NomTuile.JARDINHURLEMENTS,EtatTuile.ASSECHEE));
             tuiles.add(new Tuile(NomTuile.FORETPOURPRE,EtatTuile.ASSECHEE));
             tuiles.add(new Tuile(NomTuile.LAGONPERDU,EtatTuile.INONDEE));

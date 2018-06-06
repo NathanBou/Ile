@@ -39,7 +39,9 @@ public class Tuile {
 	 */
 	public void EstSurTuile(Aventurier joueur) {
 		// TODO - implement Tuile.EstSurTuile
-		throw new UnsupportedOperationException();
+                if(! aSurTuile.contains(joueur)){
+                    aSurTuile.add(joueur);
+                }
 	}
 
 	/**

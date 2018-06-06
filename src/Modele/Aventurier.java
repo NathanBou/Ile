@@ -159,7 +159,9 @@ public abstract class Aventurier {
     public void setEstSurTuile(Tuile estSurTuile) {
         this.estSurTuile = estSurTuile;
     }
-
+    public void setApparition(Tuile apparition){
+        this.estSurTuile=apparition;
+    }
     public void setRole(Role role) {
         this.role = role;
     }

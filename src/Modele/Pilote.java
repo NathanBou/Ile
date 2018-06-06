@@ -35,4 +35,5 @@ public class Pilote extends Aventurier{
         }
         return tuilesAccessibles;
     }
+
 }
