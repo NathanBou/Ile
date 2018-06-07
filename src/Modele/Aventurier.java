@@ -91,6 +91,7 @@ public abstract class Aventurier {
     public ArrayList<Tuile> getTuilesAccessibles(Grille g) {
         // TODO - implement Aventurier.TuilesAccessibles
         ArrayList<Tuile> tuilesAccessibles = new ArrayList();
+        this.tuilesAdjacentes=getTuilesAdjacentes(g,this.estSurTuile);
         for (Tuile tuile : tuilesAdjacentes) {
             if (tuile.getEtat() != Utils.EtatTuile.COULEE) {
                 tuilesAccessibles.add(tuile);
@@ -112,8 +113,7 @@ public abstract class Aventurier {
     }
 
     public ArrayList<Tuile> getTuilesAdjacentes(Grille g) {
-        // TODO - implement Aventurier.TuilesAssechables
-        tuilesAdjacentes.clear();
+        //tuilesAdjacentes.clear();
         if (g.getTuiles().get(g.getTuiles().indexOf(this.estSurTuile) + 1).getEtat() != Utils.EtatTuile.COULEE) {
             tuilesAdjacentes.add(g.getTuiles().get(g.getTuiles().indexOf(this.estSurTuile) + 1));
         }
@@ -121,10 +121,10 @@ public abstract class Aventurier {
             tuilesAdjacentes.add(g.getTuiles().get(g.getTuiles().indexOf(this.estSurTuile) - 1));
         }
         if (g.getTuiles().get(g.getTuiles().indexOf(this.estSurTuile) + 6).getEtat() != Utils.EtatTuile.COULEE) {
-            tuilesAdjacentes.add(g.getTuiles().get(g.getTuiles().indexOf(this.estSurTuile) + 6));
+            tuilesAdjacentes.add(g.getTuiles().get(g.getTuiles().indexOf(this.estSurTuile) + 5));
         }
         if (g.getTuiles().get(g.getTuiles().indexOf(this.estSurTuile) - 6).getEtat() != Utils.EtatTuile.COULEE) {
-            tuilesAdjacentes.add(g.getTuiles().get(g.getTuiles().indexOf(this.estSurTuile) - 6));
+            tuilesAdjacentes.add(g.getTuiles().get(g.getTuiles().indexOf(this.estSurTuile) - 5));
         }
         return tuilesAdjacentes;
     }

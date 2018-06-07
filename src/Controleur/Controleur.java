@@ -45,28 +45,22 @@ public class Controleur implements Observateur {
         this.vue = vue;
         vue.addObservateur(this);
         this.grille = grille;
-        while (!gagner){
-            nbTour=0;
-            for(Aventurier joueur : joueurs){
-                tourDeJeu(joueur);
-                this.nbTour++;
-            }
-        }
     }
 
     @Override
     public void traiterMessage(Message m) {
         if (m.type == TypesMessage.FINIRTOUR) {
             System.out.println("Clic sur FINTOUR");
-            this.fintour=true;
-            //this.gagner=true;
+            this.fintour = true;
         } else if (m.type == TypesMessage.DEPLACER) {
             System.out.println("Clic sur Deplacer");
-            this.deplacement=true;
-            vue.afficherTuileAccessible(joueurCourant.getTuilesAdjacentes(grille));
+            this.deplacement = true;
+            vue.afficherTuileAccessible(joueurCourant.getTuilesAccessibles(grille));
+            
         } else if (m.type == TypesMessage.ASSECHER) {
             System.out.println("Clic sur ASSECHER");
-            this.assechement=true;
+            this.assechement = true;
+            vue.afficherTuileAccessible(joueurCourant.getTuilesInondees(grille));
         } else if (m.type == TypesMessage.INITIALISATIONGRILLE) {
             System.out.println("INITIALISATION");
             joueurs = new ArrayList<Aventurier>();
@@ -109,10 +103,11 @@ public class Controleur implements Observateur {
                     System.out.println("PILOTE");
                 }
             }
-            for (Aventurier joueur : joueurs){
-                System.out.println("*"+joueur.getRole().getNomRole().toString());
+            for (Aventurier joueur : joueurs) {
+                System.out.println("*" + joueur.getRole().getNomRole().toString());
             }
-            vue.creeJeu(grille);
+            commencerPartie();
+            
         }
 
     }
@@ -145,23 +140,34 @@ public class Controleur implements Observateur {
         return defausseCarte;
     }
 
-    public void tourDeJeu(Aventurier joueur) {
-        boolean finTour = false;
-        this.joueurCourant= joueur;
-        joueur.setNbAction(3);
-        while (!finTour || joueur.getNbAction() != 0) {
-            if (deplacement){
-                this.deplacement=false;
-                joueur.setNbAction(joueur.getNbAction()-1);
+    public void commencerPartie() {
+        vue.creeJeu(grille);
+        gagner=false;
+        //while (!gagner) {
+            nbTour = 0;
+            System.out.println(".");
+            for (Aventurier joueur : joueurs) {
+                this.fintour=false;
+                this.joueurCourant = joueur;
+                System.out.println("+");
+                vue.afficherEtatJeu(nbTour, nbTour, joueur.getRole().getNomRole().toString());
+                //joueur.debutTour();
+                tourDeJeu(joueur);
             }
-            if(assechement){
-                this.assechement=false;
-                joueur.setNbAction(joueur.getNbAction()-1);
+        //}
+    }
+
+    public void tourDeJeu(Aventurier joueur) { 
+        do{
+            if (deplacement) {
+                this.deplacement = false;
+                joueur.setNbAction(joueur.getNbAction() - 1);
             }
-            if (fintour){
-                finTour=true;
+            if (assechement) {
+                this.assechement = false;
+                joueur.setNbAction(joueur.getNbAction() - 1);
             }
-        }
-        vue.afficherEtatJeu(nbTour, nbTour, joueur.getRole().toString());
+        }while(fintour || joueur.getNbAction()==0);
+        this.nbTour++;
     }
 }

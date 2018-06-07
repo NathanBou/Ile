@@ -173,7 +173,6 @@ public class Vue implements Observe {
                             bTuile.setBackground(Color.YELLOW);
                         }
                         if(!grille.getTuiles().get(i).getASurTuile().isEmpty()){
-                            System.out.println("Tuile numero : "+i);
                             bTuile.setForeground(grille.getTuiles().get(i).getASurTuile().get(0).getRole().getCouleur().getCouleur());               
                             //bTuile.paintImmediately(0, 0, 5, 5);
                         }
@@ -232,7 +231,7 @@ public class Vue implements Observe {
                                 new ActionListener() {
                             @Override
                             public void actionPerformed(ActionEvent e) {
-                                Message m = new Message(TypesMessage.INITIALISATIONGRILLE);
+                                Message m = new Message(TypesMessage.DEPLACER);
                                 notifierObservateur(m);
                             }
                         });

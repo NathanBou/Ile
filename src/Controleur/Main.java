@@ -23,7 +23,6 @@ public class Main {
         Grille grille = new Grille();
         Vue ihm = new Vue();
         Controleur cont = new Controleur(ihm,grille);
-      
     }
     
 }
