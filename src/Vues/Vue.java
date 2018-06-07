@@ -14,6 +14,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.GridLayout;
 import static java.awt.SystemColor.window;
 import java.awt.Toolkit;
@@ -32,9 +33,12 @@ public class Vue implements Observe {
     private final JFrame fenetreJeu = new JFrame();
     private JPanel panelGrilleTuile;
     private Observateur observateur;
+    private JLabel tour = new JLabel("",SwingConstants.CENTER);
+    private JLabel niveau  = new JLabel("",SwingConstants.CENTER);
+    private JLabel joueur  = new JLabel("",SwingConstants.CENTER);
+
 
     public Vue() {
-
         fenetreInit.setTitle("L 'ILE INTERDITE INITIALISATION");
         // Définit la taille de la fenêtre en pixels
         fenetreInit.setSize(650, 500);
@@ -167,7 +171,8 @@ public class Vue implements Observe {
                         }
                         if(!grille.getTuiles().get(i).getASurTuile().isEmpty()){
                             System.out.println("Tuile numero : "+i);
-                            bTuile.setForeground(grille.getTuiles().get(i).getASurTuile().get(0).getRole().getCouleur().getCouleur());            
+                            bTuile.setForeground(grille.getTuiles().get(i).getASurTuile().get(0).getRole().getCouleur().getCouleur());               
+                            //bTuile.paintImmediately(0, 0, 5, 5);
                         }
                         
                         bTuile.setEnabled(true);
@@ -190,15 +195,16 @@ public class Vue implements Observe {
                 // Panel Top
                 JPanel panelBouton = new JPanel(new BorderLayout());
                 JPanel panelInfo = new JPanel(new GridLayout(0, 3));
-                JLabel Tour = new JLabel("Tour numéro : ", SwingConstants.CENTER);
-                JLabel Niveau = new JLabel("Niveau d'eau : ", SwingConstants.CENTER);
-                JLabel Joueur = new JLabel("Joueur numéro : ", SwingConstants.CENTER);
-                Tour.setPreferredSize(new Dimension(200, 100));
-                Niveau.setPreferredSize(new Dimension(200, 100));
-                Joueur.setPreferredSize(new Dimension(200, 100));
-                panelInfo.add(Tour);
-                panelInfo.add(Niveau);
-                panelInfo.add(Joueur);
+                JLabel Tour = new JLabel();
+                tour.setText("Tour numéro : ");
+                niveau.setText("Niveau d'eau : ");
+                joueur.setText("Joueur : ");
+                tour.setPreferredSize(new Dimension(200, 100));
+                niveau.setPreferredSize(new Dimension(200, 100));
+                joueur.setPreferredSize(new Dimension(200, 100));
+                panelInfo.add(tour);
+                panelInfo.add(niveau);
+                panelInfo.add(joueur);
 
                 // Panel Centre
                 JPanel panelGrilleBouton = new JPanel(new GridLayout(2, 5));
@@ -266,6 +272,11 @@ public class Vue implements Observe {
         panelBas.setPreferredSize(new Dimension(1650, 100));
         mainPanel.add(panelBas, BorderLayout.SOUTH);
         fenetreJeu.setVisible(true);
+    }
+    public void afficherEtatJeu(int nbTour, int nivEau, String nomJoueur){
+        tour.setText("Tour numero :"+nbTour);
+        niveau.setText("Niveau d'eau :"+nivEau);
+        joueur.setText("Joueur :"+nomJoueur);
     }
 
     public void addObservateur(Observateur o) {

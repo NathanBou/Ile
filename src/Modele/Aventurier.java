@@ -27,6 +27,9 @@ public abstract class Aventurier {
     public int getNbAction() {
         return nbAction;
     }
+    public void setNbAction(int i){
+        this.nbAction=i;
+    }
 
     /**
      *

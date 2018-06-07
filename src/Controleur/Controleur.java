@@ -34,23 +34,38 @@ public class Controleur implements Observateur {
     private ArrayList<Innondation> defausseInnondation;
     private ArrayList<CTresor> pileCarte;
     private ArrayList<CTresor> defausseCarte;
+    private Aventurier joueurCourant;
+    private boolean gagner;
+    private boolean deplacement;
+    private boolean assechement;
+    private boolean fintour;
+    private int nbTour;
 
     public Controleur(Vue vue, Grille grille) {
         this.vue = vue;
         vue.addObservateur(this);
         this.grille = grille;
-
+        while (!gagner){
+            nbTour=0;
+            for(Aventurier joueur : joueurs){
+                tourDeJeu(joueur);
+                this.nbTour++;
+            }
+        }
     }
 
     @Override
     public void traiterMessage(Message m) {
         if (m.type == TypesMessage.FINIRTOUR) {
             System.out.println("Clic sur FINTOUR");
+            this.fintour=true;
+            //this.gagner=true;
         } else if (m.type == TypesMessage.DEPLACER) {
             System.out.println("Clic sur Deplacer");
-
+            this.deplacement=true;
         } else if (m.type == TypesMessage.ASSECHER) {
             System.out.println("Clic sur ASSECHER");
+            this.assechement=true;
         } else if (m.type == TypesMessage.INITIALISATIONGRILLE) {
             System.out.println("INITIALISATION");
             joueurs = new ArrayList<Aventurier>();
@@ -129,10 +144,23 @@ public class Controleur implements Observateur {
         return defausseCarte;
     }
 
-    public void TourDeJeu(Aventurier joueur, Grille grille) {
+    public void tourDeJeu(Aventurier joueur) {
         boolean finTour = false;
-        while (!finTour || joueur.getNbAction() <= 2) {
-
+        this.joueurCourant= joueur;
+        joueur.setNbAction(3);
+        while (!finTour || joueur.getNbAction() != 0) {
+            if (deplacement){
+                this.deplacement=false;
+                joueur.setNbAction(joueur.getNbAction()-1);
+            }
+            if(assechement){
+                this.assechement=false;
+                joueur.setNbAction(joueur.getNbAction()-1);
+            }
+            if (fintour){
+                finTour=true;
+            }
         }
+        vue.afficherEtatJeu(nbTour, nbTour, joueur.getRole().toString());
     }
 }
