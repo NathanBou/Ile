@@ -63,6 +63,7 @@ public class Controleur implements Observateur {
         } else if (m.type == TypesMessage.DEPLACER) {
             System.out.println("Clic sur Deplacer");
             this.deplacement=true;
+            vue.afficherTuileAccessible(joueurCourant.getTuilesAdjacentes(grille));
         } else if (m.type == TypesMessage.ASSECHER) {
             System.out.println("Clic sur ASSECHER");
             this.assechement=true;

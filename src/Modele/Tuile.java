@@ -8,7 +8,7 @@ public class Tuile {
 	private EtatTuile etat;
 	private NomTuile nomTuile;
         private int nb_Tuile;
-        Tuile(NomTuile nomTuile, EtatTuile etat) {
+        Tuile(NomTuile nomTuile, EtatTuile etat,int nb_Tuile) {
             this.nomTuile = nomTuile;
             this.etat = etat;
             aSurTuile= new ArrayList<Aventurier>();
@@ -17,7 +17,9 @@ public class Tuile {
 	public EtatTuile getEtat() {
 		return this.etat;
 	} 
-
+        public int getNbTuile(){
+            return this.nb_Tuile;
+        }
 	/**
 	 * 
 	 * @param Etat

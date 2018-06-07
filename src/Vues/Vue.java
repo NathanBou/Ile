@@ -20,6 +20,8 @@ import static java.awt.SystemColor.window;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
@@ -36,6 +38,7 @@ public class Vue implements Observe {
     private JLabel tour = new JLabel("",SwingConstants.CENTER);
     private JLabel niveau  = new JLabel("",SwingConstants.CENTER);
     private JLabel joueur  = new JLabel("",SwingConstants.CENTER);
+    private JButton[] tabTuile;
 
 
     public Vue() {
@@ -155,7 +158,7 @@ public class Vue implements Observe {
         for (int j = 0; j <= 1; j++) {
             if (j == 0) {
                 JPanel panelGrilleTuile = new JPanel(new GridLayout(6, 6, 2 ,2)); //Grille
-                JButton[] tabTuile = new JButton[36];
+                tabTuile = new JButton[36];
                 for (int i = 0; i <= 35; i++) {
                     if (i == 0 || i == 1 || i == 4 || i == 5 || i == 6 || i == 11 || i == 24 || i == 29 || i == 30 || i == 31 || i == 34 || i == 35) {
                         panelGrilleTuile.add(new JLabel("", SwingConstants.CENTER));
@@ -278,7 +281,15 @@ public class Vue implements Observe {
         niveau.setText("Niveau d'eau :"+nivEau);
         joueur.setText("Joueur :"+nomJoueur);
     }
-
+    public void afficherTuileAccessible(ArrayList<Tuile> tuilesAccessibles){
+        for (Tuile tuile : tuilesAccessibles){
+            for (int i=0;i<36;i++){
+                if (i==tuile.getNbTuile()){
+                    tabTuile[i].setBorder(BorderFactory.createLineBorder(Color.CYAN));
+                }
+            }
+        }
+    }
     public void addObservateur(Observateur o) {
         this.observateur = o;
     }
