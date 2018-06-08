@@ -142,42 +142,44 @@ public class Controleur implements Observateur {
                 System.out.println("INITIALISATION");
                 joueurs = new ArrayList<Aventurier>();
                 for (NomRole joueur : m.joueurs) {
-                    if (joueur == NomRole.EXPLORATEUR && joueurs.size() < 4) {
+                    if (joueur == NomRole.EXPLORATEUR && m.joueurs.size() < 4) {
                         Explorateur explorateur = new Explorateur();
                         joueurs.add(explorateur);
                         explorateur.setApparition(grille.getTuile(2, 4));
                         grille.getTuile(2, 4).estSurTuile(explorateur);
                         System.out.println("EXPLORATEUR");
-                    } else if (joueur == NomRole.PLONGEUR && joueurs.size() < 4) {
+                    } else if (joueur == NomRole.PLONGEUR && m.joueurs.size() < 4) {
                         Plongeur plongeur = new Plongeur();
                         joueurs.add(plongeur);
                         plongeur.setApparition(grille.getTuile(1, 2));
                         grille.getTuile(1, 2).estSurTuile(plongeur);
                         System.out.println("PLONGEUR");
-                    } else if (joueur == NomRole.INGENIEUR && joueurs.size() < 4) {
+                    } else if (joueur == NomRole.INGENIEUR && m.joueurs.size() < 4) {
                         Ingenieur ingenieur = new Ingenieur();
                         joueurs.add(ingenieur);
                         ingenieur.setApparition(grille.getTuile(0, 3));
                         grille.getTuile(0, 3).estSurTuile(ingenieur);
                         System.out.println("INGENIEUR");
-                    } else if (joueur == NomRole.MESSAGER && joueurs.size() < 4) {
+                    } else if (joueur == NomRole.MESSAGER && m.joueurs.size() < 4) {
                         Messager messager = new Messager();
                         joueurs.add(messager);
                         messager.setApparition(grille.getTuile(2, 1));
                         grille.getTuile(2, 1).estSurTuile(messager);
                         System.out.println("MESSAGER");
-                    } else if (joueur == NomRole.NAVIGATEUR && joueurs.size() < 4) {
+                    } else if (joueur == NomRole.NAVIGATEUR && m.joueurs.size() < 4) {
                         Navigateur navigateur = new Navigateur();
                         joueurs.add(navigateur);
                         navigateur.setApparition(grille.getTuile(1, 3));
                         grille.getTuile(1, 3).estSurTuile(navigateur);
                         System.out.println("NAVIGATEUR");
-                    } else if (joueur == NomRole.PILOTE && joueurs.size() < 4) {
+                    } else if (joueur == NomRole.PILOTE && m.joueurs.size() < 4) {
                         Pilote pilote = new Pilote();
                         joueurs.add(pilote);
                         pilote.setApparition(grille.getTuile(2, 3));
                         grille.getTuile(2, 3).estSurTuile(pilote);
                         System.out.println("PILOTE");
+                    } else{
+                        System.out.println("Trop de joueur");
                     }
                 }
                 for (Aventurier joueur : joueurs) {
