@@ -43,8 +43,8 @@ public abstract class Aventurier {
      *
      * @param Tuile
      */
-    public void Deplacement(Tuile tuile) {
-        // TODO - implement Aventurier.Deplacement
+    public void deplacement(Tuile tuile) {
+        // TODO - implement Aventurier.deplacement
         if (nbAction >= 3) {
             System.out.println("Deplacement impossible, nombre d'actions disponibles insuffisants.");
         } else {
@@ -59,7 +59,7 @@ public abstract class Aventurier {
      * @param Aventurier
      * @param Carte
      */
-    public void DonnerCarte(Aventurier joueur, CTresor carte) {
+    public void donnerCarte(Aventurier joueur, CTresor carte) {
         if (nbAction >= 3) {
             System.out.println("Action impossible, nombre d'actions disponibles insuffisants.");
         } else {
@@ -72,12 +72,12 @@ public abstract class Aventurier {
      *
      * @param Tuile
      */
-    public void Assecher(Tuile tuile) {
-        // TODO - implement Aventurier.Assecher
+    public void assecher(Tuile tuile) {
+        // TODO - implement Aventurier.assecher
         if (nbAction >= 3) {
             System.out.println("Assechage impossible, nombre d'actions disponibles insuffisants.");
         } else {
-            tuile.Assecher();
+            tuile.assecher();
             nbAction++;
         }
     }
@@ -86,8 +86,8 @@ public abstract class Aventurier {
      *
      * @param Tresor
      */
-    public void PrendreTresor(Tresor tresor) {
-        // TODO - implement Aventurier.PrendreTresor
+    public void prendreTresor(Tresor tresor) {
+        // TODO - implement Aventurier.prendreTresor
         if (nbAction >= 3) {
             System.out.println("Action impossible, nombre d'actions disponibles insuffisants.");
         } else {

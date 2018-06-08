@@ -4,11 +4,13 @@ import Controleur.Message;
 import Controleur.TypesMessage;
 import Controleur.Observateur;
 import Controleur.Observe;
+import Modele.Aventurier;
 import Modele.Grille;
 import Modele.Grille;
 import Modele.NomRole;
 import Modele.Tuile;
 import Modele.Utils;
+import Modele.Utils.EtatTuile;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -283,11 +285,20 @@ public class Vue implements Observe {
     public void afficherTuileAccessible(ArrayList<Tuile> tuilesAccessibles){
         for (Tuile tuile : tuilesAccessibles){
             for (int i=0;i<36;i++){
-                if (i==tuile.getNbTuile()){
+                if (i==tuile.getNumTuile()){
                     tabTuile[i].setBorder(BorderFactory.createLineBorder(Color.CYAN));
                 }
             }
         }
+    }
+    public void afficherDeplacement(Aventurier joueur){
+        
+    }
+    public void changerEtatTuile(int num_Tuile, EtatTuile etat){
+        
+    }
+    public void afficherTuileAssechable(ArrayList<Tuile> tuilesAssechables){
+        
     }
     public void addObservateur(Observateur o) {
         this.observateur = o;

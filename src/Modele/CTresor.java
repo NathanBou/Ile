@@ -2,7 +2,7 @@ package Modele;
 
 public abstract class CTresor {
 
-	public void PiocherCarteT() {
+	public void piocherCarteT() {
 		// TODO - implement CTresor.PiocherCarteT
 		throw new UnsupportedOperationException();
 	}

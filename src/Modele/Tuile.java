@@ -7,7 +7,7 @@ public class Tuile {
 	private ArrayList<Aventurier> aSurTuile;
 	private EtatTuile etat;
 	private NomTuile nomTuile;
-        private int nb_Tuile;
+        private int num_Tuile;
         Tuile(NomTuile nomTuile, EtatTuile etat,int nb_Tuile) {
             this.nomTuile = nomTuile;
             this.etat = etat;
@@ -17,8 +17,8 @@ public class Tuile {
 	public EtatTuile getEtat() {
 		return this.etat;
 	} 
-        public int getNbTuile(){
-            return this.nb_Tuile;
+        public int getNumTuile(){
+            return this.num_Tuile;
         }
 	/**
 	 * 
@@ -27,12 +27,12 @@ public class Tuile {
 	public void setEtat(EtatTuile etat) {
 		this.etat = etat;
 	}
-        public void addAventurierSurTuile(Aventurier joueur){
+        public void estSurTuile(Aventurier joueur){
             this.aSurTuile.add(joueur);
         }
 
 
-	public void Assecher() {
+	public void assecher() {
 		// TODO - implement Tuile.setAssecher
 		this.setEtat(EtatTuile.ASSECHEE);
 	}
