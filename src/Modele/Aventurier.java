@@ -4,11 +4,11 @@ import java.util.ArrayList;
 
 public abstract class Aventurier {
 
-    private int nbAction = 3;
-    protected Tuile estSurTuile;
-    private int nbCarte = 0;
+    private int nbAction;
+    public Tuile estSurTuile;
+    private int nbCarte;
     private Role role;
-    protected ArrayList<Tuile> tuilesAdjacentes;
+    public ArrayList<Tuile> tuilesAdjacentes;
     private boolean monTour = false;
 
     Aventurier(Role role) {
@@ -22,6 +22,14 @@ public abstract class Aventurier {
 
     public void setNbCarte(int nbCarte) {
         this.nbCarte = nbCarte;
+    }
+
+    public boolean isMonTour() {
+        return monTour;
+    }
+
+    public void setMonTour(boolean monTour) {
+        this.monTour = monTour;
     }
 
     public int getNbAction() {
@@ -113,7 +121,7 @@ public abstract class Aventurier {
     }
 
     public ArrayList<Tuile> getTuilesAdjacentes(Grille g) {
-        //tuilesAdjacentes.clear();
+        tuilesAdjacentes.clear();
         if (g.getTuiles().get(g.getTuiles().indexOf(this.estSurTuile) + 1).getEtat() != Utils.EtatTuile.COULEE) {
             tuilesAdjacentes.add(g.getTuiles().get(g.getTuiles().indexOf(this.estSurTuile) + 1));
         }
@@ -121,10 +129,10 @@ public abstract class Aventurier {
             tuilesAdjacentes.add(g.getTuiles().get(g.getTuiles().indexOf(this.estSurTuile) - 1));
         }
         if (g.getTuiles().get(g.getTuiles().indexOf(this.estSurTuile) + 6).getEtat() != Utils.EtatTuile.COULEE) {
-            tuilesAdjacentes.add(g.getTuiles().get(g.getTuiles().indexOf(this.estSurTuile) + 5));
+            tuilesAdjacentes.add(g.getTuiles().get(g.getTuiles().indexOf(this.estSurTuile) + 6));
         }
         if (g.getTuiles().get(g.getTuiles().indexOf(this.estSurTuile) - 6).getEtat() != Utils.EtatTuile.COULEE) {
-            tuilesAdjacentes.add(g.getTuiles().get(g.getTuiles().indexOf(this.estSurTuile) - 5));
+            tuilesAdjacentes.add(g.getTuiles().get(g.getTuiles().indexOf(this.estSurTuile) - 6));
         }
         return tuilesAdjacentes;
     }
@@ -170,7 +178,6 @@ public abstract class Aventurier {
     }
 
     public void finTour() {
-        nbAction = 3;
         monTour = false;
     }
 

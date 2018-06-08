@@ -18,7 +18,7 @@ public class Explorateur extends Aventurier {
     
     @Override
     public ArrayList<Tuile> getTuilesAdjacentes(Grille g) {
-        tuilesAdjacentes.clear();
+//        tuilesAdjacentes.clear();
         if (g.getTuiles().get(g.getTuiles().indexOf(this.estSurTuile) + 1) != null && g.getTuiles().get(g.getTuiles().indexOf(this.estSurTuile) + 1).getEtat() != Utils.EtatTuile.COULEE) {
             tuilesAdjacentes.add(g.getTuiles().get(g.getTuiles().indexOf(this.estSurTuile) + 1));
         }
