@@ -10,5 +10,8 @@ package Controleur;
  * @author bouviern
  */
 public enum TypesMessage {
-    INITIALISATIONGRILLE,FINIRTOUR,DEPLACER,ASSECHER;
+    INITIALISATIONGRILLE,
+    FINIRTOUR,
+    DEPLACER,
+    ASSECHER;
 }

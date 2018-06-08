@@ -46,66 +46,75 @@ public class Controleur implements Observateur {
 
     @Override
     public void traiterMessage(Message m) {
-        if (m.type == TypesMessage.FINIRTOUR) {
-            System.out.println("Clic sur FINTOUR");
-            joueurCourant.finTour();
-        } else if (m.type == TypesMessage.DEPLACER) {
-            System.out.println("Clic sur Deplacer");
-            joueurCourant.setNbAction(joueurCourant.getNbAction()+1);
-            System.out.println(joueurCourant.getNbAction());
-            vue.afficherTuileAccessible(joueurCourant.getTuilesAccessibles(grille));
-            
-        } else if (m.type == TypesMessage.ASSECHER) {
-            System.out.println("Clic sur ASSECHER");
-            joueurCourant.setNbAction(joueurCourant.getNbAction()+1);
-            vue.afficherTuileAccessible(joueurCourant.getTuilesInondees(grille));
-        } else if (m.type == TypesMessage.INITIALISATIONGRILLE) {
-            System.out.println("INITIALISATION");
-            joueurs = new ArrayList<Aventurier>();
-            for (NomRole joueur : m.joueurs) {
-                if (joueur == NomRole.EXPLORATEUR) {
-                    Explorateur explorateur = new Explorateur();
-                    joueurs.add(explorateur);
-                    explorateur.setApparition(grille.getTuiles().get(16));
-                    grille.getTuiles().get(16).estSurTuile(explorateur);
-                    System.out.println("EXPLORATEUR");
-                } else if (joueur == NomRole.PLONGEUR) {
-                    Plongeur plongeur = new Plongeur();
-                    joueurs.add(plongeur);
-                    plongeur.setApparition(grille.getTuiles().get(8));
-                    grille.getTuiles().get(8).estSurTuile(plongeur);
-                    System.out.println("PLONGEUR");
-                } else if (joueur == NomRole.INGENIEUR) {
-                    Ingenieur ingenieur = new Ingenieur();
-                    joueurs.add(ingenieur);
-                    ingenieur.setApparition(grille.getTuiles().get(3));
-                    grille.getTuiles().get(3).estSurTuile(ingenieur);
-                    System.out.println("INGENIEUR");
-                } else if (joueur == NomRole.MESSAGER) {
-                    Messager messager = new Messager();
-                    joueurs.add(messager);
-                    messager.setApparition(grille.getTuiles().get(13));
-                    grille.getTuiles().get(13).estSurTuile(messager);
-                    System.out.println("MESSAGER");
-                } else if (joueur == NomRole.NAVIGATEUR) {
-                    Navigateur navigateur = new Navigateur();
-                    joueurs.add(navigateur);
-                    navigateur.setApparition(grille.getTuiles().get(9));
-                    grille.getTuiles().get(9).estSurTuile(navigateur);
-                    System.out.println("NAVIGATEUR");
-                } else if (joueur == NomRole.PILOTE) {
-                    Pilote pilote = new Pilote();
-                    joueurs.add(pilote);
-                    pilote.setApparition(grille.getTuiles().get(15));
-                    grille.getTuiles().get(15).estSurTuile(pilote);
-                    System.out.println("PILOTE");
+        switch (m.type) {
+            case DEPLACER:
+                System.out.println("Clic sur Deplacer");
+                joueurCourant.setNbAction(joueurCourant.getNbAction() + 1);
+                System.out.println(joueurCourant.getNbAction());
+                vue.afficherTuileAccessible(joueurCourant.getTuilesAccessibles(grille));
+                break;
+            case FINIRTOUR:
+                System.out.println("Clic sur FINTOUR");
+                joueurCourant.finTour();
+                break;
+            case ASSECHER:
+                System.out.println("Clic sur ASSECHER");
+                joueurCourant.setNbAction(joueurCourant.getNbAction() + 1);
+                vue.afficherTuileAccessible(joueurCourant.getTuilesInondees(grille));
+                break;
+            case INITIALISATIONGRILLE:
+                System.out.println("INITIALISATION");
+                joueurs = new ArrayList<Aventurier>();
+                for (NomRole joueur : m.joueurs) {
+                    if (joueur == NomRole.EXPLORATEUR && joueurs.size() < 4) {
+                        Explorateur explorateur = new Explorateur();
+                        joueurs.add(explorateur);
+                        explorateur.setApparition(grille.getTuiles().get(16));
+                        grille.getTuiles().get(16).estSurTuile(explorateur);
+                        System.out.println("EXPLORATEUR");
+                    } else if (joueur == NomRole.PLONGEUR && joueurs.size() < 4) {
+                        Plongeur plongeur = new Plongeur();
+                        joueurs.add(plongeur);
+                        plongeur.setApparition(grille.getTuiles().get(8));
+                        grille.getTuiles().get(8).estSurTuile(plongeur);
+                        System.out.println("PLONGEUR");
+                    } else if (joueur == NomRole.INGENIEUR && joueurs.size() < 4) {
+                        Ingenieur ingenieur = new Ingenieur();
+                        joueurs.add(ingenieur);
+                        ingenieur.setApparition(grille.getTuiles().get(3));
+                        grille.getTuiles().get(3).estSurTuile(ingenieur);
+                        System.out.println("INGENIEUR");
+                    } else if (joueur == NomRole.MESSAGER && joueurs.size() < 4) {
+                        Messager messager = new Messager();
+                        joueurs.add(messager);
+                        messager.setApparition(grille.getTuiles().get(13));
+                        grille.getTuiles().get(13).estSurTuile(messager);
+                        System.out.println("MESSAGER");
+                    } else if (joueur == NomRole.NAVIGATEUR && joueurs.size() < 4) {
+                        Navigateur navigateur = new Navigateur();
+                        joueurs.add(navigateur);
+                        navigateur.setApparition(grille.getTuiles().get(9));
+                        grille.getTuiles().get(9).estSurTuile(navigateur);
+                        System.out.println("NAVIGATEUR");
+                    } else if (joueur == NomRole.PILOTE && joueurs.size() < 4) {
+                        Pilote pilote = new Pilote();
+                        joueurs.add(pilote);
+                        pilote.setApparition(grille.getTuiles().get(15));
+                        grille.getTuiles().get(15).estSurTuile(pilote);
+                        System.out.println("PILOTE");
+                    }
                 }
-            }
-            for (Aventurier joueur : joueurs) {
-                System.out.println("*" + joueur.getRole().getNomRole().toString());
-            }
-            commencerPartie();
-            
+                for (Aventurier joueur : joueurs) {
+                    System.out.println("*" + joueur.getRole().getNomRole().toString());
+                }
+                vue.creeJeu(grille);
+                gagner = false;
+                nbTour = 0;
+                for (Aventurier joueur : joueurs) {
+                    tourDeJeu(joueur);
+                }
+                
+                break;
         }
 
     }
@@ -138,27 +147,17 @@ public class Controleur implements Observateur {
         return defausseCarte;
     }
 
-    public void commencerPartie() {
-        vue.creeJeu(grille);
-        gagner=false;
-        nbTour = 0;
-        while (!gagner) {
+    public void tourDeJeu(Aventurier joueur) {
             
-            for (Aventurier joueur : joueurs) {
-                System.out.println("Tour numero :"+nbTour);
+                System.out.println("Tour numero :" + nbTour);
                 joueur.debutTour();
-                joueurCourant=joueur;
+                joueurCourant = joueur;
                 vue.afficherEtatJeu(nbTour, nbTour, joueur.getRole().getNomRole().toString());
-                if (joueur.getNbAction()==3){
+                if (joueur.getNbAction() == 3) {
                     joueur.finTour();
                 }
                 nbTour++;
-                
-            }
-            if (nbTour==10){
-                gagner=true;
-            }
-        }
     }
+    
 
 }

@@ -16,7 +16,6 @@ import java.util.ArrayList;
 public class Message {
     TypesMessage type;
     ArrayList<NomRole> joueurs = new ArrayList<NomRole>();
-    int nbJoueur=0;
     public Message(TypesMessage type) {
         this.type = type;    
     }
@@ -30,6 +29,5 @@ public class Message {
     }
     public void ajouterJoueur(NomRole joueur){
         joueurs.add(joueur);
-        nbJoueur++;
     }
 }

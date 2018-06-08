@@ -99,7 +99,7 @@ public abstract class Aventurier {
     public ArrayList<Tuile> getTuilesAccessibles(Grille g) {
         // TODO - implement Aventurier.TuilesAccessibles
         ArrayList<Tuile> tuilesAccessibles = new ArrayList();
-        this.tuilesAdjacentes=getTuilesAdjacentes(g,this.estSurTuile);
+        this.tuilesAdjacentes=getTuilesAdjacentes(g);
         for (Tuile tuile : tuilesAdjacentes) {
             if (tuile.getEtat() != Utils.EtatTuile.COULEE) {
                 tuilesAccessibles.add(tuile);
