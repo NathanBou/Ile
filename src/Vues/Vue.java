@@ -30,6 +30,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import Vues.CelluleTuile;
 
 public class Vue implements Observe {
 
@@ -175,11 +176,10 @@ public class Vue implements Observe {
                             bTuile.setBackground(Color.YELLOW);
                         }
                         if(!grille.getTuiles().get(i).getASurTuile().isEmpty()){
-                            bTuile.setForeground(grille.getTuiles().get(i).getASurTuile().get(0).getRole().getCouleur().getCouleur());               
-                            //bTuile.paintImmediately(0, 0, 5, 5);
+                            bTuile.setBorder(BorderFactory.createLineBorder(grille.getTuiles().get(i).getASurTuile().get(0).getRole().getCouleur().getCouleur()));
                         }
                         
-                        bTuile.setEnabled(true);
+                        bTuile.setEnabled(false);
                         bTuile.setFont(new Font("Dialog",Font.BOLD,10));
                         bTuile.setPreferredSize(new Dimension(118, 118));
                         panelGrilleTuile.add(bTuile);
@@ -286,7 +286,7 @@ public class Vue implements Observe {
         for (Tuile tuile : tuilesAccessibles){
             for (int i=0;i<36;i++){
                 if (i==tuile.getNumTuile()){
-                    tabTuile[i].setBorder(BorderFactory.createLineBorder(Color.CYAN));
+                    tabTuile[i].setEnabled(true);
                 }
             }
         }

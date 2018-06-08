@@ -53,12 +53,12 @@ public class Controleur implements Observateur {
             System.out.println("Clic sur Deplacer");
             joueurCourant.setNbAction(joueurCourant.getNbAction()+1);
             System.out.println(joueurCourant.getNbAction());
-            //vue.afficherTuileAccessible(joueurCourant.getTuilesAccessibles(grille));
+            vue.afficherTuileAccessible(joueurCourant.getTuilesAccessibles(grille));
             
         } else if (m.type == TypesMessage.ASSECHER) {
             System.out.println("Clic sur ASSECHER");
             joueurCourant.setNbAction(joueurCourant.getNbAction()+1);
-           // vue.afficherTuileAccessible(joueurCourant.getTuilesInondees(grille));
+            vue.afficherTuileAccessible(joueurCourant.getTuilesInondees(grille));
         } else if (m.type == TypesMessage.INITIALISATIONGRILLE) {
             System.out.println("INITIALISATION");
             joueurs = new ArrayList<Aventurier>();
