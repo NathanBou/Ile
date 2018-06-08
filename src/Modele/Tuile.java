@@ -8,10 +8,11 @@ public class Tuile {
 	private EtatTuile etat;
 	private NomTuile nomTuile;
         private int num_Tuile;
-        Tuile(NomTuile nomTuile, EtatTuile etat,int nb_Tuile) {
+        Tuile(NomTuile nomTuile, EtatTuile etat,int num_Tuile) {
             this.nomTuile = nomTuile;
             this.etat = etat;
             aSurTuile= new ArrayList<Aventurier>();
+            this.num_Tuile=num_Tuile;
         }
 
 	public EtatTuile getEtat() {
