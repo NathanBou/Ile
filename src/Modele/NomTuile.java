@@ -54,5 +54,5 @@ public enum NomTuile {
         public String toString() {
             return this.libelle ;
         }
-        
+
 }

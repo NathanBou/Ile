@@ -163,11 +163,11 @@ public class Vue implements Observe {
                     for (int k = 0; k < 6; k++) {
                         if (grille.getTuile(i, k).getNomTuile() == NomTuile.BORDURE) {
                             panelGrilleTuile.add(new JLabel("", SwingConstants.CENTER));
-                            CelluleTuile tuile = new CelluleTuile(i,k);
-                            tabTuile[i][k]=tuile;
+                            CelluleTuile tuile = new CelluleTuile(i, k);
+                            tabTuile[i][k] = tuile;
                         } else {
-                            CelluleTuile bTuile = new CelluleTuile(i,k);
-                            tabTuile[i][k]=bTuile;
+                            CelluleTuile bTuile = new CelluleTuile(i, k);
+                            tabTuile[i][k] = bTuile;
                             bTuile.setText(grille.getTuile(i, k).getNomTuile().toString());
                             if (grille.getTuile(i, k).getEtat() == Utils.EtatTuile.COULEE) {
                                 bTuile.setBackground(Color.BLUE);
@@ -285,11 +285,11 @@ public class Vue implements Observe {
         joueur.setText("Joueur :" + nomJoueur);
     }
 
-    public void afficherTuileAccessible(ArrayList<Tuile> tuilesAccessibles,Grille g) {
+    public void afficherTuileAccessible(ArrayList<Tuile> tuilesAccessibles, Grille g) {
         for (Tuile tuile : tuilesAccessibles) {
             for (int i = 0; i < 6; i++) {
                 for (int k = 0; k < 6; k++) {
-                    if (i==tuile.getLig(g) && k== tuile.getCol(g)) {
+                    if (i == tuile.getLig(g) && k == tuile.getCol(g)) {
                         tabTuile[i][k].setEnabled(true);
                     }
                 }
@@ -306,8 +306,17 @@ public class Vue implements Observe {
 
     }
 
-    public void afficherTuileAssechable(ArrayList<Tuile> tuilesAssechables) {
+    public void afficherTuileAssechable(ArrayList<Tuile> tuilesInondees, Grille g) {
+        for (Tuile tuile : tuilesInondees) {
+            for (int i = 0; i < 6; i++) {
+                for (int k = 0; k < 6; k++) {
+                    if (i == tuile.getLig(g) && k == tuile.getCol(g)) {
+                        tabTuile[i][k].setEnabled(true);
+                    }
+                }
 
+            }
+        }
     }
 
     public void addObservateur(Observateur o) {

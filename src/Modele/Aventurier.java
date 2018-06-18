@@ -112,6 +112,7 @@ public abstract class Aventurier {
 
     public ArrayList<Tuile> getTuilesInondees(Grille g) {
         ArrayList<Tuile> tuilesInondees = new ArrayList();
+        tuilesAdjacentes=getTuilesAdjacentes(g);
         for (Tuile tuile : tuilesAdjacentes) {
             if (tuile.getEtat() == EtatTuile.INONDEE) {
                 tuilesInondees.add(tuile);

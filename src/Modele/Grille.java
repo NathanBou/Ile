@@ -19,7 +19,7 @@ public class Grille {
 
     public Grille() {
         tuiles = new Tuile[6][6];
-        tuiles[0][0] = new Tuile(NomTuile.BORDURE, EtatTuile.COULEE, 0);
+        /*tuiles[0][0] = new Tuile(NomTuile.BORDURE, EtatTuile.COULEE, 0);
         tuiles[0][1] = new Tuile(NomTuile.BORDURE, EtatTuile.COULEE, 1);
         tuiles[0][2] = new Tuile(NomTuile.PONTABIMES, EtatTuile.ASSECHEE, 2);
         tuiles[0][3] = new Apparition(NomTuile.PORTEBRONZE, new Role(NomRole.INGENIEUR, Utils.Pion.ROUGE), EtatTuile.INONDEE, 3);//3
@@ -54,7 +54,7 @@ public class Grille {
         tuiles[5][2] = new Tuile(NomTuile.TOURDEGUET, EtatTuile.ASSECHEE, 32);
         tuiles[5][3] = new Tuile(NomTuile.JARDINMURMURES, EtatTuile.INONDEE, 33);
         tuiles[5][4] = new Tuile(NomTuile.BORDURE, EtatTuile.COULEE, 34);
-        tuiles[5][5] = new Tuile(NomTuile.BORDURE, EtatTuile.COULEE, 35);
+        tuiles[5][5] = new Tuile(NomTuile.BORDURE, EtatTuile.COULEE, 35);*/
     }
 
     public Tuile[][] getTuiles() {
