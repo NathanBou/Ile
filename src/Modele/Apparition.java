@@ -6,8 +6,8 @@ public class Apparition extends Tuile {
 
 	private Role role;
         
-        Apparition(NomTuile nomTuile, Role role,EtatTuile etat) {
-            super(nomTuile,etat);
+        Apparition(NomTuile nomTuile, Role role,EtatTuile etat,int lig, int col) {
+            super(nomTuile,etat,lig,col);
             this.role=role;
         }
 

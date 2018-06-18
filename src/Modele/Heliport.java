@@ -6,7 +6,7 @@ import java.awt.Color;
 
 public class Heliport extends Apparition {
 
-    public Heliport() {
-        super(NomTuile.HELIPORT,new Role(NomRole.PILOTE, Pion.BLEU),EtatTuile.ASSECHEE);
+    public Heliport(int lig, int col) {
+        super(NomTuile.HELIPORT,new Role(NomRole.PILOTE, Pion.BLEU),EtatTuile.ASSECHEE,lig,col);
     }
 }
