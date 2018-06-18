@@ -35,8 +35,9 @@ public abstract class Aventurier {
     public int getNbAction() {
         return nbAction;
     }
-    public void setNbAction(int i){
-        this.nbAction=i;
+
+    public void setNbAction(int i) {
+        this.nbAction = i;
     }
 
     /**
@@ -99,16 +100,10 @@ public abstract class Aventurier {
     public ArrayList<Tuile> getTuilesAccessibles(Grille g) {
         // TODO - implement Aventurier.TuilesAccessibles
         ArrayList<Tuile> tuilesAccessibles = new ArrayList();
-        this.tuilesAdjacentes=getTuilesAdjacentes(g);
-        for (Tuile tuile : tuilesAdjacentes) {
-            if (tuile.getEtat() != Utils.EtatTuile.COULEE) {
-                tuilesAccessibles.add(tuile);
-            }
-        }
+        tuilesAccessibles = getTuilesAssechees(tuilesAdjacentes);
         return tuilesAccessibles;
 
     }
-
 
     public ArrayList<Tuile> getTuilesInondees(Grille g) {
         ArrayList<Tuile> tuilesInondees = new ArrayList();
@@ -122,34 +117,18 @@ public abstract class Aventurier {
 
     public ArrayList<Tuile> getTuilesAdjacentes(Grille g) {
         tuilesAdjacentes.clear();
-        if (g.getTuiles().get(g.getTuiles().indexOf(this.estSurTuile) + 1).getEtat() != Utils.EtatTuile.COULEE) {
-            tuilesAdjacentes.add(g.getTuiles().get(g.getTuiles().indexOf(this.estSurTuile) + 1));
-        }
-        if (g.getTuiles().get(g.getTuiles().indexOf(this.estSurTuile) - 1).getEtat() != Utils.EtatTuile.COULEE) {
-            tuilesAdjacentes.add(g.getTuiles().get(g.getTuiles().indexOf(this.estSurTuile) - 1));
-        }
-        if (g.getTuiles().get(g.getTuiles().indexOf(this.estSurTuile) + 6).getEtat() != Utils.EtatTuile.COULEE) {
-            tuilesAdjacentes.add(g.getTuiles().get(g.getTuiles().indexOf(this.estSurTuile) + 6));
-        }
-        if (g.getTuiles().get(g.getTuiles().indexOf(this.estSurTuile) - 6).getEtat() != Utils.EtatTuile.COULEE) {
-            tuilesAdjacentes.add(g.getTuiles().get(g.getTuiles().indexOf(this.estSurTuile) - 6));
-        }
+        tuilesAdjacentes.add(g.getTuiles()[this.getEstSurTuile().getLig(g) + 1][this.getEstSurTuile().getCol(g)]);
+        tuilesAdjacentes.add(g.getTuiles()[this.getEstSurTuile().getLig(g) - 1][this.getEstSurTuile().getCol(g)]);
+        tuilesAdjacentes.add(g.getTuiles()[this.getEstSurTuile().getLig(g)][this.getEstSurTuile().getCol(g) + 1]);
+        tuilesAdjacentes.add(g.getTuiles()[this.getEstSurTuile().getLig(g)][this.getEstSurTuile().getCol(g) - 1]);
         return tuilesAdjacentes;
     }
 
     public ArrayList<Tuile> getTuilesAdjacentes(Grille g, Tuile t) {
-        if (g.getTuiles().get(g.getTuiles().indexOf(t)).getEtat() != Utils.EtatTuile.COULEE) {
-            tuilesAdjacentes.add(g.getTuiles().get(g.getTuiles().indexOf(t)));
-        }
-        if (g.getTuiles().get(g.getTuiles().indexOf(t)).getEtat() != Utils.EtatTuile.COULEE) {
-            tuilesAdjacentes.add(g.getTuiles().get(g.getTuiles().indexOf(t)));
-        }
-        if (g.getTuiles().get(g.getTuiles().indexOf(t)).getEtat() != Utils.EtatTuile.COULEE) {
-            tuilesAdjacentes.add(g.getTuiles().get(g.getTuiles().indexOf(t)));
-        }
-        if (g.getTuiles().get(g.getTuiles().indexOf(t)).getEtat() != Utils.EtatTuile.COULEE) {
-            tuilesAdjacentes.add(g.getTuiles().get(g.getTuiles().indexOf(t)));
-        }
+        tuilesAdjacentes.add(g.getTuiles()[t.getLig(g) + 1][t.getCol(g)]);
+        tuilesAdjacentes.add(g.getTuiles()[t.getLig(g) - 1][t.getCol(g)]);
+        tuilesAdjacentes.add(g.getTuiles()[t.getLig(g)][t.getCol(g) + 1]);
+        tuilesAdjacentes.add(g.getTuiles()[t.getLig(g)][t.getCol(g) - 1]);
         return tuilesAdjacentes;
 
     }
@@ -170,9 +149,11 @@ public abstract class Aventurier {
     public void setEstSurTuile(Tuile estSurTuile) {
         this.estSurTuile = estSurTuile;
     }
-    public void setApparition(Tuile apparition){
-        this.estSurTuile=apparition;
+
+    public void setApparition(Tuile apparition) {
+        this.estSurTuile = apparition;
     }
+
     public void setRole(Role role) {
         this.role = role;
     }
