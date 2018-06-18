@@ -18,46 +18,59 @@ import java.util.ArrayList;
  */
 public class Plongeur extends Aventurier {
 
+    private ArrayList<Tuile> dejaPasse;
+    
     public Plongeur() {
         super(new Role(NomRole.PLONGEUR, Utils.Pion.VIOLET));
+        dejaPasse = new ArrayList();
     }
 
-    @Override
-    public ArrayList<Tuile> getTuilesAccessibles(Grille g) {
-        ArrayList<Tuile> tuilesAccessibles = new ArrayList();
-        // Attributs nécessaires
-        boolean allTraitees = true;
+    public ArrayList<Tuile> getTuilesAccessibles(ArrayList<Tuile> tuilesAccessibles,Tuile t, Grille g) {
+        int x = t.getLig();
+        int y = t.getCol();
         
-        ArrayList<Tuile> tuilesAdjacentes2 = new ArrayList();
-        tuilesAdjacentes2 = getTuilesAdjacentes(g);
+        Tuile t1 = (y!=0 ? g.getTuile(x, y-1):null);
+        Tuile t2 = (x!=0 ? g.getTuile(x-1, y):null);
+        Tuile t3 = (x!=5 ? g.getTuile(x+1, y):null);
+        Tuile t4 = (y!=5 ? g.getTuile(x, y+1):null);
         
-        // Ajout des cases assechées et inondées des tuiles adjacentes
-        tuilesAccessibles = super.getTuilesAccessibles(g);
-        
-        // Gestion des cases coulées et inondées des tuiles adjacentes
-        // Tant qu'on a pas parcouru toutes les possibilités et ajouté celles qui sont bonnes,
-        // pour chaque tuile de tuilesAccessibles, trouver celles qui sont inondées et coulées
-        // et ajouter a tuilesAdjacentes2 les cases adjacentes à la case inondées
-        for(Tuile tuile : tuilesAccessibles) {
-            if(tuile.getEtat()!=EtatTuile.ASSECHEE) {
-                allTraitees = false;
+        if(y!=0 && !tuilesAccessibles.contains(t1) && t1.getNomTuile()!= null) {
+            if(t1.getEtat()!=EtatTuile.COULEE) {
+                tuilesAccessibles.add(t1);
+            }
+            if(t1.getEtat()!=EtatTuile.ASSECHEE) {
+                dejaPasse.add(t1);
+                getTuilesAccessibles(tuilesAccessibles,t1, g);
             }
         }
         
-        while(!allTraitees){
-            for (Tuile tuile : tuilesAccessibles) {
-                if (tuile.getEtat()!=EtatTuile.ASSECHEE) {
-                    tuilesAdjacentes2 = getTuilesAdjacentes(g,tuile);
-                    tuilesAdjacentes2.remove(tuile);
-                    for(Tuile tuile2 : tuilesAdjacentes2) {
-                        if (!tuilesAccessibles.contains(tuile2) && tuile2.getEtat()==EtatTuile.COULEE) {
-                            tuilesAccessibles.add(tuile2);
-                        }
-                    }
-                }
+        if(x!=0 && !tuilesAccessibles.contains(t2) && t2.getNomTuile()!= null) {
+            if(t2.getEtat()!=EtatTuile.COULEE) {
+                tuilesAccessibles.add(t2);
+            }////////////////////////////////////////////////////////////////////////////SA RAAAAAAAACE !!!!!/////////////////////////////////////////////////////////////////////
+            if(t2.getEtat()!=EtatTuile.ASSECHEE) {//////////////////////////////SA RAAAAAAAACE !!!!!//////////////////
+                dejaPasse.add(t2);//////////////////////////////SA RAAAAAAAACE !!!!!//////////////////
+                getTuilesAccessibles(tuilesAccessibles,t2, g);//////////////////////////////SA RAAAAAAAACE !!!!!//////////////////
+            }//////////////////////////////SA RAAAAAAAACE !!!!!//////////////////
+        }//////////////////////////////SA RAAAAAAAACE !!!!!//////////////////
+        if(y!=5 && !tuilesAccessibles.contains(t4) && t4.getNomTuile()!= null) {//////////////////////////////SA RAAAAAAAACE !!!!!//////////////////
+            if(t4.getEtat()!=EtatTuile.COULEE) {//////////////////////////////SA RAAAAAAAACE !!!!!//////////////////
+                tuilesAccessibles.add(t4);//////////////////////////////SA RAAAAAAAACE !!!!!//////////////////
+            }//////////////////////////////SA RAAAAAAAACE !!!!!//////////////////
+            if(t4.getEtat()!=EtatTuile.ASSECHEE) {
+                dejaPasse.add(t4);
+                getTuilesAccessibles(tuilesAccessibles,t4, g);
             }
         }
-        
+        if(x!=5 && !tuilesAccessibles.contains(t3) && t3.getNomTuile()!= null) {
+            if(t3.getEtat()!=EtatTuile.COULEE) {
+                tuilesAccessibles.add(t3);
+            }
+            if(t3.getEtat()!=EtatTuile.ASSECHEE) {
+                dejaPasse.add(t3);
+                getTuilesAccessibles(tuilesAccessibles,t3, g);
+            }
+        }
         
         
         
