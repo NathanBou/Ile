@@ -8,22 +8,17 @@ public class Tuile {
     private ArrayList<Aventurier> aSurTuile;
     private EtatTuile etat;
     private NomTuile nomTuile;
-    private int num_Tuile;
 
-    Tuile(NomTuile nomTuile, EtatTuile etat, int num_Tuile) {
+    Tuile(NomTuile nomTuile, EtatTuile etat) {
         this.nomTuile = nomTuile;
         this.etat = etat;
         aSurTuile = new ArrayList<Aventurier>();
-        this.num_Tuile = num_Tuile;
     }
 
     public EtatTuile getEtat() {
         return this.etat;
     }
 
-    public int getNumTuile() {
-        return this.num_Tuile;
-    }
 
     /**
      *
@@ -69,30 +64,35 @@ public class Tuile {
     }
 
     public int getCol(Grille g) {
-        int col = 0;
-        int lig = 0;
+        int col = -1;
+        int lig = -1;
         boolean found = false;
-        while (lig < 6 && !found) {
-            col = 0;
-            while (col < 6 && !found) {
-                found = this == g.getTuile(lig,col)/*[lig][col]*/;
-                col++;
-            }
+        while (lig < 5 && !found) {
             lig++;
+            col = -1;
+            while (col < 5 && !found) {
+                col++;
+                found = this == g.getTuile(lig,col)/*[lig][col]*/;
+
+            }
+
         }
         return col;
     }
 
     public int getLig(Grille g) {
-        int lig = 0;
+        int col = -1;
+        int lig = -1;
         boolean found = false;
-        while (lig < 6 && !found) {
-            int col = 0;
-            while (col < 6 && !found) {
-                found = this == g.getTuile(lig,col)/*[lig][col]*/;
-                col++;
-            }
+        while (lig < 5 && !found) {
             lig++;
+            col = -1;
+            while (col < 5 && !found) {
+                col++;
+                found = this == g.getTuile(lig,col)/*[lig][col]*/;
+
+            }
+
         }
         return lig;
     }
