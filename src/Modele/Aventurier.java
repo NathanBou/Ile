@@ -1,5 +1,6 @@
 package Modele;
 
+import Modele.Utils.EtatTuile;
 import java.util.ArrayList;
 
 public abstract class Aventurier {
@@ -100,15 +101,18 @@ public abstract class Aventurier {
     public ArrayList<Tuile> getTuilesAccessibles(Grille g) {
         // TODO - implement Aventurier.TuilesAccessibles
         ArrayList<Tuile> tuilesAccessibles = new ArrayList();
-        tuilesAccessibles = getTuilesAssechees(tuilesAdjacentes);
+        for(Tuile tuile : getTuilesAdjacentes(g)) {
+            if (tuile.getEtat()!=EtatTuile.COULEE) {
+                tuilesAccessibles.add(tuile);
+            }
+        }
         return tuilesAccessibles;
-
     }
 
     public ArrayList<Tuile> getTuilesInondees(Grille g) {
         ArrayList<Tuile> tuilesInondees = new ArrayList();
         for (Tuile tuile : tuilesAdjacentes) {
-            if (tuile.getEtat() == Utils.EtatTuile.INONDEE) {
+            if (tuile.getEtat() == EtatTuile.INONDEE) {
                 tuilesInondees.add(tuile);
             }
         }
