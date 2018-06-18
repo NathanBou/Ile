@@ -51,11 +51,6 @@ public class Controleur implements Observateur {
                 System.out.println("Clic sur Deplacer");
                 System.out.println(joueurCourant);
                 joueurCourant.setNbAction(joueurCourant.getNbAction() + 1);
-                System.out.println(joueurCourant.getNbAction());
-                System.out.println(joueurCourant.getTuilesAccessibles(grille));
-                System.out.println(joueurCourant.getTuilesAdjacentes(grille));
-                System.out.println(joueurCourant.getEstSurTuile().getLig(grille));
-                System.out.println(joueurCourant.getEstSurTuile().getCol(grille));
                 vue.afficherTuileAccessible(joueurCourant.getTuilesAccessibles(grille),grille);
                 break;
             case FINIRTOUR:
