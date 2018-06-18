@@ -36,6 +36,8 @@ public class Controleur implements Observateur {
     private ArrayList<CTresor> defausseCarte;
     private Aventurier joueurCourant;
     private boolean gagner;
+    private boolean deplacement;
+    private boolean assechement;
     private int nbTour;
 
     public Controleur(Vue vue, Grille grille) {
@@ -52,14 +54,21 @@ public class Controleur implements Observateur {
                 System.out.println(joueurCourant);
                 joueurCourant.setNbAction(joueurCourant.getNbAction() + 1);
                 vue.afficherTuileAccessible(joueurCourant.getTuilesAccessibles(grille));
+                deplacement = true;
                 break;
-            case DEPLACEMENTCOOR:
-                System.out.println("Clic sur tuile choisi pour deplacement");
-                System.out.println(joueurCourant.getEstSurTuile());
-                Tuile tuileAvantDeplacement = joueurCourant.getEstSurTuile();
-                joueurCourant.deplacement(grille.getTuile(m.lig, m.col));
-                vue.afficherDeplacement(m.lig,m.col, joueurCourant,tuileAvantDeplacement);
-                System.out.println(joueurCourant.getEstSurTuile());
+            case COORDONNEE:
+                if (deplacement) {
+                    System.out.println("Clic sur tuile choisi pour deplacement");
+                    Tuile tuileAvantDeplacement = joueurCourant.getEstSurTuile();
+                    joueurCourant.deplacement(grille.getTuile(m.lig, m.col));
+                    vue.afficherDeplacement(m.lig, m.col, joueurCourant, tuileAvantDeplacement);
+                    deplacement =false;
+                }else if(assechement){
+                    System.out.println("Clic sur tuile choisi pour assechement");
+                    vue.assecherTuile(m.lig, m.col);
+                    assechement = false;
+                }
+
             case FINIRTOUR:
                 System.out.println("Clic sur FINTOUR");
                 joueurCourant.finTour();
@@ -68,6 +77,7 @@ public class Controleur implements Observateur {
                 System.out.println("Clic sur ASSECHER");
                 joueurCourant.setNbAction(joueurCourant.getNbAction() + 1);
                 vue.afficherTuileAssechable(joueurCourant.getTuilesInondees(grille));
+                assechement = true;
                 break;
             case INITIALISATIONGRILLE:
                 System.out.println("INITIALISATION");
@@ -76,38 +86,38 @@ public class Controleur implements Observateur {
                     if (joueur == NomRole.EXPLORATEUR && joueurs.size() < 4) {
                         Explorateur explorateur = new Explorateur();
                         joueurs.add(explorateur);
-                        explorateur.setApparition(grille.getTuile(2,4));
-                        grille.getTuile(2,4).estSurTuile(explorateur);
+                        explorateur.setApparition(grille.getTuile(2, 4));
+                        grille.getTuile(2, 4).estSurTuile(explorateur);
                         System.out.println("EXPLORATEUR");
                     } else if (joueur == NomRole.PLONGEUR && joueurs.size() < 4) {
                         Plongeur plongeur = new Plongeur();
                         joueurs.add(plongeur);
-                        plongeur.setApparition(grille.getTuile(1,2));
-                        grille.getTuile(1,2).estSurTuile(plongeur);
+                        plongeur.setApparition(grille.getTuile(1, 2));
+                        grille.getTuile(1, 2).estSurTuile(plongeur);
                         System.out.println("PLONGEUR");
                     } else if (joueur == NomRole.INGENIEUR && joueurs.size() < 4) {
                         Ingenieur ingenieur = new Ingenieur();
                         joueurs.add(ingenieur);
-                        ingenieur.setApparition(grille.getTuile(0,3));
-                        grille.getTuile(0,3).estSurTuile(ingenieur);
+                        ingenieur.setApparition(grille.getTuile(0, 3));
+                        grille.getTuile(0, 3).estSurTuile(ingenieur);
                         System.out.println("INGENIEUR");
                     } else if (joueur == NomRole.MESSAGER && joueurs.size() < 4) {
                         Messager messager = new Messager();
                         joueurs.add(messager);
-                        messager.setApparition(grille.getTuile(2,1));
-                        grille.getTuile(2,1).estSurTuile(messager);
+                        messager.setApparition(grille.getTuile(2, 1));
+                        grille.getTuile(2, 1).estSurTuile(messager);
                         System.out.println("MESSAGER");
                     } else if (joueur == NomRole.NAVIGATEUR && joueurs.size() < 4) {
                         Navigateur navigateur = new Navigateur();
                         joueurs.add(navigateur);
-                        navigateur.setApparition(grille.getTuile(1,3));
-                        grille.getTuile(1,3).estSurTuile(navigateur);
+                        navigateur.setApparition(grille.getTuile(1, 3));
+                        grille.getTuile(1, 3).estSurTuile(navigateur);
                         System.out.println("NAVIGATEUR");
                     } else if (joueur == NomRole.PILOTE && joueurs.size() < 4) {
                         Pilote pilote = new Pilote();
                         joueurs.add(pilote);
-                        pilote.setApparition(grille.getTuile(2,3));
-                        grille.getTuile(2,3).estSurTuile(pilote);
+                        pilote.setApparition(grille.getTuile(2, 3));
+                        grille.getTuile(2, 3).estSurTuile(pilote);
                         System.out.println("PILOTE");
                     }
                 }
@@ -120,7 +130,7 @@ public class Controleur implements Observateur {
                 for (Aventurier joueur : joueurs) {
                     tourDeJeu(joueur);
                 }
-                
+
                 break;
         }
 
@@ -155,16 +165,15 @@ public class Controleur implements Observateur {
     }
 
     public void tourDeJeu(Aventurier joueur) {
-            
-                System.out.println("Tour numero :" + nbTour);
-                joueur.debutTour();
-                joueurCourant = joueur;
-                vue.afficherEtatJeu(nbTour, nbTour, joueur.getRole().getNomRole().toString());
-                if (joueur.getNbAction() == 3) {
-                    joueur.finTour();
-                }
-                nbTour++;
+
+        System.out.println("Tour numero :" + nbTour);
+        joueur.debutTour();
+        joueurCourant = joueur;
+        vue.afficherEtatJeu(nbTour, nbTour, joueur.getRole().getNomRole().toString());
+        if (joueur.getNbAction() == 3) {
+            joueur.finTour();
+        }
+        nbTour++;
     }
-    
 
 }

@@ -14,6 +14,5 @@ public enum TypesMessage {
     FINIRTOUR,
     DEPLACER,
     ASSECHER,
-    DEPLACEMENTCOOR,
-    ASSECHERCOOR;
+    COORDONNEE;
 }

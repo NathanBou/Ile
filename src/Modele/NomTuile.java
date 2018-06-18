@@ -34,7 +34,7 @@ public enum NomTuile {
     TEMPLESOLEIL("Temple du Soleil",19),
     TEMPLELUNE("Temple de la Lune",20),
     PALAISMAREES("Palais des Marees",21),
-    VALCREPUSCULE("Cal du Crepuscule",22),
+    VALCREPUSCULE("Val du Crepuscule",22),
     TOURDEGUET("Tour de Guet",23),
     JARDINMURMURES("Jardin des Murmures",24);
         

@@ -170,12 +170,12 @@ public class Vue implements Observe {
                             tabTuile[i][k] = bTuile;
                             bTuile.setText(grille.getTuile(i, k).getNomTuile().toString());
                             if (grille.getTuile(i, k).getEtat() == Utils.EtatTuile.COULEE) {
-                                bTuile.setBackground(Color.BLUE);
+                                bTuile.setBackground(Color.lightGray);
                             } else if (grille.getTuile(i, k).getEtat() == Utils.EtatTuile.INONDEE) {
-                                bTuile.setBackground(Color.YELLOW);
+                                bTuile.setBackground(new Color(30, 127, 203));
                             }
                             if (!grille.getTuile(i, k).getASurTuile().isEmpty()) {
-                                bTuile.setBorder(BorderFactory.createLineBorder(grille.getTuile(i, k).getASurTuile().get(0).getRole().getCouleur().getCouleur()));
+                                bTuile.setBorder(BorderFactory.createLineBorder(grille.getTuile(i, k).getASurTuile().get(0).getRole().getCouleur().getCouleur(),4));
                             }
 
                             bTuile.setEnabled(false);
@@ -185,7 +185,7 @@ public class Vue implements Observe {
                                     new ActionListener() {
                                 @Override
                                 public void actionPerformed(ActionEvent e) {
-                                    Message m = new Message(TypesMessage.DEPLACEMENTCOOR);
+                                    Message m = new Message(TypesMessage.COORDONNEE);
                                     m.setLig(bTuile.lig_cellule);
                                     m.setCol(bTuile.col_cellule);
                                     notifierObservateur(m);
@@ -307,10 +307,10 @@ public class Vue implements Observe {
             }
         }
     }
-
+    
     public void afficherDeplacement(int lig, int col, Aventurier joueur, Tuile tuileAvantDeplacement) {
         tabTuile[tuileAvantDeplacement.getLig()][tuileAvantDeplacement.getCol()].setBorder((BorderFactory.createLineBorder(Color.LIGHT_GRAY)));
-        tabTuile[lig][col].setBorder(BorderFactory.createLineBorder(joueur.getRole().getCouleur().getCouleur()));
+        tabTuile[lig][col].setBorder(BorderFactory.createLineBorder(joueur.getRole().getCouleur().getCouleur(),4));
         for (int i = 0; i < 6; i++) {
             for (int k = 0; k < 6; k++) {
                 tabTuile[i][k].setEnabled(false);
@@ -319,8 +319,8 @@ public class Vue implements Observe {
         }
     }
 
-    public void changerEtatTuile(int lig, int col, EtatTuile etat) {
-
+    public void assecherTuile(int lig, int col) {
+        tabTuile[lig][col].setBackground(null);
     }
 
     public void afficherTuileAssechable(ArrayList<Tuile> tuilesInondees) {
