@@ -43,6 +43,10 @@ public class Vue implements Observe {
     private JLabel niveau = new JLabel("", SwingConstants.CENTER);
     private JLabel joueur = new JLabel("", SwingConstants.CENTER);
     private JButton[][] tabTuile;
+    private JButton prendreTresor;
+    private JButton donnerCarte;
+    private JButton deplacer;
+    private JButton assecher;
 
     public Vue() {
         fenetreInit.setTitle("L 'ILE INTERDITE INITIALISATION");
@@ -238,9 +242,9 @@ public class Vue implements Observe {
                         });
 
                     } else if (v == 1) {
-                        JButton d = new JButton("Se déplacer");
-                        d.setPreferredSize(new Dimension(40, 25));
-                        d.addActionListener(
+                        deplacer = new JButton("Se déplacer");
+                        deplacer.setPreferredSize(new Dimension(40, 25));
+                        deplacer.addActionListener(
                                 new ActionListener() {
                             @Override
                             public void actionPerformed(ActionEvent e) {
@@ -248,12 +252,12 @@ public class Vue implements Observe {
                                 notifierObservateur(m);
                             }
                         });
-                        panelGrilleBouton.add(d);
+                        panelGrilleBouton.add(deplacer);
 
                     } else if (v == 2) {
-                        JButton a = new JButton("Assécher");
-                        a.setPreferredSize(new Dimension(40, 25));
-                        a.addActionListener(
+                        assecher = new JButton("Assécher");
+                        assecher.setPreferredSize(new Dimension(40, 25));
+                        assecher.addActionListener(
                                 new ActionListener() {
                             @Override
                             public void actionPerformed(ActionEvent e) {
@@ -261,15 +265,15 @@ public class Vue implements Observe {
                                 notifierObservateur(m);
                             }
                         });
-                        panelGrilleBouton.add(a);
+                        panelGrilleBouton.add(assecher);
                     } else if (v == 3) {
-                        JButton dn = new JButton("Donner une carte");
-                        dn.setPreferredSize(new Dimension(40, 25));
-                        panelGrilleBouton.add(dn);
+                        donnerCarte = new JButton("Donner une carte");
+                        donnerCarte.setPreferredSize(new Dimension(40, 25));
+                        panelGrilleBouton.add(donnerCarte);
                     } else if (v == 4) {
-                        JButton p = new JButton("Prendre trésor");
-                        p.setPreferredSize(new Dimension(40, 25));
-                        panelGrilleBouton.add(p);
+                        prendreTresor = new JButton("Prendre trésor");
+                        prendreTresor.setPreferredSize(new Dimension(40, 25));
+                        panelGrilleBouton.add(prendreTresor);
                     }
 
                 }
@@ -330,7 +334,12 @@ public class Vue implements Observe {
             }
         }
     }
-
+    public void afficherFinTour(){
+        deplacer.setEnabled(false);
+        assecher.setEnabled(false);
+        prendreTresor.setEnabled(false);
+        donnerCarte.setEnabled(false);
+    }
     public void afficherEtatJeu(int nbTour, int nivEau, String nomJoueur) {
         tour.setText("Tour numero :" + nbTour);
         niveau.setText("Niveau d'eau :" + nivEau);

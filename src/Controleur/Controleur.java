@@ -55,6 +55,9 @@ public class Controleur implements Observateur {
                 System.out.println(joueurCourant);
                 joueurCourant.setNbAction(joueurCourant.getNbAction() + 1);
                 vue.afficherTuileAccessible(joueurCourant.getTuilesAccessibles(grille));
+                if (joueurCourant.getNbAction()==3){
+                    vue.afficherFinTour();
+                }
                 deplacement = true;
                 break;
             case COORDONNEE:
@@ -82,6 +85,9 @@ public class Controleur implements Observateur {
                 System.out.println("Clic sur ASSECHER");
                 joueurCourant.setNbAction(joueurCourant.getNbAction() + 1);
                 vue.afficherTuileAssechable(joueurCourant.getTuilesInondees(grille));
+                if (joueurCourant.getNbAction()==3){
+                    vue.afficherFinTour();
+                }
                 assechement = true;
                 break;
             case INITIALISATIONGRILLE:
