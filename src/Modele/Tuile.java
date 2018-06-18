@@ -67,38 +67,12 @@ public class Tuile {
         return this.nomTuile.toString();
     }
 
-    public int getCol(Grille g) {
-       /* int col = -1;
-        int lig = -1;
-        boolean found = false;
-        while (lig < 5 && !found) {
-            lig++;
-            col = -1;
-            while (col < 5 && !found) {
-                col++;
-                found = this == g.getTuile(lig,col)/*[lig][col];
-
-            }
-
-        }*/
+    public int getCol() {
         return this.col;
     }
 
-    public int getLig(Grille g) {
-       /* int col = -1;
-        int lig = -1;
-        boolean found = false;
-        while (lig < 5 && !found) {
-            lig++;
-            col = -1;
-            while (col < 5 && !found) {
-                col++;
-                found = this == g.getTuile(lig,col)/*[lig][col];
-
-            }
-
-        }*/
+    public int getLig() {
         return this.lig;
     }
-
+    
 }

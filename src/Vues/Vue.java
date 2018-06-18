@@ -181,6 +181,16 @@ public class Vue implements Observe {
                             bTuile.setEnabled(false);
                             bTuile.setFont(new Font("Dialog", Font.BOLD, 10));
                             bTuile.setPreferredSize(new Dimension(118, 118));
+                            bTuile.addActionListener(
+                                    new ActionListener() {
+                                @Override
+                                public void actionPerformed(ActionEvent e) {
+                                    Message m = new Message(TypesMessage.DEPLACEMENTCOOR);
+                                    m.setLig(bTuile.lig_cellule);
+                                    m.setCol(bTuile.col_cellule);
+                                    notifierObservateur(m);
+                                }
+                            });
                             panelGrilleTuile.add(bTuile);
                         }
                     }
@@ -285,11 +295,11 @@ public class Vue implements Observe {
         joueur.setText("Joueur :" + nomJoueur);
     }
 
-    public void afficherTuileAccessible(ArrayList<Tuile> tuilesAccessibles, Grille g) {
+    public void afficherTuileAccessible(ArrayList<Tuile> tuilesAccessibles) {
         for (Tuile tuile : tuilesAccessibles) {
             for (int i = 0; i < 6; i++) {
                 for (int k = 0; k < 6; k++) {
-                    if (i == tuile.getLig(g) && k == tuile.getCol(g)) {
+                    if (i == tuile.getLig() && k == tuile.getCol()) {
                         tabTuile[i][k].setEnabled(true);
                     }
                 }
@@ -298,19 +308,26 @@ public class Vue implements Observe {
         }
     }
 
-    public void afficherDeplacement(Aventurier joueur) {
+    public void afficherDeplacement(int lig, int col, Aventurier joueur, Tuile tuileAvantDeplacement) {
+        tabTuile[tuileAvantDeplacement.getLig()][tuileAvantDeplacement.getCol()].setBorder((BorderFactory.createLineBorder(Color.LIGHT_GRAY)));
+        tabTuile[lig][col].setBorder(BorderFactory.createLineBorder(joueur.getRole().getCouleur().getCouleur()));
+        for (int i = 0; i < 6; i++) {
+            for (int k = 0; k < 6; k++) {
+                tabTuile[i][k].setEnabled(false);
+            }
+
+        }
+    }
+
+    public void changerEtatTuile(int lig, int col, EtatTuile etat) {
 
     }
 
-    public void changerEtatTuile(int num_Tuile, EtatTuile etat) {
-
-    }
-
-    public void afficherTuileAssechable(ArrayList<Tuile> tuilesInondees, Grille g) {
+    public void afficherTuileAssechable(ArrayList<Tuile> tuilesInondees) {
         for (Tuile tuile : tuilesInondees) {
             for (int i = 0; i < 6; i++) {
                 for (int k = 0; k < 6; k++) {
-                    if (i == tuile.getLig(g) && k == tuile.getCol(g)) {
+                    if (i == tuile.getLig() && k == tuile.getCol()) {
                         tabTuile[i][k].setEnabled(true);
                     }
                 }

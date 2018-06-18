@@ -14,7 +14,7 @@ public abstract class Aventurier {
 
     Aventurier(Role role) {
         this.role = role;
-        //ArrayList<Tuile> tuilesAdjacentes = new ArrayList<>();
+        this.tuilesAdjacentes = new ArrayList<>();
     }
 
     public int getNbCarte() {
@@ -47,13 +47,12 @@ public abstract class Aventurier {
      */
     public void deplacement(Tuile tuile) {
         // TODO - implement Aventurier.deplacement
-        if (nbAction >= 3) {
-            System.out.println("Deplacement impossible, nombre d'actions disponibles insuffisants.");
-        } else {
-            this.getEstSurTuile().estPlusSurTuile(this);
-            tuile.getASurTuile().add(this);
-            nbAction++;
-        }
+
+        this.getEstSurTuile().estPlusSurTuile(this);
+        this.setEstSurTuile(tuile);
+        tuile.getASurTuile().add(this);
+        nbAction++;
+
     }
 
     /**
@@ -112,7 +111,7 @@ public abstract class Aventurier {
 
     public ArrayList<Tuile> getTuilesInondees(Grille g) {
         ArrayList<Tuile> tuilesInondees = new ArrayList();
-        tuilesAdjacentes=getTuilesAdjacentes(g);
+        tuilesAdjacentes = getTuilesAdjacentes(g);
         for (Tuile tuile : tuilesAdjacentes) {
             if (tuile.getEtat() == EtatTuile.INONDEE) {
                 tuilesInondees.add(tuile);
@@ -122,21 +121,19 @@ public abstract class Aventurier {
     }
 
     public ArrayList<Tuile> getTuilesAdjacentes(Grille g) {
-        // tuilesAdjacentes.clear();
-        //tuilesAdjacentes.add(g.getTuiles()[this.getEstSurTuile().getLig(g) + 1][this.getEstSurTuile().getCol(g)]);
-        ArrayList<Tuile> tuilesAdjacentes = new ArrayList<>();
-        tuilesAdjacentes.add(g.getTuile(this.getEstSurTuile().getLig(g) + 1 >5 ? 5 : this.getEstSurTuile().getLig(g) + 1, this.getEstSurTuile().getCol(g)));
-        tuilesAdjacentes.add(g.getTuile(this.getEstSurTuile().getLig(g) - 1 <0 ? 0 : this.getEstSurTuile().getLig(g) - 1, this.getEstSurTuile().getCol(g)));
-        tuilesAdjacentes.add(g.getTuile(this.getEstSurTuile().getLig(g), this.getEstSurTuile().getCol(g) + 1 >5 ? 5 : this.getEstSurTuile().getCol(g) + 1));
-        tuilesAdjacentes.add(g.getTuile(this.getEstSurTuile().getLig(g), this.getEstSurTuile().getCol(g) - 1 <0 ? 0 : this.getEstSurTuile().getCol(g) - 1));
+        tuilesAdjacentes.clear();
+        tuilesAdjacentes.add(g.getTuile(this.getEstSurTuile().getLig() + 1 > 5 ? 5 : this.getEstSurTuile().getLig() + 1, this.getEstSurTuile().getCol()));
+        tuilesAdjacentes.add(g.getTuile(this.getEstSurTuile().getLig() - 1 < 0 ? 0 : this.getEstSurTuile().getLig() - 1, this.getEstSurTuile().getCol()));
+        tuilesAdjacentes.add(g.getTuile(this.getEstSurTuile().getLig(), this.getEstSurTuile().getCol() + 1 > 5 ? 5 : this.getEstSurTuile().getCol() + 1));
+        tuilesAdjacentes.add(g.getTuile(this.getEstSurTuile().getLig(), this.getEstSurTuile().getCol() - 1 < 0 ? 0 : this.getEstSurTuile().getCol() - 1));
         return tuilesAdjacentes;
     }
 
     public ArrayList<Tuile> getTuilesAdjacentes(Grille g, Tuile t) {
-        tuilesAdjacentes.add(g.getTuiles()[t.getLig(g) + 1][t.getCol(g)]);
-        tuilesAdjacentes.add(g.getTuiles()[t.getLig(g) - 1][t.getCol(g)]);
-        tuilesAdjacentes.add(g.getTuiles()[t.getLig(g)][t.getCol(g) + 1]);
-        tuilesAdjacentes.add(g.getTuiles()[t.getLig(g)][t.getCol(g) - 1]);
+        tuilesAdjacentes.add(g.getTuiles()[t.getLig() + 1][t.getCol()]);
+        tuilesAdjacentes.add(g.getTuiles()[t.getLig() - 1][t.getCol()]);
+        tuilesAdjacentes.add(g.getTuiles()[t.getLig()][t.getCol() + 1]);
+        tuilesAdjacentes.add(g.getTuiles()[t.getLig()][t.getCol() - 1]);
         return tuilesAdjacentes;
 
     }

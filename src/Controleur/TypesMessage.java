@@ -13,5 +13,7 @@ public enum TypesMessage {
     INITIALISATIONGRILLE,
     FINIRTOUR,
     DEPLACER,
-    ASSECHER;
+    ASSECHER,
+    DEPLACEMENTCOOR,
+    ASSECHERCOOR;
 }
