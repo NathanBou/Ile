@@ -120,7 +120,7 @@ public abstract class Aventurier {
     }
 
     public ArrayList<Tuile> getTuilesAdjacentes(Grille g) {
-        tuilesAdjacentes.clear();
+       // tuilesAdjacentes.clear();
         tuilesAdjacentes.add(g.getTuiles()[this.getEstSurTuile().getLig(g) + 1][this.getEstSurTuile().getCol(g)]);
         tuilesAdjacentes.add(g.getTuiles()[this.getEstSurTuile().getLig(g) - 1][this.getEstSurTuile().getCol(g)]);
         tuilesAdjacentes.add(g.getTuiles()[this.getEstSurTuile().getLig(g)][this.getEstSurTuile().getCol(g) + 1]);

@@ -69,38 +69,38 @@ public class Controleur implements Observateur {
                     if (joueur == NomRole.EXPLORATEUR && joueurs.size() < 4) {
                         Explorateur explorateur = new Explorateur();
                         joueurs.add(explorateur);
-                        explorateur.setApparition(grille.getTuiles().get(16));
-                        grille.getTuiles().get(16).estSurTuile(explorateur);
+                        explorateur.setApparition(grille.getTuile(2,4));
+                        grille.getTuile(2,4).estSurTuile(explorateur);
                         System.out.println("EXPLORATEUR");
                     } else if (joueur == NomRole.PLONGEUR && joueurs.size() < 4) {
                         Plongeur plongeur = new Plongeur();
                         joueurs.add(plongeur);
-                        plongeur.setApparition(grille.getTuiles().get(8));
-                        grille.getTuiles().get(8).estSurTuile(plongeur);
+                        plongeur.setApparition(grille.getTuile(1,2));
+                        grille.getTuile(1,2).estSurTuile(plongeur);
                         System.out.println("PLONGEUR");
                     } else if (joueur == NomRole.INGENIEUR && joueurs.size() < 4) {
                         Ingenieur ingenieur = new Ingenieur();
                         joueurs.add(ingenieur);
-                        ingenieur.setApparition(grille.getTuiles().get(3));
-                        grille.getTuiles().get(3).estSurTuile(ingenieur);
+                        ingenieur.setApparition(grille.getTuile(0,3));
+                        grille.getTuile(0,3).estSurTuile(ingenieur);
                         System.out.println("INGENIEUR");
                     } else if (joueur == NomRole.MESSAGER && joueurs.size() < 4) {
                         Messager messager = new Messager();
                         joueurs.add(messager);
-                        messager.setApparition(grille.getTuiles().get(13));
-                        grille.getTuiles().get(13).estSurTuile(messager);
+                        messager.setApparition(grille.getTuile(2,1));
+                        grille.getTuile(2,1).estSurTuile(messager);
                         System.out.println("MESSAGER");
                     } else if (joueur == NomRole.NAVIGATEUR && joueurs.size() < 4) {
                         Navigateur navigateur = new Navigateur();
                         joueurs.add(navigateur);
-                        navigateur.setApparition(grille.getTuiles().get(9));
-                        grille.getTuiles().get(9).estSurTuile(navigateur);
+                        navigateur.setApparition(grille.getTuile(1,3));
+                        grille.getTuile(1,3).estSurTuile(navigateur);
                         System.out.println("NAVIGATEUR");
                     } else if (joueur == NomRole.PILOTE && joueurs.size() < 4) {
                         Pilote pilote = new Pilote();
                         joueurs.add(pilote);
-                        pilote.setApparition(grille.getTuiles().get(15));
-                        grille.getTuiles().get(15).estSurTuile(pilote);
+                        pilote.setApparition(grille.getTuile(2,3));
+                        grille.getTuile(2,3).estSurTuile(pilote);
                         System.out.println("PILOTE");
                     }
                 }

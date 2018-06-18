@@ -61,4 +61,7 @@ public class Grille {
         return tuiles;
 
     }
+    public Tuile getTuile(int i, int j){
+        return tuiles[i][j];
+    }
 }
