@@ -72,10 +72,10 @@ public class Tuile {
         int col = 0;
         int lig = 0;
         boolean found = false;
-        while (lig < 5 | !found) {
+        while (lig < 6 && !found) {
             col = 0;
-            while (col < 5 | !found) {
-                found = this == g.getTuiles()[lig][col];
+            while (col < 6 && !found) {
+                found = this == g.getTuile(lig,col)/*[lig][col]*/;
                 col++;
             }
             lig++;
@@ -86,10 +86,10 @@ public class Tuile {
     public int getLig(Grille g) {
         int lig = 0;
         boolean found = false;
-        while (lig < 5 | !found) {
+        while (lig < 6 && !found) {
             int col = 0;
-            while (col < 5 | !found) {
-                found = this == g.getTuiles()[lig][col];
+            while (col < 6 && !found) {
+                found = this == g.getTuile(lig,col)/*[lig][col]*/;
                 col++;
             }
             lig++;

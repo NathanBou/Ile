@@ -14,7 +14,7 @@ public abstract class Aventurier {
 
     Aventurier(Role role) {
         this.role = role;
-        ArrayList<Tuile> tuilesAdjacentes = new ArrayList<>();
+        //ArrayList<Tuile> tuilesAdjacentes = new ArrayList<>();
     }
 
     public int getNbCarte() {
@@ -101,7 +101,8 @@ public abstract class Aventurier {
     public ArrayList<Tuile> getTuilesAccessibles(Grille g) {
         // TODO - implement Aventurier.TuilesAccessibles
         ArrayList<Tuile> tuilesAccessibles = new ArrayList();
-        for(Tuile tuile : getTuilesAdjacentes(g)) {
+        tuilesAdjacentes=getTuilesAdjacentes(g);
+        for(Tuile tuile : tuilesAdjacentes) {
             if (tuile.getEtat()!=EtatTuile.COULEE) {
                 tuilesAccessibles.add(tuile);
             }
@@ -121,7 +122,9 @@ public abstract class Aventurier {
 
     public ArrayList<Tuile> getTuilesAdjacentes(Grille g) {
        // tuilesAdjacentes.clear();
-        tuilesAdjacentes.add(g.getTuiles()[this.getEstSurTuile().getLig(g) + 1][this.getEstSurTuile().getCol(g)]);
+        //tuilesAdjacentes.add(g.getTuiles()[this.getEstSurTuile().getLig(g) + 1][this.getEstSurTuile().getCol(g)]);
+        ArrayList<Tuile> tuilesAdjacentes = new ArrayList<>();
+        tuilesAdjacentes.add(g.getTuile(this.getEstSurTuile().getLig(g) + 1, this.getEstSurTuile().getCol(g)));
         tuilesAdjacentes.add(g.getTuiles()[this.getEstSurTuile().getLig(g) - 1][this.getEstSurTuile().getCol(g)]);
         tuilesAdjacentes.add(g.getTuiles()[this.getEstSurTuile().getLig(g)][this.getEstSurTuile().getCol(g) + 1]);
         tuilesAdjacentes.add(g.getTuiles()[this.getEstSurTuile().getLig(g)][this.getEstSurTuile().getCol(g) - 1]);

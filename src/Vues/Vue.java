@@ -42,7 +42,7 @@ public class Vue implements Observe {
     private JLabel tour = new JLabel("", SwingConstants.CENTER);
     private JLabel niveau = new JLabel("", SwingConstants.CENTER);
     private JLabel joueur = new JLabel("", SwingConstants.CENTER);
-    private JButton[] tabTuile;
+    private JButton[][] tabTuile;
 
     public Vue() {
         fenetreInit.setTitle("L 'ILE INTERDITE INITIALISATION");
@@ -158,23 +158,24 @@ public class Vue implements Observe {
         for (int j = 0; j <= 1; j++) {
             if (j == 0) {
                 JPanel panelGrilleTuile = new JPanel(new GridLayout(6, 6, 2, 2)); //Grille
-                tabTuile = new JButton[36];
+                tabTuile = new JButton[6][6];
                 for (int i = 0; i < 6; i++) {
                     for (int k = 0; k < 6; k++) {
-                        if (grille.getTuile(i,k).getNomTuile()== NomTuile.BORDURE){
+                        if (grille.getTuile(i, k).getNomTuile() == NomTuile.BORDURE) {
                             panelGrilleTuile.add(new JLabel("", SwingConstants.CENTER));
-                            CelluleTuile tuile = new CelluleTuile(i);
-
+                            CelluleTuile tuile = new CelluleTuile(i,k);
+                            tabTuile[i][k]=tuile;
                         } else {
-                            CelluleTuile bTuile = new CelluleTuile(i);
+                            CelluleTuile bTuile = new CelluleTuile(i,k);
+                            tabTuile[i][k]=bTuile;
                             bTuile.setText(grille.getTuile(i, k).getNomTuile().toString());
-                            if (grille.getTuile(i,k).getEtat() == Utils.EtatTuile.COULEE) {
+                            if (grille.getTuile(i, k).getEtat() == Utils.EtatTuile.COULEE) {
                                 bTuile.setBackground(Color.BLUE);
-                            } else if (grille.getTuile(i,k).getEtat() == Utils.EtatTuile.INONDEE) {
+                            } else if (grille.getTuile(i, k).getEtat() == Utils.EtatTuile.INONDEE) {
                                 bTuile.setBackground(Color.YELLOW);
                             }
-                            if (!grille.getTuile(i,k).getASurTuile().isEmpty()) {
-                                bTuile.setBorder(BorderFactory.createLineBorder(grille.getTuile(i,k).getASurTuile().get(0).getRole().getCouleur().getCouleur()));
+                            if (!grille.getTuile(i, k).getASurTuile().isEmpty()) {
+                                bTuile.setBorder(BorderFactory.createLineBorder(grille.getTuile(i, k).getASurTuile().get(0).getRole().getCouleur().getCouleur()));
                             }
 
                             bTuile.setEnabled(false);
@@ -284,12 +285,15 @@ public class Vue implements Observe {
         joueur.setText("Joueur :" + nomJoueur);
     }
 
-    public void afficherTuileAccessible(ArrayList<Tuile> tuilesAccessibles) {
+    public void afficherTuileAccessible(ArrayList<Tuile> tuilesAccessibles,Grille g) {
         for (Tuile tuile : tuilesAccessibles) {
-            for (int i = 0; i < 36; i++) {
-                if (i == tuile.getNumTuile()) {
-                    tabTuile[i].setEnabled(true);
+            for (int i = 0; i < 6; i++) {
+                for (int k = 0; k < 6; k++) {
+                    if (i==tuile.getLig(g) && k== tuile.getCol(g)) {
+                        tabTuile[i][k].setEnabled(true);
+                    }
                 }
+
             }
         }
     }

@@ -49,9 +49,14 @@ public class Controleur implements Observateur {
         switch (m.type) {
             case DEPLACER:
                 System.out.println("Clic sur Deplacer");
+                System.out.println(joueurCourant);
                 joueurCourant.setNbAction(joueurCourant.getNbAction() + 1);
                 System.out.println(joueurCourant.getNbAction());
-                vue.afficherTuileAccessible(joueurCourant.getTuilesAccessibles(grille));
+                System.out.println(joueurCourant.getTuilesAccessibles(grille));
+                System.out.println(joueurCourant.getTuilesAdjacentes(grille));
+                System.out.println(joueurCourant.getEstSurTuile().getLig(grille));
+                System.out.println(joueurCourant.getEstSurTuile().getCol(grille));
+                vue.afficherTuileAccessible(joueurCourant.getTuilesAccessibles(grille),grille);
                 break;
             case FINIRTOUR:
                 System.out.println("Clic sur FINTOUR");
@@ -60,7 +65,7 @@ public class Controleur implements Observateur {
             case ASSECHER:
                 System.out.println("Clic sur ASSECHER");
                 joueurCourant.setNbAction(joueurCourant.getNbAction() + 1);
-                vue.afficherTuileAccessible(joueurCourant.getTuilesInondees(grille));
+                vue.afficherTuileAccessible(joueurCourant.getTuilesInondees(grille),grille);
                 break;
             case INITIALISATIONGRILLE:
                 System.out.println("INITIALISATION");

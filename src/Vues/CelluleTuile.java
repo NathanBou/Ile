@@ -12,8 +12,10 @@ import javax.swing.JButton;
  * @author nathan
  */
 public class CelluleTuile extends JButton {
-    public int nb_cellule;
-    public CelluleTuile(int i){
-        this.nb_cellule=i;
+    public int lig_cellule;
+    public int col_cellule;
+    public CelluleTuile(int i, int k){
+        this.lig_cellule=i;
+        this.col_cellule=k;
     }
 }
