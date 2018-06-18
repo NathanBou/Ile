@@ -175,7 +175,7 @@ public class Vue implements Observe {
                                 bTuile.setBackground(new Color(30, 127, 203));
                             }
                             if (!grille.getTuile(i, k).getASurTuile().isEmpty()) {
-                                bTuile.setBorder(BorderFactory.createLineBorder(grille.getTuile(i, k).getASurTuile().get(0).getRole().getCouleur().getCouleur(),4));
+                                bTuile.setBorder(BorderFactory.createLineBorder(grille.getTuile(i, k).getASurTuile().get(0).getRole().getCouleur().getCouleur(), 4));
                             }
 
                             bTuile.setEnabled(false);
@@ -289,12 +289,6 @@ public class Vue implements Observe {
         fenetreJeu.setVisible(true);
     }
 
-    public void afficherEtatJeu(int nbTour, int nivEau, String nomJoueur) {
-        tour.setText("Tour numero :" + nbTour);
-        niveau.setText("Niveau d'eau :" + nivEau);
-        joueur.setText("Joueur :" + nomJoueur);
-    }
-
     public void afficherTuileAccessible(ArrayList<Tuile> tuilesAccessibles) {
         for (Tuile tuile : tuilesAccessibles) {
             for (int i = 0; i < 6; i++) {
@@ -307,10 +301,10 @@ public class Vue implements Observe {
             }
         }
     }
-    
+
     public void afficherDeplacement(int lig, int col, Aventurier joueur, Tuile tuileAvantDeplacement) {
         tabTuile[tuileAvantDeplacement.getLig()][tuileAvantDeplacement.getCol()].setBorder((BorderFactory.createLineBorder(Color.LIGHT_GRAY)));
-        tabTuile[lig][col].setBorder(BorderFactory.createLineBorder(joueur.getRole().getCouleur().getCouleur(),4));
+        tabTuile[lig][col].setBorder(BorderFactory.createLineBorder(joueur.getRole().getCouleur().getCouleur(), 4));
         for (int i = 0; i < 6; i++) {
             for (int k = 0; k < 6; k++) {
                 tabTuile[i][k].setEnabled(false);
@@ -321,6 +315,7 @@ public class Vue implements Observe {
 
     public void assecherTuile(int lig, int col) {
         tabTuile[lig][col].setBackground(null);
+        tabTuile[lig][col].setEnabled(false);
     }
 
     public void afficherTuileAssechable(ArrayList<Tuile> tuilesInondees) {
@@ -334,6 +329,20 @@ public class Vue implements Observe {
 
             }
         }
+    }
+
+    public void afficherEtatJeu(int nbTour, int nivEau, String nomJoueur) {
+        tour.setText("Tour numero :" + nbTour);
+        niveau.setText("Niveau d'eau :" + nivEau);
+        joueur.setText("Joueur :" + nomJoueur);
+    }
+
+    public void afficherEtatJeu(int nbTour) {
+        tour.setText("Tour numero :" + nbTour);
+    }
+    public void afficherEtatJeu(int nbTour, String nomJoueur) {
+        tour.setText("Tour numero :" + nbTour);
+        joueur.setText("Joueur :" + nomJoueur);
     }
 
     public void addObservateur(Observateur o) {

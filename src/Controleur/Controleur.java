@@ -39,6 +39,7 @@ public class Controleur implements Observateur {
     private boolean deplacement;
     private boolean assechement;
     private int nbTour;
+    private int i = 0;
 
     public Controleur(Vue vue, Grille grille) {
         this.vue = vue;
@@ -71,6 +72,10 @@ public class Controleur implements Observateur {
 
             case FINIRTOUR:
                 System.out.println("Clic sur FINTOUR");
+                i++; 
+                joueurCourant=joueurs.get(i == joueurs.size() ? i=0 : i);
+                nbTour++;
+                vue.afficherEtatJeu(nbTour,joueurCourant.getRole().getNomRole().toString());
                 joueurCourant.finTour();
                 break;
             case ASSECHER:
@@ -127,10 +132,8 @@ public class Controleur implements Observateur {
                 vue.creeJeu(grille);
                 gagner = false;
                 nbTour = 0;
-                for (Aventurier joueur : joueurs) {
-                    tourDeJeu(joueur);
-                }
-
+                joueurCourant=joueurs.get(i);
+                vue.afficherEtatJeu(nbTour,0,joueurCourant.getRole().getNomRole().toString());
                 break;
         }
 
@@ -164,16 +167,5 @@ public class Controleur implements Observateur {
         return defausseCarte;
     }
 
-    public void tourDeJeu(Aventurier joueur) {
-
-        System.out.println("Tour numero :" + nbTour);
-        joueur.debutTour();
-        joueurCourant = joueur;
-        vue.afficherEtatJeu(nbTour, nbTour, joueur.getRole().getNomRole().toString());
-        if (joueur.getNbAction() == 3) {
-            joueur.finTour();
-        }
-        nbTour++;
-    }
 
 }

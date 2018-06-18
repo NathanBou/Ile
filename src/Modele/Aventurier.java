@@ -51,7 +51,6 @@ public abstract class Aventurier {
         this.getEstSurTuile().estPlusSurTuile(this);
         this.setEstSurTuile(tuile);
         tuile.getASurTuile().add(this);
-        nbAction++;
 
     }
 
@@ -75,12 +74,8 @@ public abstract class Aventurier {
      */
     public void assecher(Tuile tuile) {
         // TODO - implement Aventurier.assecher
-        if (nbAction >= 3) {
-            System.out.println("Assechage impossible, nombre d'actions disponibles insuffisants.");
-        } else {
             tuile.assecher();
-            nbAction++;
-        }
+       
     }
 
     /**
