@@ -217,6 +217,7 @@ public class Controleur implements Observateur {
                 }
                 
                 break;
+            
             case ANNULER:
                 System.out.println("Annuler");
                 vue.setVueBoutonsEnabled();
