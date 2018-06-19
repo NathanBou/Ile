@@ -15,5 +15,6 @@ public enum TypesMessage {
     DEPLACER,
     ASSECHER,
     COORDONNEE,
-    ANNULER;
+    ANNULER,
+    JOUERCARTE;
 }

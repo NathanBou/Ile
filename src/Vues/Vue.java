@@ -48,6 +48,10 @@ public class Vue implements Observe {
     private JButton deplacer;
     private JButton assecher;
     private JButton annuler;
+    private JPanel panelCartes1;
+    private JPanel panelCartes2;
+    private JPanel panelCartes3;
+    private JPanel panelCartes4;
 
     public Vue() {
         fenetreInit.setTitle("L 'ILE INTERDITE INITIALISATION");
@@ -227,6 +231,41 @@ public class Vue implements Observe {
                 panelInfo.add(niveau);
                 panelInfo.add(joueur);
 
+                // PanelCartes
+                JPanel panelCartes = new JPanel (new GridLayout(2,2,2,2));
+                panelCartes1 = new JPanel(new GridLayout(3,3));
+                panelCartes2 = new JPanel(new GridLayout(3,3));
+                panelCartes3 = new JPanel(new GridLayout(3,3));
+                panelCartes4 = new JPanel(new GridLayout(3,3));
+                panelCartes.add(panelCartes1);
+                panelCartes.add(panelCartes2);
+                panelCartes.add(panelCartes3);
+                panelCartes.add(panelCartes4);
+                // dessin carrés dans panelCartes1,2,3 et 4
+                for(int a=0; a<4; a++) {
+                    for(int i=0; i<9; i++){
+                        JButton carte = new JButton();
+                        carte.addActionListener(new ActionListener() {
+                            @Override
+                            public void actionPerformed(ActionEvent e) {
+                                Message m = new Message(TypesMessage.JOUERCARTE);
+                                
+                                //A compléter...
+                            }
+                        });
+                        carte.setEnabled(false);
+                        if(a==0) {
+                            panelCartes1.add(carte);
+                        } else if(a==1) {
+                            panelCartes2.add(carte);
+                        } else if (a==2) {
+                            panelCartes3.add(carte);
+                        } else if(a==3) {
+                            panelCartes4.add(carte);
+                        }
+                    }
+                }
+                
                 // Panel Centre
                 JPanel panelGrilleBouton = new JPanel(new GridLayout(2, 5));
                 for (int v = 0; v <= 5; v++) {
@@ -294,6 +333,7 @@ public class Vue implements Observe {
                 }
                 panelBouton.add(panelInfo, BorderLayout.NORTH);
                 panelBouton.add(panelGrilleBouton, BorderLayout.SOUTH);
+                panelBouton.add(panelCartes, BorderLayout.CENTER);
                 panelCentre.add(panelBouton);
 
             }
