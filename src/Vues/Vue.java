@@ -316,6 +316,16 @@ public class Vue implements Observe {
 
         }
     }
+        public void afficherDeplacement(int lig, int col, Aventurier joueur, Tuile tuileAvantDeplacement,Tuile tuileApresDeplacement) {
+        tabTuile[tuileAvantDeplacement.getLig()][tuileAvantDeplacement.getCol()].setBorder((BorderFactory.createLineBorder(Color.LIGHT_GRAY)));
+        tabTuile[tuileApresDeplacement.getLig()][tuileApresDeplacement.getCol()].setBorder(BorderFactory.createLineBorder(joueur.getRole().getCouleur().getCouleur(), 4));
+        for (int i = 0; i < 6; i++) {
+            for (int k = 0; k < 6; k++) {
+                tabTuile[i][k].setEnabled(false);
+            }
+
+        }
+    }
 
     public void assecherTuile(int lig, int col) {
         tabTuile[lig][col].setBackground(null);
@@ -339,6 +349,12 @@ public class Vue implements Observe {
         assecher.setEnabled(false);
         prendreTresor.setEnabled(false);
         donnerCarte.setEnabled(false);
+    }
+    public void afficherDebutTour(){
+        deplacer.setEnabled(true);
+        assecher.setEnabled(true);
+        prendreTresor.setEnabled(true);
+        donnerCarte.setEnabled(true);
     }
     public void afficherEtatJeu(int nbTour, int nivEau, String nomJoueur) {
         tour.setText("Tour numero :" + nbTour);

@@ -40,7 +40,7 @@ public class Grille {
         tuiles[2][5] = new Tuile(NomTuile.JARDINHURLEMENTS, EtatTuile.ASSECHEE,2,5);
         tuiles[3][0] = new Tuile(NomTuile.FORETPOURPRE, EtatTuile.ASSECHEE,3,0);
         tuiles[3][1] = new Tuile(NomTuile.LAGONPERDU, EtatTuile.INONDEE,3,1);
-        tuiles[3][2] = new Tuile(NomTuile.MARAISBRUMEUX, EtatTuile.COULEE,3,2);
+        tuiles[3][2] = new Tuile(NomTuile.MARAISBRUMEUX, EtatTuile.ASSECHEE,3,2);
         tuiles[3][3] = new Tuile(NomTuile.OBSERTVATOIRE, EtatTuile.INONDEE,3,3);
         tuiles[3][4] = new Tuile(NomTuile.ROCHERFANTOME, EtatTuile.COULEE,3,4);
         tuiles[3][5] = new Tuile(NomTuile.CAVERNEBRASIER, EtatTuile.INONDEE,3,5);

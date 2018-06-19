@@ -64,15 +64,22 @@ public class Controleur implements Observateur {
                 if (deplacement) {
                     System.out.println("Clic sur tuile choisi pour deplacement");
                     Tuile tuileAvantDeplacement = joueurCourant.getEstSurTuile();
-                    joueurCourant.deplacement(grille.getTuile(m.lig, m.col));
-                    vue.afficherDeplacement(m.lig, m.col, joueurCourant, tuileAvantDeplacement);
+                    Tuile tuileApresDeplacement = grille.getTuile(m.lig, m.col);
+                    if(tuileApresDeplacement.getASurTuile().isEmpty()){
+                        joueurCourant.deplacement(tuileApresDeplacement);
+                        vue.afficherDeplacement(m.lig, m.col, joueurCourant, tuileAvantDeplacement);
+                    }else{
+                        joueurCourant.deplacement(tuileApresDeplacement);
+                        vue.afficherDeplacement(m.lig, m.col, joueurCourant, tuileAvantDeplacement,tuileApresDeplacement);
+                    }
+                    
                     deplacement =false;
                 }else if(assechement){
                     System.out.println("Clic sur tuile choisi pour assechement");
                     vue.assecherTuile(m.lig, m.col);
                     assechement = false;
                 }
-
+                break;
             case FINIRTOUR:
                 System.out.println("Clic sur FINTOUR");
                 i++; 
@@ -80,11 +87,13 @@ public class Controleur implements Observateur {
                 nbTour++;
                 vue.afficherEtatJeu(nbTour,joueurCourant.getRole().getNomRole().toString());
                 joueurCourant.finTour();
+                vue.afficherDebutTour();
                 break;
             case ASSECHER:
                 System.out.println("Clic sur ASSECHER");
                 joueurCourant.setNbAction(joueurCourant.getNbAction() + 1);
                 vue.afficherTuileAssechable(joueurCourant.getTuilesInondees(grille));
+                System.out.println(joueurCourant.getTuilesInondees(grille));
                 if (joueurCourant.getNbAction()==3){
                     vue.afficherFinTour();
                 }
@@ -137,7 +146,7 @@ public class Controleur implements Observateur {
                 }
                 vue.creeJeu(grille);
                 gagner = false;
-                nbTour = 0;
+                nbTour = 1;
                 joueurCourant=joueurs.get(i);
                 vue.afficherEtatJeu(nbTour,0,joueurCourant.getRole().getNomRole().toString());
                 break;

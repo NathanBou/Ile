@@ -10,7 +10,6 @@ public abstract class Aventurier {
     private int nbCarte;
     private Role role;
     public ArrayList<Tuile> tuilesAdjacentes;
-    private boolean monTour = false;
 
     Aventurier(Role role) {
         this.role = role;
@@ -23,14 +22,6 @@ public abstract class Aventurier {
 
     public void setNbCarte(int nbCarte) {
         this.nbCarte = nbCarte;
-    }
-
-    public boolean isMonTour() {
-        return monTour;
-    }
-
-    public void setMonTour(boolean monTour) {
-        this.monTour = monTour;
     }
 
     public int getNbAction() {
@@ -133,10 +124,6 @@ public abstract class Aventurier {
 
     }
 
-    public void debutTour() {
-        nbAction = 0;
-        monTour = true;
-    }
 
     public Role getRole() {
         return role;
@@ -159,7 +146,7 @@ public abstract class Aventurier {
     }
 
     public void finTour() {
-        monTour = false;
+        nbAction=0;
     }
 
 }
