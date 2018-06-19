@@ -10,6 +10,7 @@ public abstract class Aventurier {
     private int nbCarte;
     private Role role;
     public ArrayList<Tuile> tuilesAdjacentes;
+    public ArrayList<CarteTirage> cartePossedees;
 
     Aventurier(Role role) {
         this.role = role;
@@ -17,11 +18,8 @@ public abstract class Aventurier {
     }
 
     public int getNbCarte() {
-        return this.nbCarte;
-    }
-
-    public void setNbCarte(int nbCarte) {
-        this.nbCarte = nbCarte;
+        nbCarte = cartePossedees.size();
+        return nbCarte;
     }
 
     public int getNbAction() {
@@ -50,13 +48,26 @@ public abstract class Aventurier {
      * @param Aventurier
      * @param Carte
      */
-    public void donnerCarte(Aventurier joueur, CarteTresor carte) {
+    public void donnerCarte(Aventurier joueur, CarteTirage carte) {
         if (nbAction >= 3) {
             System.out.println("Action impossible, nombre d'actions disponibles insuffisants.");
         } else {
-
+            joueur.cartePossedees.add(carte);
+            this.cartePossedees.remove(carte);
+            joueur.nbCarte++;
+            nbCarte--;
             nbAction++;
         }
+    }
+
+    public void piocherCarte(CarteTirage carte) {
+        this.cartePossedees.add(carte);
+        nbCarte++;
+    }
+    
+    public void defausserCarte(CarteTirage carte) {
+        this.cartePossedees.remove(carte);
+        nbCarte--;
     }
 
     /**
