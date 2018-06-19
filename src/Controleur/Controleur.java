@@ -6,7 +6,8 @@
 package Controleur;
 
 import Modele.Aventurier;
-import Modele.CarteTresor;
+import Modele.CarteTirage;
+import Modele.Cartes;
 import Modele.Explorateur;
 import Modele.Grille;
 import Modele.Grille;
@@ -20,6 +21,7 @@ import Modele.Plongeur;
 import Modele.Tuile;
 import Vues.Vue;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  *
@@ -32,8 +34,8 @@ public class Controleur implements Observateur {
     private ArrayList<Aventurier> joueurs;
     private ArrayList<Innondation> pileInnondation;
     private ArrayList<Innondation> defausseInnondation;
-    private ArrayList<CarteTresor> pileCarte;
-    private ArrayList<CarteTresor> defausseCarte;
+    private ArrayList<CarteTirage> pileCarte;
+    private ArrayList<CarteTirage> pileDefausse;
     private Aventurier joueurCourant;
     private boolean gagner;
     private boolean deplacement;
@@ -45,6 +47,8 @@ public class Controleur implements Observateur {
         this.vue = vue;
         vue.addObservateur(this);
         this.grille = grille;
+        pileCarte = new ArrayList();
+        pileDefausse=new ArrayList();
     }
 
     @Override
@@ -55,13 +59,12 @@ public class Controleur implements Observateur {
                 System.out.println(joueurCourant);
                 vue.setVueDeplacement();
                 vue.afficherTuileAccessible(joueurCourant.getTuilesAccessibles(grille));
-                if (joueurCourant.getNbAction()==3){
-                    vue.afficherFinTour();
-                    if(joueurCourant instanceof Pilote) {
-                        Pilote p = (Pilote)joueurCourant;
-                        p.setUtilise(false);
-                    }
+
+                if (joueurCourant instanceof Pilote) {
+                    Pilote p = (Pilote) joueurCourant;
+                    p.setUtilise(false);
                 }
+
                 deplacement = true;
                 break;
             case COORDONNEE:
@@ -70,53 +73,68 @@ public class Controleur implements Observateur {
                     joueurCourant.setNbAction(joueurCourant.getNbAction() + 1);
                     Tuile tuileAvantDeplacement = joueurCourant.getEstSurTuile();
                     Tuile tuileApresDeplacement = grille.getTuile(m.lig, m.col);
-                    if(joueurCourant instanceof Pilote) {
-                        Pilote p = (Pilote)joueurCourant;
+                    if (joueurCourant instanceof Pilote) {
+                        Pilote p = (Pilote) joueurCourant;
                         int x = joueurCourant.getEstSurTuile().getLig();
                         int y = joueurCourant.getEstSurTuile().getCol();
-                        
-                        if(!((m.col==y+1 && m.lig==x) || (m.col==y-1 && m.lig == x) || (m.col == y && m.lig == x+1) || (m.col == y && m.lig == x-1))) {
+
+                        if (!((m.col == y + 1 && m.lig == x) || (m.col == y - 1 && m.lig == x) || (m.col == y && m.lig == x + 1) || (m.col == y && m.lig == x - 1))) {
                             //Si le joueur est un pilote et que son déplacement induit l'utilisation de son pouvoir, le pouvoir du Pilote devient "utilisé"
                             p.setUtilise(true);
                         }//Sinon, l'utilisation du pilote reste à faux
                     }
-                    if(tuileApresDeplacement.getASurTuile().isEmpty()){
+                    if (tuileApresDeplacement.getASurTuile().isEmpty()) {
                         joueurCourant.deplacement(tuileApresDeplacement);
                         vue.afficherDeplacement(m.lig, m.col, joueurCourant, tuileAvantDeplacement);
-                    }else{
+                    } else {
                         joueurCourant.deplacement(tuileApresDeplacement);
-                        vue.afficherDeplacement(m.lig, m.col, joueurCourant, tuileAvantDeplacement,tuileApresDeplacement);
+                        vue.afficherDeplacement(m.lig, m.col, joueurCourant, tuileAvantDeplacement, tuileApresDeplacement);
                     }
-                    
-                    deplacement =false;
-                }else if(assechement){
+
+                    deplacement = false;
+                } else if (assechement) {
                     System.out.println("Clic sur tuile choisi pour assechement");
+                    joueurCourant.setNbAction(joueurCourant.getNbAction() + 1);
                     vue.assecherTuile(m.lig, m.col);
                     grille.getTuile(m.lig, m.col).assecher();
-                    joueurCourant.setNbAction(joueurCourant.getNbAction() + 1);
                     assechement = false;
                 }
-                vue.setVueBoutonsEnabled();
+
+                if (joueurCourant.getNbAction() == 3) {
+                    System.out.println("ZOB");
+                    vue.afficherFinTour();
+                } else {
+                    vue.setVueBoutonsEnabled();
+                }
                 break;
             case FINIRTOUR:
                 System.out.println("Clic sur FINTOUR");
                 if (joueurCourant instanceof Pilote) {
-                    Pilote p = (Pilote)joueurCourant;
+                    Pilote p = (Pilote) joueurCourant;
                     p.setUtilise(false);
                 }
-                i++; 
-                joueurCourant=joueurs.get(i == joueurs.size() ? i=0 : i);
+                i++;
+                joueurCourant = joueurs.get(i == joueurs.size() ? i = 0 : i);
                 nbTour++;
                 vue.afficherEtatJeu(nbTour,joueurCourant.getRole().getNomRole().toString());
+                joueurCourant.piocherCarte(pileCarte.get(0));
+                pileCarte.remove(0);
                 joueurCourant.finTour();
                 vue.afficherDebutTour();
+                if (joueurCourant.getNbCarte()>9) {
+                    for (int i = 0; i < joueurCourant.getNbCarte()-9; i++) {
+                        joueurCourant.defausserCarte(joueurCourant.cartePossedees.get(m.numCarte));
+                        pileDefausse.add(joueurCourant.cartePossedees.get(m.numCarte));
+                    }
+                }
                 break;
             case ASSECHER:
                 System.out.println("Clic sur ASSECHER");
+                joueurCourant.setNbAction(joueurCourant.getNbAction() + 1);
                 vue.afficherTuileAssechable(joueurCourant.getTuilesInondees(grille));
                 System.out.println(joueurCourant.getTuilesInondees(grille));
                 vue.setVueAssecher();
-                if (joueurCourant.getNbAction()==3){
+                if (joueurCourant.getNbAction() == 3) {
                     vue.afficherFinTour();
                 }
                 assechement = true;
@@ -172,9 +190,41 @@ public class Controleur implements Observateur {
                 nbTour = 1;
                 joueurCourant=joueurs.get(i);
                 vue.afficherEtatJeu(nbTour,0,joueurCourant.getRole().getNomRole().toString());
-                break;
-            case ANNULER :
                 
+                for (int i = 0; i < 5; i++) {
+                    pileCarte.add(new CarteTirage(Cartes.CALICE));
+                    pileCarte.add(new CarteTirage(Cartes.CRISTAL));
+                    pileCarte.add(new CarteTirage(Cartes.PIERRE));
+                    pileCarte.add(new CarteTirage(Cartes.ZEPHYR));
+                } 
+                
+                for (int i = 0; i < 2; i++) {
+                    pileCarte.add(new CarteTirage(Cartes.MONTEEDESEAUX));
+                    pileCarte.add(new CarteTirage(Cartes.SACDESABLE));
+                }
+                
+                for (int i = 0; i < 3; i++) {
+                    pileCarte.add(new CarteTirage(Cartes.HELICOPTERE));
+                }
+                
+                Collections.shuffle(pileCarte);
+                
+                for (Aventurier joueur : joueurs) {
+                    for (int i = 0; i < 2; i++) {
+                        joueur.piocherCarte(pileCarte.get(0));
+                        pileCarte.remove(0);
+                    }
+                }
+                
+                break;
+            
+            case ANNULER:
+                System.out.println("Annuler");
+                vue.setVueBoutonsEnabled();
+                vue.reinitialiserGrille();
+                System.out.println("**********");
+                System.out.println(joueurCourant.getNbAction());
+                break;
         }
 
     }
@@ -187,7 +237,7 @@ public class Controleur implements Observateur {
         return grille;
     }
 
-    public ArrayList<CarteTresor> getPileCarte() {
+    public ArrayList<CarteTirage> getPileCarte() {
         return pileCarte;
     }
 
@@ -203,9 +253,8 @@ public class Controleur implements Observateur {
         return defausseInnondation;
     }
 
-    public ArrayList<CarteTresor> getDefausseCarte() {
-        return defausseCarte;
+    public ArrayList<CarteTirage> getPileDefausse() {
+        return pileDefausse;
     }
-
 
 }

@@ -19,6 +19,7 @@ public class Message {
     ArrayList<NomRole> joueurs = new ArrayList<NomRole>();
     int lig;
     int col;
+    int numCarte;
     Tuile tuile;
     public Message(TypesMessage type) {
         this.type = type;    
@@ -50,4 +51,14 @@ public class Message {
     public void setCol(int col) {
         this.col = col;
     }
+
+    public int getNumCarte() {
+        return numCarte;
+    }
+
+    public void setNumCarte(int numCarte) {
+        this.numCarte = numCarte;
+    }
+    
+    
 }

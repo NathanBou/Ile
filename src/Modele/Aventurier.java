@@ -15,6 +15,7 @@ public abstract class Aventurier {
     Aventurier(Role role) {
         this.role = role;
         this.tuilesAdjacentes = new ArrayList<>();
+        this.cartePossedees = new ArrayList();
     }
 
     public int getNbCarte() {
