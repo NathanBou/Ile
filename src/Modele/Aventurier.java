@@ -97,10 +97,14 @@ public abstract class Aventurier {
     public ArrayList<Tuile> getTuilesAccessibles(Grille g) {
         // TODO - implement Aventurier.TuilesAccessibles
         ArrayList<Tuile> tuilesAccessibles = new ArrayList();
-        tuilesAdjacentes = getTuilesAdjacentes(g);
-        for (Tuile tuile : tuilesAdjacentes) {
-            if (tuile.getEtat() != EtatTuile.COULEE) {
-                tuilesAccessibles.add(tuile);
+        if (this.getRole().getNomRole() == NomRole.PLONGEUR) {
+            tuilesAccessibles = getTuilesAccessibles(tuilesAccessibles, this.getEstSurTuile(), g);
+        } else {
+            tuilesAdjacentes = getTuilesAdjacentes(g);
+            for (Tuile tuile : tuilesAdjacentes) {
+                if (tuile.getEtat() != EtatTuile.COULEE) {
+                    tuilesAccessibles.add(tuile);
+                }
             }
         }
         return tuilesAccessibles;
@@ -126,12 +130,29 @@ public abstract class Aventurier {
         return tuilesAdjacentes;
     }
 
-    public ArrayList<Tuile> getTuilesAdjacentes(Grille g, Tuile t) {
-        tuilesAdjacentes.add(g.getTuiles()[t.getLig() + 1][t.getCol()]);
-        tuilesAdjacentes.add(g.getTuiles()[t.getLig() - 1][t.getCol()]);
-        tuilesAdjacentes.add(g.getTuiles()[t.getLig()][t.getCol() + 1]);
-        tuilesAdjacentes.add(g.getTuiles()[t.getLig()][t.getCol() - 1]);
-        return tuilesAdjacentes;
+    public ArrayList<Tuile> getTuilesAccessibles(ArrayList<Tuile> tuilesAccessibles, Tuile t, Grille g) {
+        int x = t.getLig();
+        int y = t.getCol();
+
+        Tuile t1 = (y != 0 ? g.getTuile(x, y - 1) : null);
+        Tuile t2 = (x != 0 ? g.getTuile(x - 1, y) : null);
+        Tuile t3 = (x != 5 ? g.getTuile(x + 1, y) : null);
+        Tuile t4 = (y != 5 ? g.getTuile(x, y + 1) : null);
+
+        if (t1 != null) {
+            tuilesAccessibles.add(t1);
+        }
+        if (t2 != null) {
+            tuilesAccessibles.add(t2);
+        }
+        if (t3 != null) {
+            tuilesAccessibles.add(t3);
+        }
+        if (t4 != null) {
+            tuilesAccessibles.add(t4);
+        }
+
+        return tuilesAccessibles;
 
     }
 
