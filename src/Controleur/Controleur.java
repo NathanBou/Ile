@@ -183,7 +183,7 @@ public class Controleur implements Observateur {
                 for (Aventurier joueur : joueurs) {
                     System.out.println("*" + joueur.getRole().getNomRole().toString());
                 }
-                vue.creeJeu(grille);
+                vue.creeJeu(grille, joueurs);
                 vue.setVueBoutonsEnabled();
                 gagner = false;
                 nbTour = 1;

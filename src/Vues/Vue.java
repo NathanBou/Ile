@@ -136,7 +136,7 @@ public class Vue implements Observe {
         fenetreInit.setVisible(true);
     }
 
-    public void creeJeu(Grille grille) {
+    public void creeJeu(Grille grille, ArrayList<Aventurier> joueurs) {
 
         fenetreJeu.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
         fenetreJeu.setTitle("L 'ILE INTERDITE");
@@ -232,40 +232,62 @@ public class Vue implements Observe {
                 panelInfo.add(joueur);
 
                 // PanelCartes
-                JPanel panelCartes = new JPanel (new GridLayout(2,2,2,2));
-                panelCartes1 = new JPanel(new GridLayout(3,3));
-                panelCartes2 = new JPanel(new GridLayout(3,3));
-                panelCartes3 = new JPanel(new GridLayout(3,3));
-                panelCartes4 = new JPanel(new GridLayout(3,3));
-                panelCartes.add(panelCartes1);
-                panelCartes.add(panelCartes2);
-                panelCartes.add(panelCartes3);
-                panelCartes.add(panelCartes4);
+                JPanel panelCartes = new JPanel(new GridLayout(2, 2, 2, 2));
+
+                JPanel BorderCartes1 = new JPanel(new BorderLayout());
+                JPanel BorderCartes2 = new JPanel(new BorderLayout());
+                JPanel BorderCartes3 = new JPanel(new BorderLayout());
+                JPanel BorderCartes4 = new JPanel(new BorderLayout());
+
+                panelCartes1 = new JPanel(new GridLayout(3, 3));
+                panelCartes2 = new JPanel(new GridLayout(3, 3));
+                panelCartes3 = new JPanel(new GridLayout(3, 3));
+                panelCartes4 = new JPanel(new GridLayout(3, 3));
+
+                panelCartes.add(BorderCartes1);
+                panelCartes.add(BorderCartes2);
+                panelCartes.add(BorderCartes3);
+                panelCartes.add(BorderCartes4);
+
+                BorderCartes1.add(panelCartes1, BorderLayout.CENTER);
+                BorderCartes2.add(panelCartes2, BorderLayout.CENTER);
+                BorderCartes3.add(panelCartes3, BorderLayout.CENTER);
+                BorderCartes4.add(panelCartes4, BorderLayout.CENTER);
+
                 // dessin carrés dans panelCartes1,2,3 et 4
-                for(int a=0; a<4; a++) {
-                    for(int i=0; i<9; i++){
-                        JButton carte = new JButton();
+                for (int a = 0; a < joueurs.size(); a++) {
+                    for (int i = 0; i < 9; i++) {
+                        JButton carte = new JButton("carte");
                         carte.addActionListener(new ActionListener() {
                             @Override
                             public void actionPerformed(ActionEvent e) {
                                 Message m = new Message(TypesMessage.JOUERCARTE);
-                                
+
                                 //A compléter...
                             }
                         });
                         carte.setEnabled(false);
-                        if(a==0) {
+                        if (a == 0) {
                             panelCartes1.add(carte);
-                        } else if(a==1) {
+                        } else if (a == 1) {
                             panelCartes2.add(carte);
-                        } else if (a==2) {
+                        } else if (a == 2) {
                             panelCartes3.add(carte);
-                        } else if(a==3) {
+                        } else if (a == 3) {
                             panelCartes4.add(carte);
                         }
                     }
+                    if (a == 0) {
+                        BorderCartes1.add(new JLabel(joueurs.get(a).getRole().getNomRole().toString()), BorderLayout.NORTH);
+                    } else if (a == 1) {
+                        BorderCartes2.add(new JLabel(joueurs.get(a).getRole().getNomRole().toString()), BorderLayout.NORTH);
+                    } else if (a == 2) {
+                        BorderCartes3.add(new JLabel(joueurs.get(a).getRole().getNomRole().toString()), BorderLayout.NORTH);
+                    } else if (a == 3) {
+                        BorderCartes4.add(new JLabel(joueurs.get(a).getRole().getNomRole().toString()), BorderLayout.NORTH);
+                    }
                 }
-                
+
                 // Panel Centre
                 JPanel panelGrilleBouton = new JPanel(new GridLayout(2, 5));
                 for (int v = 0; v <= 5; v++) {
@@ -397,7 +419,7 @@ public class Vue implements Observe {
     }
 
     public void afficherFinTour() {
-        
+
         finTour.setEnabled(true);
         deplacer.setEnabled(false);
         deplacer.setBackground(Color.GREEN);
