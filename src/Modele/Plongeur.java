@@ -27,6 +27,7 @@ public class Plongeur extends Aventurier {
 
     @Override
     public ArrayList<Tuile> getTuilesAccessibles(ArrayList<Tuile> tuilesAccessibles,Tuile t, Grille g) {
+        dejaPasse.clear();
         int x = t.getLig();
         int y = t.getCol();
         
@@ -35,7 +36,7 @@ public class Plongeur extends Aventurier {
         Tuile t3 = (x!=5 ? g.getTuile(x+1, y):null);
         Tuile t4 = (y!=5 ? g.getTuile(x, y+1):null);
         
-        if(y!=0 && !tuilesAccessibles.contains(t1) && t1!= null) {
+        if(y!=0 && !tuilesAccessibles.contains(t1) && t1.getNomTuile()!=NomTuile.BORDURE) {
             if(t1.getEtat()!=EtatTuile.COULEE && !tuilesAccessibles.contains(t1)) {
                 tuilesAccessibles.add(t1);
             }
@@ -45,7 +46,7 @@ public class Plongeur extends Aventurier {
             }
         }
         
-        if(x!=0 && !tuilesAccessibles.contains(t2) && t2!= null) {
+        if(x!=0 && !tuilesAccessibles.contains(t2) && t2.getNomTuile()!=NomTuile.BORDURE) {
             if(t2.getEtat()!=EtatTuile.COULEE && !tuilesAccessibles.contains(t2)) {
                 tuilesAccessibles.add(t2);
             }
@@ -54,7 +55,7 @@ public class Plongeur extends Aventurier {
                 getTuilesAccessibles(tuilesAccessibles,t2, g);
             }
         }
-        if(y!=5 && !tuilesAccessibles.contains(t4) && t4!= null) {
+        if(y!=5 && !tuilesAccessibles.contains(t4) && t4.getNomTuile()!=NomTuile.BORDURE) {
             if(t4.getEtat()!=EtatTuile.COULEE && !tuilesAccessibles.contains(t4)) {
                 tuilesAccessibles.add(t4);
             }
@@ -63,7 +64,7 @@ public class Plongeur extends Aventurier {
                 getTuilesAccessibles(tuilesAccessibles,t4, g);
             }
         }
-        if(x!=5 && !tuilesAccessibles.contains(t3) && t3!= null) {
+        if(x!=5 && !tuilesAccessibles.contains(t3) && t3.getNomTuile()!=NomTuile.BORDURE) {
             if(t3.getEtat()!=EtatTuile.COULEE && !tuilesAccessibles.contains(t3)) {
                 tuilesAccessibles.add(t3);
             }
@@ -73,7 +74,12 @@ public class Plongeur extends Aventurier {
             }
         }
         
+        tuilesAccessibles.remove(this.getEstSurTuile());
         
+        System.out.println("*************");
+        for(Tuile tuile : tuilesAccessibles) {
+            System.out.println(tuile.getCol()+ "-" + tuile.getLig());
+        }
         
         return tuilesAccessibles;
     }
