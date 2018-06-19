@@ -170,23 +170,21 @@ public class Vue implements Observe {
                             CelluleTuile tuile = new CelluleTuile(i, k);
                             tabTuile[i][k] = tuile;
                         } else {
-                            CelluleTuile bTuile = new CelluleTuile(i, k);
+                            CelluleTuile bTuile = new CelluleTuile(i, k,grille.getTuile(i, k).getEtat(),grille.getTuile(i, k).getNomTuile(),grille.getTuile(i, k).getASurTuile());
                             tabTuile[i][k] = bTuile;
-                            bTuile.nomTuile.setText(grille.getTuile(i, k).getNomTuile().toString());                           
-                            if (grille.getTuile(i, k).getEtat() == Utils.EtatTuile.COULEE) {
+                            //bTuile./*nomTuile.*/setText(grille.getTuile(i, k).getNomTuile().toString());                           
+                           /* if (grille.getTuile(i, k).getEtat() == Utils.EtatTuile.COULEE) {
                                 bTuile.setBackground(Color.lightGray);
                             } else if (grille.getTuile(i, k).getEtat() == Utils.EtatTuile.INONDEE) {
                                 bTuile.setBackground(new Color(30, 127, 203));
-                            }
-                            if (!grille.getTuile(i, k).getASurTuile().isEmpty()) {
-                                //bTuile.setBorder(BorderFactory.createLineBorder(grille.getTuile(i, k).getASurTuile().get(0).getRole().getCouleur().getCouleur(), 4));
-                                JLabel pion = new JLabel("");
-                                pion.setBackground(grille.getTuile(i, k).getASurTuile().get(0).getRole().getCouleur().getCouleur());
-                                bTuile.pions.add(pion);
-                            }
+                            }*/
+                            /*if (!grille.getTuile(i, k).getASurTuile().isEmpty()) {
+                               // bTuile.setBorder(BorderFactory.createLineBorder(grille.getTuile(i, k).getASurTuile().get(0).getRole().getCouleur().getCouleur(), 4));
+                                //JLabel pion = new JLabel("");
+
+                            }*/
 
                             bTuile.setEnabled(false);
-                            bTuile.setFont(new Font("Dialog", Font.BOLD, 10));
                             bTuile.setPreferredSize(new Dimension(118, 118));
                             bTuile.addActionListener(
                                     new ActionListener() {
