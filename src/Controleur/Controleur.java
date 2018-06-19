@@ -130,7 +130,6 @@ public class Controleur implements Observateur {
                 break;
             case ASSECHER:
                 System.out.println("Clic sur ASSECHER");
-                joueurCourant.setNbAction(joueurCourant.getNbAction() + 1);
                 vue.afficherTuileAssechable(joueurCourant.getTuilesInondees(grille));
                 System.out.println(joueurCourant.getTuilesInondees(grille));
                 vue.setVueAssecher();
