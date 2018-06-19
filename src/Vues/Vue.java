@@ -5,6 +5,8 @@ import Controleur.TypesMessage;
 import Controleur.Observateur;
 import Controleur.Observe;
 import Modele.Aventurier;
+import Modele.CarteTirage;
+import Modele.Cartes;
 import Modele.Grille;
 import Modele.Grille;
 import Modele.NomRole;
@@ -232,7 +234,7 @@ public class Vue implements Observe {
                 panelInfo.add(joueur);
 
                 // PanelCartes
-                JPanel panelCartes = new JPanel(new GridLayout(2, 2, 2, 2));
+                JPanel panelCartes = new JPanel(new GridLayout(2, 2, 4, 4));
 
                 JPanel BorderCartes1 = new JPanel(new BorderLayout());
                 JPanel BorderCartes2 = new JPanel(new BorderLayout());
@@ -256,8 +258,8 @@ public class Vue implements Observe {
 
                 // dessin carrés dans panelCartes1,2,3 et 4
                 for (int a = 0; a < joueurs.size(); a++) {
-                    for (int i = 0; i < 9; i++) {
-                        JButton carte = new JButton("carte");
+                    for (int i = 0; i < 9; i++) {                        
+                        JButton carte = new JButton(!joueurs.get(a).getCartePossedees().isEmpty() ? joueurs.get(a).getCartePossedees().get(i).getNomCarte().toString() : "/");
                         carte.addActionListener(new ActionListener() {
                             @Override
                             public void actionPerformed(ActionEvent e) {

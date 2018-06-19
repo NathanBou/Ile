@@ -16,6 +16,7 @@ public abstract class Aventurier {
         this.role = role;
         this.tuilesAdjacentes = new ArrayList<>();
         this.cartePossedees = new ArrayList();
+        this.nbAction=0;
     }
 
     public int getNbCarte() {
@@ -180,5 +181,11 @@ public abstract class Aventurier {
     public void finTour() {
         nbAction = 0;
     }
+
+    public ArrayList<CarteTirage> getCartePossedees() {
+        return cartePossedees;
+    }
+    
+    
 
 }
