@@ -26,11 +26,9 @@ public class CelluleTuile extends JButton {
 
     public int lig_cellule;
     public int col_cellule;
-    public JPanel tuile;
-    public JLabel nomTuile;
-    public JPanel pions;
 
-    public CelluleTuile(int i, int k, EtatTuile etat, NomTuile nom, ArrayList<Aventurier> joueurs) {
+
+   /* public CelluleTuile(int i, int k, EtatTuile etat, NomTuile nom, ArrayList<Aventurier> joueurs) {
         tuile = new JPanel(new BorderLayout());
         this.lig_cellule = i;
         this.col_cellule = k;
@@ -62,7 +60,7 @@ public class CelluleTuile extends JButton {
         }
         this.add(tuile);
 
-    }
+    }*/
 
     public CelluleTuile(int i, int k) {
         this.lig_cellule = i;

@@ -48,6 +48,8 @@ public class Vue implements Observe {
     private JButton deplacer;
     private JButton assecher;
     private JButton annuler;
+    private JButton finTour;
+    private JLabel pion;
 
     public Vue() {
         fenetreInit.setTitle("L 'ILE INTERDITE INITIALISATION");
@@ -171,20 +173,18 @@ public class Vue implements Observe {
                             CelluleTuile tuile = new CelluleTuile(i, k);
                             tabTuile[i][k] = tuile;
                         } else {
-                            CelluleTuile bTuile = new CelluleTuile(i, k,grille.getTuile(i, k).getEtat(),grille.getTuile(i, k).getNomTuile(),grille.getTuile(i, k).getASurTuile());
+                            CelluleTuile bTuile = new CelluleTuile(i, k);
                             tabTuile[i][k] = bTuile;
-                            //bTuile./*nomTuile.*/setText(grille.getTuile(i, k).getNomTuile().toString());                           
-                           /* if (grille.getTuile(i, k).getEtat() == Utils.EtatTuile.COULEE) {
+                            bTuile.setText(grille.getTuile(i, k).getNomTuile().toString());
+                            bTuile.setFont(new Font("Dialog", Font.BOLD, 10));
+                            if (grille.getTuile(i, k).getEtat() == Utils.EtatTuile.COULEE) {
                                 bTuile.setBackground(Color.lightGray);
                             } else if (grille.getTuile(i, k).getEtat() == Utils.EtatTuile.INONDEE) {
                                 bTuile.setBackground(new Color(30, 127, 203));
-                            }*/
-                            /*if (!grille.getTuile(i, k).getASurTuile().isEmpty()) {
-                               // bTuile.setBorder(BorderFactory.createLineBorder(grille.getTuile(i, k).getASurTuile().get(0).getRole().getCouleur().getCouleur(), 4));
-                                //JLabel pion = new JLabel("");
-
-                            }*/
-
+                            }
+                            if (!grille.getTuile(i, k).getASurTuile().isEmpty()) {
+                                bTuile.setBorder(BorderFactory.createLineBorder(grille.getTuile(i, k).getASurTuile().get(0).getRole().getCouleur().getCouleur(), 4));
+                            }
                             bTuile.setEnabled(false);
                             bTuile.setPreferredSize(new Dimension(118, 118));
                             bTuile.addActionListener(
@@ -231,10 +231,10 @@ public class Vue implements Observe {
                 JPanel panelGrilleBouton = new JPanel(new GridLayout(2, 5));
                 for (int v = 0; v <= 5; v++) {
                     if (v == 0) {
-                        JButton nrf = new JButton("Fin tour");
-                        nrf.setPreferredSize(new Dimension(40, 25));
-                        panelGrilleBouton.add(nrf);
-                        nrf.addActionListener(
+                        finTour = new JButton("Fin tour");
+                        finTour.setPreferredSize(new Dimension(40, 25));
+                        panelGrilleBouton.add(finTour);
+                        finTour.addActionListener(
                                 new ActionListener() {
                             @Override
                             public void actionPerformed(ActionEvent e) {
@@ -278,7 +278,7 @@ public class Vue implements Observe {
                         panelGrilleBouton.add(prendreTresor);                   //ActionListener a ajouter
                     } else if (v == 5) {
                         annuler = new JButton("Annuler");
-                        annuler.setPreferredSize(new Dimension(40,25));
+                        annuler.setPreferredSize(new Dimension(40, 25));
                         panelGrilleBouton.add(annuler);
                         annuler.setEnabled(false);                              //ActionListener a ajouter
                         annuler.addActionListener(new ActionListener() {
@@ -286,7 +286,7 @@ public class Vue implements Observe {
                             public void actionPerformed(ActionEvent e) {
                                 Message m = new Message(TypesMessage.ANNULER);
                                 notifierObservateur(m);
-                                
+
                             }
                         });
                     }
@@ -326,7 +326,8 @@ public class Vue implements Observe {
         tabTuile[lig][col].setBorder(BorderFactory.createLineBorder(joueur.getRole().getCouleur().getCouleur(), 4));
         this.reinitialiserGrille();
     }
-        public void afficherDeplacement(int lig, int col, Aventurier joueur, Tuile tuileAvantDeplacement,Tuile tuileApresDeplacement) {
+
+    public void afficherDeplacement(int lig, int col, Aventurier joueur, Tuile tuileAvantDeplacement, Tuile tuileApresDeplacement) {
         tabTuile[tuileAvantDeplacement.getLig()][tuileAvantDeplacement.getCol()].setBorder((BorderFactory.createLineBorder(Color.LIGHT_GRAY)));
         tabTuile[tuileApresDeplacement.getLig()][tuileApresDeplacement.getCol()].setBorder(BorderFactory.createLineBorder(joueur.getRole().getCouleur().getCouleur(), 4));
         for (int i = 0; i < 6; i++) {
@@ -354,19 +355,27 @@ public class Vue implements Observe {
             }
         }
     }
-    public void afficherFinTour(){
+
+    public void afficherFinTour() {
+        
+        finTour.setEnabled(true);
         deplacer.setEnabled(false);
+        deplacer.setBackground(Color.GREEN);
         assecher.setEnabled(false);
+        assecher.setBackground(Color.GREEN);
         prendreTresor.setEnabled(false);
         donnerCarte.setEnabled(false);
         annuler.setEnabled(false);
+        annuler.setBackground(Color.GREEN);
     }
-    public void afficherDebutTour(){
+
+    public void afficherDebutTour() {
         deplacer.setEnabled(true);
         assecher.setEnabled(true);
         prendreTresor.setEnabled(true);
         donnerCarte.setEnabled(true);
     }
+
     public void afficherEtatJeu(int nbTour, int nivEau, String nomJoueur) {
         tour.setText("Tour numero :" + nbTour);
         niveau.setText("Niveau d'eau :" + nivEau);
@@ -376,30 +385,34 @@ public class Vue implements Observe {
     public void afficherEtatJeu(int nbTour) {
         tour.setText("Tour numero :" + nbTour);
     }
+
     public void afficherEtatJeu(int nbTour, String nomJoueur) {
         tour.setText("Tour numero :" + nbTour);
         joueur.setText("Joueur :" + nomJoueur);
     }
-    
+
     public void setVueDeplacement() {
         deplacer.setBackground(Color.BLUE);
         deplacer.setEnabled(false);
         prendreTresor.setEnabled(false);
         donnerCarte.setEnabled(false);
         assecher.setEnabled(false);
+        finTour.setEnabled(false);
         annuler.setBackground(Color.RED);
         annuler.setEnabled(true);
     }
-    
+
     public void setVueAssecher() {
         assecher.setBackground(Color.BLUE);
         deplacer.setEnabled(false);
         prendreTresor.setEnabled(false);
         donnerCarte.setEnabled(false);
         assecher.setEnabled(false);
+        finTour.setEnabled(false);
         annuler.setBackground(Color.RED);
         annuler.setEnabled(true);
     }
+
     public void setVuePrendreTresor() {
         prendreTresor.setBackground(Color.BLUE);
         deplacer.setEnabled(false);
@@ -409,6 +422,7 @@ public class Vue implements Observe {
         annuler.setBackground(Color.RED);
         annuler.setEnabled(true);
     }
+
     public void setVueDonnerCarte() {
         donnerCarte.setBackground(Color.BLUE);
         deplacer.setEnabled(false);
@@ -418,7 +432,7 @@ public class Vue implements Observe {
         annuler.setBackground(Color.RED);
         annuler.setEnabled(true);
     }
-    
+
     public void setVueBoutonsEnabled() {
         deplacer.setBackground(Color.GREEN);
         deplacer.setEnabled(true);
@@ -428,10 +442,11 @@ public class Vue implements Observe {
         donnerCarte.setEnabled(true);
         assecher.setBackground(Color.GREEN);
         assecher.setEnabled(true);
+        finTour.setEnabled(true);
         annuler.setBackground(Color.GREEN);
         annuler.setEnabled(false);
     }
-    
+
     public void reinitialiserGrille() {
         for (int i = 0; i < 6; i++) {
             for (int k = 0; k < 6; k++) {
@@ -440,7 +455,6 @@ public class Vue implements Observe {
 
         }
     }
-    
 
     public void addObservateur(Observateur o) {
         this.observateur = o;
