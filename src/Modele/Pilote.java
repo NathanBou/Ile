@@ -24,13 +24,23 @@ public class Pilote extends Aventurier {
     @Override
     public ArrayList<Tuile> getTuilesAccessibles(Grille g) {
         ArrayList<Tuile> tuilesAccessibles = new ArrayList();
-        for(int i =0; i<6; i++) {
-            for(int k =0; k<6; k++) {
-                if(g.getTuile(i,k)!= null && g.getTuile(i,k).getEtat()!=Utils.EtatTuile.COULEE) {
-                    tuilesAccessibles.add(g.getTuile(i, k));
+        if (utilise) {
+            tuilesAccessibles=super.getTuilesAccessibles(g);
+        } else {
+            for (int i = 0; i < 6; i++) {
+                for (int k = 0; k < 6; k++) {
+                    if (g.getTuile(i, k) != null && g.getTuile(i, k).getEtat() != Utils.EtatTuile.COULEE) {
+                        tuilesAccessibles.add(g.getTuile(i, k));
+                    }
                 }
             }
+            tuilesAccessibles.remove(this.getEstSurTuile());
         }
         return tuilesAccessibles;
     }
+    
+    public void setUtilise(boolean utilise) {
+        this.utilise = utilise;
+    }
+
 }

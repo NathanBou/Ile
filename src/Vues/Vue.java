@@ -47,6 +47,7 @@ public class Vue implements Observe {
     private JButton donnerCarte;
     private JButton deplacer;
     private JButton assecher;
+    private JButton annuler;
 
     public Vue() {
         fenetreInit.setTitle("L 'ILE INTERDITE INITIALISATION");
@@ -228,7 +229,7 @@ public class Vue implements Observe {
 
                 // Panel Centre
                 JPanel panelGrilleBouton = new JPanel(new GridLayout(2, 5));
-                for (int v = 0; v <= 4; v++) {
+                for (int v = 0; v <= 5; v++) {
                     if (v == 0) {
                         JButton nrf = new JButton("Fin tour");
                         nrf.setPreferredSize(new Dimension(40, 25));
@@ -270,11 +271,24 @@ public class Vue implements Observe {
                     } else if (v == 3) {
                         donnerCarte = new JButton("Donner une carte");
                         donnerCarte.setPreferredSize(new Dimension(40, 25));
-                        panelGrilleBouton.add(donnerCarte);
+                        panelGrilleBouton.add(donnerCarte);                     //ActionListener a ajouter
                     } else if (v == 4) {
                         prendreTresor = new JButton("Prendre trésor");
                         prendreTresor.setPreferredSize(new Dimension(40, 25));
-                        panelGrilleBouton.add(prendreTresor);
+                        panelGrilleBouton.add(prendreTresor);                   //ActionListener a ajouter
+                    } else if (v == 5) {
+                        annuler = new JButton("Annuler");
+                        annuler.setPreferredSize(new Dimension(40,25));
+                        panelGrilleBouton.add(annuler);
+                        annuler.setEnabled(false);                              //ActionListener a ajouter
+                        annuler.addActionListener(new ActionListener() {
+                            @Override
+                            public void actionPerformed(ActionEvent e) {
+                                Message m = new Message(TypesMessage.ANNULER);
+                                notifierObservateur(m);
+                                
+                            }
+                        });
                     }
 
                 }
@@ -288,7 +302,7 @@ public class Vue implements Observe {
         mainPanel.add(panelMilieu, BorderLayout.CENTER);
         // Panel Bas
         JPanel panelBas = new JPanel();
-        panelBas.setBackground(Color.RED);
+        panelBas.setBackground(Color.PINK);
         panelBas.setPreferredSize(new Dimension(1650, 100));
         mainPanel.add(panelBas, BorderLayout.SOUTH);
         fenetreJeu.setVisible(true);
@@ -370,6 +384,58 @@ public class Vue implements Observe {
         tour.setText("Tour numero :" + nbTour);
         joueur.setText("Joueur :" + nomJoueur);
     }
+    
+    public void setVueDeplacement() {
+        deplacer.setBackground(Color.BLUE);
+        deplacer.setEnabled(false);
+        prendreTresor.setEnabled(false);
+        donnerCarte.setEnabled(false);
+        assecher.setEnabled(false);
+        annuler.setBackground(Color.RED);
+        annuler.setEnabled(true);
+    }
+    
+    public void setVueAssecher() {
+        assecher.setBackground(Color.BLUE);
+        deplacer.setEnabled(false);
+        prendreTresor.setEnabled(false);
+        donnerCarte.setEnabled(false);
+        assecher.setEnabled(false);
+        annuler.setBackground(Color.RED);
+        annuler.setEnabled(true);
+    }
+    public void setVuePrendreTresor() {
+        prendreTresor.setBackground(Color.BLUE);
+        deplacer.setEnabled(false);
+        prendreTresor.setEnabled(false);
+        donnerCarte.setEnabled(false);
+        assecher.setEnabled(false);
+        annuler.setBackground(Color.RED);
+        annuler.setEnabled(true);
+    }
+    public void setVueDonnerCarte() {
+        donnerCarte.setBackground(Color.BLUE);
+        deplacer.setEnabled(false);
+        prendreTresor.setEnabled(false);
+        donnerCarte.setEnabled(false);
+        assecher.setEnabled(false);
+        annuler.setBackground(Color.RED);
+        annuler.setEnabled(true);
+    }
+    
+    public void setVueBoutonsEnabled() {
+        deplacer.setBackground(Color.GREEN);
+        deplacer.setEnabled(true);
+        prendreTresor.setBackground(Color.GREEN);
+        prendreTresor.setEnabled(true);
+        donnerCarte.setBackground(Color.GREEN);
+        donnerCarte.setEnabled(true);
+        assecher.setBackground(Color.GREEN);
+        assecher.setEnabled(true);
+        annuler.setBackground(Color.GREEN);
+        annuler.setEnabled(false);
+    }
+    
 
     public void addObservateur(Observateur o) {
         this.observateur = o;

@@ -53,18 +53,33 @@ public class Controleur implements Observateur {
             case DEPLACER:
                 System.out.println("Clic sur Deplacer");
                 System.out.println(joueurCourant);
-                joueurCourant.setNbAction(joueurCourant.getNbAction() + 1);
+                vue.setVueDeplacement();
                 vue.afficherTuileAccessible(joueurCourant.getTuilesAccessibles(grille));
                 if (joueurCourant.getNbAction()==3){
                     vue.afficherFinTour();
+                    if(joueurCourant instanceof Pilote) {
+                        Pilote p = (Pilote)joueurCourant;
+                        p.setUtilise(false);
+                    }
                 }
                 deplacement = true;
                 break;
             case COORDONNEE:
                 if (deplacement) {
                     System.out.println("Clic sur tuile choisi pour deplacement");
+                    joueurCourant.setNbAction(joueurCourant.getNbAction() + 1);
                     Tuile tuileAvantDeplacement = joueurCourant.getEstSurTuile();
                     Tuile tuileApresDeplacement = grille.getTuile(m.lig, m.col);
+                    if(joueurCourant instanceof Pilote) {
+                        Pilote p = (Pilote)joueurCourant;
+                        int x = joueurCourant.getEstSurTuile().getLig();
+                        int y = joueurCourant.getEstSurTuile().getCol();
+                        
+                        if(!((m.col==y+1 && m.lig==x) || (m.col==y-1 && m.lig == x) || (m.col == y && m.lig == x+1) || (m.col == y && m.lig == x-1))) {
+                            //Si le joueur est un pilote et que son déplacement induit l'utilisation de son pouvoir, le pouvoir du Pilote devient "utilisé"
+                            p.setUtilise(true);
+                        }//Sinon, l'utilisation du pilote reste à faux
+                    }
                     if(tuileApresDeplacement.getASurTuile().isEmpty()){
                         joueurCourant.deplacement(tuileApresDeplacement);
                         vue.afficherDeplacement(m.lig, m.col, joueurCourant, tuileAvantDeplacement);
@@ -77,11 +92,18 @@ public class Controleur implements Observateur {
                 }else if(assechement){
                     System.out.println("Clic sur tuile choisi pour assechement");
                     vue.assecherTuile(m.lig, m.col);
+                    grille.getTuile(m.lig, m.col).assecher();
+                    joueurCourant.setNbAction(joueurCourant.getNbAction() + 1);
                     assechement = false;
                 }
+                vue.setVueBoutonsEnabled();
                 break;
             case FINIRTOUR:
                 System.out.println("Clic sur FINTOUR");
+                if (joueurCourant instanceof Pilote) {
+                    Pilote p = (Pilote)joueurCourant;
+                    p.setUtilise(false);
+                }
                 i++; 
                 joueurCourant=joueurs.get(i == joueurs.size() ? i=0 : i);
                 nbTour++;
@@ -91,9 +113,9 @@ public class Controleur implements Observateur {
                 break;
             case ASSECHER:
                 System.out.println("Clic sur ASSECHER");
-                joueurCourant.setNbAction(joueurCourant.getNbAction() + 1);
                 vue.afficherTuileAssechable(joueurCourant.getTuilesInondees(grille));
                 System.out.println(joueurCourant.getTuilesInondees(grille));
+                vue.setVueAssecher();
                 if (joueurCourant.getNbAction()==3){
                     vue.afficherFinTour();
                 }
@@ -145,11 +167,14 @@ public class Controleur implements Observateur {
                     System.out.println("*" + joueur.getRole().getNomRole().toString());
                 }
                 vue.creeJeu(grille);
+                vue.setVueBoutonsEnabled();
                 gagner = false;
                 nbTour = 1;
                 joueurCourant=joueurs.get(i);
                 vue.afficherEtatJeu(nbTour,0,joueurCourant.getRole().getNomRole().toString());
                 break;
+            case ANNULER :
+                
         }
 
     }
