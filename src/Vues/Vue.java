@@ -172,14 +172,17 @@ public class Vue implements Observe {
                         } else {
                             CelluleTuile bTuile = new CelluleTuile(i, k);
                             tabTuile[i][k] = bTuile;
-                            bTuile.setText(grille.getTuile(i, k).getNomTuile().toString());
+                            bTuile.nomTuile.setText(grille.getTuile(i, k).getNomTuile().toString());                           
                             if (grille.getTuile(i, k).getEtat() == Utils.EtatTuile.COULEE) {
                                 bTuile.setBackground(Color.lightGray);
                             } else if (grille.getTuile(i, k).getEtat() == Utils.EtatTuile.INONDEE) {
                                 bTuile.setBackground(new Color(30, 127, 203));
                             }
                             if (!grille.getTuile(i, k).getASurTuile().isEmpty()) {
-                                bTuile.setBorder(BorderFactory.createLineBorder(grille.getTuile(i, k).getASurTuile().get(0).getRole().getCouleur().getCouleur(), 4));
+                                //bTuile.setBorder(BorderFactory.createLineBorder(grille.getTuile(i, k).getASurTuile().get(0).getRole().getCouleur().getCouleur(), 4));
+                                JLabel pion = new JLabel("");
+                                pion.setBackground(grille.getTuile(i, k).getASurTuile().get(0).getRole().getCouleur().getCouleur());
+                                bTuile.pions.add(pion);
                             }
 
                             bTuile.setEnabled(false);
