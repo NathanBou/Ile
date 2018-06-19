@@ -10,6 +10,7 @@ public abstract class Aventurier {
     private int nbCarte;
     private Role role;
     public ArrayList<Tuile> tuilesAdjacentes;
+    public ArrayList<CarteTirage> cartePossedees;
 
     Aventurier(Role role) {
         this.role = role;
@@ -17,11 +18,8 @@ public abstract class Aventurier {
     }
 
     public int getNbCarte() {
-        return this.nbCarte;
-    }
-
-    public void setNbCarte(int nbCarte) {
-        this.nbCarte = nbCarte;
+        nbCarte = cartePossedees.size();
+        return nbCarte;
     }
 
     public int getNbAction() {
@@ -50,13 +48,26 @@ public abstract class Aventurier {
      * @param Aventurier
      * @param Carte
      */
-    public void donnerCarte(Aventurier joueur, CTresor carte) {
+    public void donnerCarte(Aventurier joueur, CarteTirage carte) {
         if (nbAction >= 3) {
             System.out.println("Action impossible, nombre d'actions disponibles insuffisants.");
         } else {
-
+            joueur.cartePossedees.add(carte);
+            this.cartePossedees.remove(carte);
+            joueur.nbCarte++;
+            nbCarte--;
             nbAction++;
         }
+    }
+
+    public void piocherCarte(CarteTirage carte) {
+        this.cartePossedees.add(carte);
+        nbCarte++;
+    }
+    
+    public void defausserCarte(CarteTirage carte) {
+        this.cartePossedees.remove(carte);
+        nbCarte--;
     }
 
     /**
@@ -65,8 +76,8 @@ public abstract class Aventurier {
      */
     public void assecher(Tuile tuile) {
         // TODO - implement Aventurier.assecher
-            tuile.assecher();
-       
+        tuile.assecher();
+
     }
 
     /**
@@ -86,10 +97,14 @@ public abstract class Aventurier {
     public ArrayList<Tuile> getTuilesAccessibles(Grille g) {
         // TODO - implement Aventurier.TuilesAccessibles
         ArrayList<Tuile> tuilesAccessibles = new ArrayList();
-        tuilesAdjacentes = getTuilesAdjacentes(g);
-        for (Tuile tuile : tuilesAdjacentes) {
-            if (tuile.getEtat() != EtatTuile.COULEE) {
-                tuilesAccessibles.add(tuile);
+        if (this.getRole().getNomRole() == NomRole.PLONGEUR) {
+            tuilesAccessibles = getTuilesAccessibles(tuilesAccessibles, this.getEstSurTuile(), g);
+        } else {
+            tuilesAdjacentes = getTuilesAdjacentes(g);
+            for (Tuile tuile : tuilesAdjacentes) {
+                if (tuile.getEtat() != EtatTuile.COULEE) {
+                    tuilesAccessibles.add(tuile);
+                }
             }
         }
         return tuilesAccessibles;
@@ -115,15 +130,31 @@ public abstract class Aventurier {
         return tuilesAdjacentes;
     }
 
-    public ArrayList<Tuile> getTuilesAdjacentes(Grille g, Tuile t) {
-        tuilesAdjacentes.add(g.getTuiles()[t.getLig() + 1][t.getCol()]);
-        tuilesAdjacentes.add(g.getTuiles()[t.getLig() - 1][t.getCol()]);
-        tuilesAdjacentes.add(g.getTuiles()[t.getLig()][t.getCol() + 1]);
-        tuilesAdjacentes.add(g.getTuiles()[t.getLig()][t.getCol() - 1]);
-        return tuilesAdjacentes;
+    public ArrayList<Tuile> getTuilesAccessibles(ArrayList<Tuile> tuilesAccessibles, Tuile t, Grille g) {
+        int x = t.getLig();
+        int y = t.getCol();
+
+        Tuile t1 = (y != 0 ? g.getTuile(x, y - 1) : null);
+        Tuile t2 = (x != 0 ? g.getTuile(x - 1, y) : null);
+        Tuile t3 = (x != 5 ? g.getTuile(x + 1, y) : null);
+        Tuile t4 = (y != 5 ? g.getTuile(x, y + 1) : null);
+
+        if (t1 != null) {
+            tuilesAccessibles.add(t1);
+        }
+        if (t2 != null) {
+            tuilesAccessibles.add(t2);
+        }
+        if (t3 != null) {
+            tuilesAccessibles.add(t3);
+        }
+        if (t4 != null) {
+            tuilesAccessibles.add(t4);
+        }
+
+        return tuilesAccessibles;
 
     }
-
 
     public Role getRole() {
         return role;
@@ -146,7 +177,7 @@ public abstract class Aventurier {
     }
 
     public void finTour() {
-        nbAction=0;
+        nbAction = 0;
     }
 
 }
