@@ -6,7 +6,8 @@
 package Controleur;
 
 import Modele.Aventurier;
-import Modele.CarteTresor;
+import Modele.CarteTirage;
+import Modele.Cartes;
 import Modele.Explorateur;
 import Modele.Grille;
 import Modele.Grille;
@@ -20,6 +21,7 @@ import Modele.Plongeur;
 import Modele.Tuile;
 import Vues.Vue;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  *
@@ -32,8 +34,8 @@ public class Controleur implements Observateur {
     private ArrayList<Aventurier> joueurs;
     private ArrayList<Innondation> pileInnondation;
     private ArrayList<Innondation> defausseInnondation;
-    private ArrayList<CarteTresor> pileCarte;
-    private ArrayList<CarteTresor> defausseCarte;
+    private ArrayList<CarteTirage> pileCarte;
+    private ArrayList<CarteTirage> pileDefausse;
     private Aventurier joueurCourant;
     private boolean gagner;
     private boolean deplacement;
@@ -108,8 +110,16 @@ public class Controleur implements Observateur {
                 joueurCourant=joueurs.get(i == joueurs.size() ? i=0 : i);
                 nbTour++;
                 vue.afficherEtatJeu(nbTour,joueurCourant.getRole().getNomRole().toString());
+                joueurCourant.piocherCarte(pileCarte.get(0));
+                pileCarte.remove(0);
                 joueurCourant.finTour();
                 vue.afficherDebutTour();
+                if (joueurCourant.getNbCarte()>9) {
+                    for (int i = 0; i < joueurCourant.getNbCarte()-9; i++) {
+                        joueurCourant.defausserCarte(joueurCourant.cartePossedees.get(m.numCarte));
+                        pileDefausse.add(joueurCourant.cartePossedees.get(m.numCarte));
+                    }
+                }
                 break;
             case ASSECHER:
                 System.out.println("Clic sur ASSECHER");
@@ -172,6 +182,32 @@ public class Controleur implements Observateur {
                 nbTour = 1;
                 joueurCourant=joueurs.get(i);
                 vue.afficherEtatJeu(nbTour,0,joueurCourant.getRole().getNomRole().toString());
+                
+                for (int i = 0; i < 5; i++) {
+                    pileCarte.add(new CarteTirage(Cartes.CALICE));
+                    pileCarte.add(new CarteTirage(Cartes.CRISTAL));
+                    pileCarte.add(new CarteTirage(Cartes.PIERRE));
+                    pileCarte.add(new CarteTirage(Cartes.ZEPHYR));
+                } 
+                
+                for (int i = 0; i < 2; i++) {
+                    pileCarte.add(new CarteTirage(Cartes.MONTEEDESEAUX));
+                    pileCarte.add(new CarteTirage(Cartes.SACDESABLE));
+                }
+                
+                for (int i = 0; i < 3; i++) {
+                    pileCarte.add(new CarteTirage(Cartes.HELICOPTERE));
+                }
+                
+                Collections.shuffle(pileCarte);
+                
+                for (Aventurier joueur : joueurs) {
+                    for (int i = 0; i < 2; i++) {
+                        joueur.piocherCarte(pileCarte.get(0));
+                        pileCarte.remove(0);
+                    }
+                }
+                
                 break;
             case ANNULER :
                 
@@ -187,7 +223,7 @@ public class Controleur implements Observateur {
         return grille;
     }
 
-    public ArrayList<CarteTresor> getPileCarte() {
+    public ArrayList<CarteTirage> getPileCarte() {
         return pileCarte;
     }
 
@@ -203,8 +239,8 @@ public class Controleur implements Observateur {
         return defausseInnondation;
     }
 
-    public ArrayList<CarteTresor> getDefausseCarte() {
-        return defausseCarte;
+    public ArrayList<CarteTirage> getPileDefausse() {
+        return pileDefausse;
     }
 
 
