@@ -6,7 +6,7 @@
 package Controleur;
 
 import Modele.Aventurier;
-import Modele.CTresor;
+import Modele.CarteTresor;
 import Modele.Explorateur;
 import Modele.Grille;
 import Modele.Grille;
@@ -32,8 +32,8 @@ public class Controleur implements Observateur {
     private ArrayList<Aventurier> joueurs;
     private ArrayList<Innondation> pileInnondation;
     private ArrayList<Innondation> defausseInnondation;
-    private ArrayList<CTresor> pileCarte;
-    private ArrayList<CTresor> defausseCarte;
+    private ArrayList<CarteTresor> pileCarte;
+    private ArrayList<CarteTresor> defausseCarte;
     private Aventurier joueurCourant;
     private boolean gagner;
     private boolean deplacement;
@@ -162,7 +162,7 @@ public class Controleur implements Observateur {
         return grille;
     }
 
-    public ArrayList<CTresor> getPileCarte() {
+    public ArrayList<CarteTresor> getPileCarte() {
         return pileCarte;
     }
 
@@ -178,7 +178,7 @@ public class Controleur implements Observateur {
         return defausseInnondation;
     }
 
-    public ArrayList<CTresor> getDefausseCarte() {
+    public ArrayList<CarteTresor> getDefausseCarte() {
         return defausseCarte;
     }
 

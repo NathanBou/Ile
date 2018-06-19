@@ -50,7 +50,7 @@ public abstract class Aventurier {
      * @param Aventurier
      * @param Carte
      */
-    public void donnerCarte(Aventurier joueur, CTresor carte) {
+    public void donnerCarte(Aventurier joueur, CarteTresor carte) {
         if (nbAction >= 3) {
             System.out.println("Action impossible, nombre d'actions disponibles insuffisants.");
         } else {
