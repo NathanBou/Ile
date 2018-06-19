@@ -55,13 +55,12 @@ public class Controleur implements Observateur {
                 System.out.println(joueurCourant);
                 vue.setVueDeplacement();
                 vue.afficherTuileAccessible(joueurCourant.getTuilesAccessibles(grille));
-                if (joueurCourant.getNbAction()==3){
-                    vue.afficherFinTour();
-                    if(joueurCourant instanceof Pilote) {
-                        Pilote p = (Pilote)joueurCourant;
-                        p.setUtilise(false);
-                    }
+
+                if (joueurCourant instanceof Pilote) {
+                    Pilote p = (Pilote) joueurCourant;
+                    p.setUtilise(false);
                 }
+
                 deplacement = true;
                 break;
             case COORDONNEE:
@@ -70,53 +69,60 @@ public class Controleur implements Observateur {
                     joueurCourant.setNbAction(joueurCourant.getNbAction() + 1);
                     Tuile tuileAvantDeplacement = joueurCourant.getEstSurTuile();
                     Tuile tuileApresDeplacement = grille.getTuile(m.lig, m.col);
-                    if(joueurCourant instanceof Pilote) {
-                        Pilote p = (Pilote)joueurCourant;
+                    if (joueurCourant instanceof Pilote) {
+                        Pilote p = (Pilote) joueurCourant;
                         int x = joueurCourant.getEstSurTuile().getLig();
                         int y = joueurCourant.getEstSurTuile().getCol();
-                        
-                        if(!((m.col==y+1 && m.lig==x) || (m.col==y-1 && m.lig == x) || (m.col == y && m.lig == x+1) || (m.col == y && m.lig == x-1))) {
+
+                        if (!((m.col == y + 1 && m.lig == x) || (m.col == y - 1 && m.lig == x) || (m.col == y && m.lig == x + 1) || (m.col == y && m.lig == x - 1))) {
                             //Si le joueur est un pilote et que son déplacement induit l'utilisation de son pouvoir, le pouvoir du Pilote devient "utilisé"
                             p.setUtilise(true);
                         }//Sinon, l'utilisation du pilote reste à faux
                     }
-                    if(tuileApresDeplacement.getASurTuile().isEmpty()){
+                    if (tuileApresDeplacement.getASurTuile().isEmpty()) {
                         joueurCourant.deplacement(tuileApresDeplacement);
                         vue.afficherDeplacement(m.lig, m.col, joueurCourant, tuileAvantDeplacement);
-                    }else{
+                    } else {
                         joueurCourant.deplacement(tuileApresDeplacement);
-                        vue.afficherDeplacement(m.lig, m.col, joueurCourant, tuileAvantDeplacement,tuileApresDeplacement);
+                        vue.afficherDeplacement(m.lig, m.col, joueurCourant, tuileAvantDeplacement, tuileApresDeplacement);
                     }
-                    
-                    deplacement =false;
-                }else if(assechement){
+
+                    deplacement = false;
+                } else if (assechement) {
                     System.out.println("Clic sur tuile choisi pour assechement");
+                    joueurCourant.setNbAction(joueurCourant.getNbAction() + 1);
                     vue.assecherTuile(m.lig, m.col);
                     grille.getTuile(m.lig, m.col).assecher();
-                    joueurCourant.setNbAction(joueurCourant.getNbAction() + 1);
                     assechement = false;
                 }
-                vue.setVueBoutonsEnabled();
+
+                if (joueurCourant.getNbAction() == 3) {
+                    System.out.println("ZOB");
+                    vue.afficherFinTour();
+                } else {
+                    vue.setVueBoutonsEnabled();
+                }
                 break;
             case FINIRTOUR:
                 System.out.println("Clic sur FINTOUR");
                 if (joueurCourant instanceof Pilote) {
-                    Pilote p = (Pilote)joueurCourant;
+                    Pilote p = (Pilote) joueurCourant;
                     p.setUtilise(false);
                 }
-                i++; 
-                joueurCourant=joueurs.get(i == joueurs.size() ? i=0 : i);
+                i++;
+                joueurCourant = joueurs.get(i == joueurs.size() ? i = 0 : i);
                 nbTour++;
-                vue.afficherEtatJeu(nbTour,joueurCourant.getRole().getNomRole().toString());
+                vue.afficherEtatJeu(nbTour, joueurCourant.getRole().getNomRole().toString());
                 joueurCourant.finTour();
                 vue.afficherDebutTour();
                 break;
             case ASSECHER:
                 System.out.println("Clic sur ASSECHER");
+                joueurCourant.setNbAction(joueurCourant.getNbAction() + 1);
                 vue.afficherTuileAssechable(joueurCourant.getTuilesInondees(grille));
                 System.out.println(joueurCourant.getTuilesInondees(grille));
                 vue.setVueAssecher();
-                if (joueurCourant.getNbAction()==3){
+                if (joueurCourant.getNbAction() == 3) {
                     vue.afficherFinTour();
                 }
                 assechement = true;
@@ -170,11 +176,16 @@ public class Controleur implements Observateur {
                 vue.setVueBoutonsEnabled();
                 gagner = false;
                 nbTour = 1;
-                joueurCourant=joueurs.get(i);
-                vue.afficherEtatJeu(nbTour,0,joueurCourant.getRole().getNomRole().toString());
+                joueurCourant = joueurs.get(i);
+                vue.afficherEtatJeu(nbTour, 0, joueurCourant.getRole().getNomRole().toString());
                 break;
-            case ANNULER :
-                
+            case ANNULER:
+                System.out.println("Annuler");
+                vue.setVueBoutonsEnabled();
+                vue.reinitialiserGrille();
+                System.out.println("**********");
+                System.out.println(joueurCourant.getNbAction());
+                break;
         }
 
     }
@@ -206,6 +217,5 @@ public class Controleur implements Observateur {
     public ArrayList<CarteTresor> getDefausseCarte() {
         return defausseCarte;
     }
-
 
 }

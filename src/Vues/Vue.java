@@ -326,12 +326,7 @@ public class Vue implements Observe {
     public void afficherDeplacement(int lig, int col, Aventurier joueur, Tuile tuileAvantDeplacement) {
         tabTuile[tuileAvantDeplacement.getLig()][tuileAvantDeplacement.getCol()].setBorder((BorderFactory.createLineBorder(Color.LIGHT_GRAY)));
         tabTuile[lig][col].setBorder(BorderFactory.createLineBorder(joueur.getRole().getCouleur().getCouleur(), 4));
-        for (int i = 0; i < 6; i++) {
-            for (int k = 0; k < 6; k++) {
-                tabTuile[i][k].setEnabled(false);
-            }
-
-        }
+        this.reinitialiserGrille();
     }
         public void afficherDeplacement(int lig, int col, Aventurier joueur, Tuile tuileAvantDeplacement,Tuile tuileApresDeplacement) {
         tabTuile[tuileAvantDeplacement.getLig()][tuileAvantDeplacement.getCol()].setBorder((BorderFactory.createLineBorder(Color.LIGHT_GRAY)));
@@ -366,6 +361,7 @@ public class Vue implements Observe {
         assecher.setEnabled(false);
         prendreTresor.setEnabled(false);
         donnerCarte.setEnabled(false);
+        annuler.setEnabled(false);
     }
     public void afficherDebutTour(){
         deplacer.setEnabled(true);
@@ -436,6 +432,15 @@ public class Vue implements Observe {
         assecher.setEnabled(true);
         annuler.setBackground(Color.GREEN);
         annuler.setEnabled(false);
+    }
+    
+    public void reinitialiserGrille() {
+        for (int i = 0; i < 6; i++) {
+            for (int k = 0; k < 6; k++) {
+                tabTuile[i][k].setEnabled(false);
+            }
+
+        }
     }
     
 
