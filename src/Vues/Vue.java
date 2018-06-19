@@ -53,7 +53,6 @@ public class Vue implements Observe {
     private JButton assecher;
     private JButton annuler;
     private JButton finTour;
-    private JLabel pion;
     private JPanel panelCartes1;
     private JPanel panelCartes2;
     private JPanel panelCartes3;
@@ -115,6 +114,7 @@ public class Vue implements Observe {
                         panelBAventu.add(pilote);
                     }
                 }
+                
 
                 panelAventurier.add(panelBAventu, BorderLayout.CENTER);
                 JButton valider = new JButton("Valider");
