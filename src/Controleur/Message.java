@@ -20,6 +20,7 @@ public class Message {
     int lig;
     int col;
     int numCarte;
+    int niveauEau;
     Tuile tuile;
     public Message(TypesMessage type) {
         this.type = type;    
@@ -58,6 +59,14 @@ public class Message {
 
     public void setNumCarte(int numCarte) {
         this.numCarte = numCarte;
+    }
+
+    public int getNiveauEau() {
+        return niveauEau;
+    }
+
+    public void setNiveauEau(int niveauEau) {
+        this.niveauEau = niveauEau;
     }
     
     

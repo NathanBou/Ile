@@ -51,20 +51,32 @@ public abstract class Aventurier {
      * @param Carte
      */
     public void donnerCarte(Aventurier joueur, CarteTirage carte) {
-        if (nbAction >= 3) {
-            System.out.println("Action impossible, nombre d'actions disponibles insuffisants.");
-        } else {
             joueur.cartePossedees.add(carte);
             this.cartePossedees.remove(carte);
             joueur.nbCarte++;
             nbCarte--;
             nbAction++;
-        }
     }
 
-    public void piocherCarte(CarteTirage carte) {
-        this.cartePossedees.add(carte);
-        nbCarte++;
+    public void piocherCarte(ArrayList<CarteTirage> pileCarte) {
+        for (int i = 0; i < 2 ;i++){
+            if(pileCarte.get(0).getNomCarte()!= Cartes.MONTEEDESEAUX){
+              this.cartePossedees.add(pileCarte.get(0));   
+            }
+            pileCarte.remove(0);
+            nbCarte++;
+        }       
+    }
+    public void piocherCarteInondation(ArrayList<CarteInondation> pileCarte,int nivEau) {
+        for (int i = 0; i < nivEau ;i++){
+            System.out.println(pileCarte.get(0).getNomCarte().toString());
+            if (pileCarte.get(0).getNomCarte().getEtat()==EtatTuile.INONDEE){
+                pileCarte.get(0).getNomCarte().setEtat(EtatTuile.COULEE);
+            }else{
+                pileCarte.get(0).getNomCarte().setEtat(EtatTuile.INONDEE);
+            }
+            pileCarte.remove(0);
+        }       
     }
     
     public void defausserCarte(CarteTirage carte) {

@@ -485,8 +485,9 @@ public class Vue implements Observe {
 
         }
     }
-    public void actualiserMain(Aventurier joueur,int numJoueur,int numCarte){
-        tabCarte[numJoueur][numCarte].setText(joueur.cartePossedees.get(numCarte).getNomCarte().toString());
+    public void actualiserMain(Aventurier joueur,int numJoueur){
+        tabCarte[numJoueur][joueur.cartePossedees.size()-2].setText(joueur.cartePossedees.get(joueur.cartePossedees.size()-2).getNomCarte().toString());
+        tabCarte[numJoueur][joueur.cartePossedees.size()-1].setText(joueur.cartePossedees.get(joueur.cartePossedees.size()-1).getNomCarte().toString());
     }
     public void assecherTuile(int lig, int col) {
         tabTuile[lig][col].setBackground(null);
@@ -505,7 +506,9 @@ public class Vue implements Observe {
             }
         }
     }
-
+    public void activerCarte(int numJoueur){
+        
+    }
     public void afficherFinTour() {
 
         finTour.setEnabled(true);
@@ -601,6 +604,20 @@ public class Vue implements Observe {
         for (int i = 0; i < 6; i++) {
             for (int k = 0; k < 6; k++) {
                 tabTuile[i][k].setEnabled(false);
+            }
+
+        }
+    }
+    public void actualiserGrille(Grille g){
+        for (int i = 0; i < 6; i++) {
+            for (int k = 0; k < 6; k++) {
+                if (g.getTuile(i, k).getEtat() == Utils.EtatTuile.COULEE && g.getTuile(i, k).getNomTuile()!=NomTuile.BORDURE) {
+                    //System.out.println(g.getTuile(i, k).getNomTuile().toString());
+                    tabTuile[i][k].setBackground(Color.lightGray);
+                } else if (g.getTuile(i, k).getEtat() == Utils.EtatTuile.INONDEE) {
+                    System.out.println(g.getTuile(i, k).getNomTuile().toString());
+                    tabTuile[i][k].setBackground(new Color(30, 127, 203));
+                }
             }
 
         }
