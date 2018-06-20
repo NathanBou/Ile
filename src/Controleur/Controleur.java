@@ -20,6 +20,7 @@ import Modele.NomTuile;
 import Modele.Pilote;
 import Modele.Plongeur;
 import Modele.Tuile;
+import Modele.Utils;
 import Vues.Vue;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -43,7 +44,7 @@ public class Controleur implements Observateur {
     private boolean assechement;
     private int nbTour;
     private int nivEau;
-    private int i = 0;
+    private int numJoueurs = 0;
 
     public Controleur(Vue vue, Grille grille) {
         this.vue = vue;
@@ -134,9 +135,13 @@ public class Controleur implements Observateur {
                     p.setUtilise(false);
                 }
                 joueurCourant.piocherCarte(pileCarteTresor);
-                System.out.println(joueurCourant);
-                System.out.println(joueurCourant.getCartePossedees());
-                vue.actualiserMain(joueurCourant, i);
+                if (this.joueurCourant.cartePossedees.size() > 9) {
+                    Utils.afficherInformation("Choisir une carte a défausser");
+                    vue.activerCartes(numJoueurs);
+                }
+                vue.actualiserMain(joueurCourant, numJoueurs);
+                joueurCourant.piocherCarteInondation(pileCarteInondation, nivEau);
+                vue.actualiserGrille(grille);
 
                 if (joueurCourant.getNbCarte() > 9) {
                     for (int i = 0; i < joueurCourant.getNbCarte() - 9; i++) {
@@ -144,8 +149,8 @@ public class Controleur implements Observateur {
                         pileDefausseTresor.add(joueurCourant.cartePossedees.get(m.numCarte));
                     }
                 }
-                i++;
-                joueurCourant = joueurs.get(i == joueurs.size() ? i = 0 : i);
+                numJoueurs++;
+                joueurCourant = joueurs.get(numJoueurs == joueurs.size() ? numJoueurs = 0 : numJoueurs);
                 nbTour++;
                 vue.afficherEtatJeu(nbTour, joueurCourant.getRole().getNomRole().toString());
 
@@ -230,7 +235,7 @@ public class Controleur implements Observateur {
                 for (int i = 0; i < 24; i++) {                          //CARTE INNONDATION
                     pileCarteInondation.add(new CarteInondation(grille.getTuile().get(i)));
                 }
-                
+
                 Collections.shuffle(pileCarteInondation);                      //MELANDE DES CARTES INNONDATION
                 Collections.shuffle(pileCarteTresor);                         //MELANGE DES CARTES  TRESOR
 
@@ -240,9 +245,10 @@ public class Controleur implements Observateur {
                 vue.creeJeu(grille, joueurs);
                 vue.setVueBoutonsEnabled();
                 gagner = false;
-                nivEau = m.getNiveauEau();
+                nivEau = 1;
+                //nivEau = m.getNiveauEau();
                 nbTour = 1;
-                joueurCourant = joueurs.get(i);
+                joueurCourant = joueurs.get(numJoueurs);
                 vue.afficherEtatJeu(nbTour, 0, joueurCourant.getRole().getNomRole().toString());
 
                 break;

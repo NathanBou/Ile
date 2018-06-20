@@ -60,9 +60,22 @@ public abstract class Aventurier {
 
     public void piocherCarte(ArrayList<CarteTirage> pileCarte) {
         for (int i = 0; i < 2 ;i++){
-            this.cartePossedees.add(pileCarte.get(0));
+            if(pileCarte.get(0).getNomCarte()!= Cartes.MONTEEDESEAUX){
+              this.cartePossedees.add(pileCarte.get(0));   
+            }
             pileCarte.remove(0);
             nbCarte++;
+        }       
+    }
+    public void piocherCarteInondation(ArrayList<CarteInondation> pileCarte,int nivEau) {
+        for (int i = 0; i < nivEau ;i++){
+            System.out.println(pileCarte.get(0).getNomCarte().toString());
+            if (pileCarte.get(0).getNomCarte().getEtat()==EtatTuile.INONDEE){
+                pileCarte.get(0).getNomCarte().setEtat(EtatTuile.COULEE);
+            }else{
+                pileCarte.get(0).getNomCarte().setEtat(EtatTuile.INONDEE);
+            }
+            pileCarte.remove(0);
         }       
     }
     

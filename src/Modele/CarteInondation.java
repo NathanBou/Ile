@@ -10,16 +10,16 @@ package Modele;
  * @author bouviern
  */
 public class CarteInondation {
-    private NomTuile nomCarte;
+    private Tuile nomCarte;
     public CarteInondation(Tuile tuile){
-        this.nomCarte=tuile.getNomTuile();
+        this.nomCarte=tuile;
     }
 
-    public NomTuile getNomCarte() {
+    public Tuile getNomCarte() {
         return nomCarte;
     }
 
-    public void setNomCarte(NomTuile nomtuile) {
+    public void setNomCarte(Tuile nomtuile) {
         this.nomCarte = nomtuile;
     }
     

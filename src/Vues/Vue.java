@@ -457,7 +457,9 @@ public class Vue implements Observe {
             }
         }
     }
-
+    public void activerCarte(int numJoueur){
+        
+    }
     public void afficherFinTour() {
 
         finTour.setEnabled(true);
@@ -553,6 +555,20 @@ public class Vue implements Observe {
         for (int i = 0; i < 6; i++) {
             for (int k = 0; k < 6; k++) {
                 tabTuile[i][k].setEnabled(false);
+            }
+
+        }
+    }
+    public void actualiserGrille(Grille g){
+        for (int i = 0; i < 6; i++) {
+            for (int k = 0; k < 6; k++) {
+                if (g.getTuile(i, k).getEtat() == Utils.EtatTuile.COULEE && g.getTuile(i, k).getNomTuile()!=NomTuile.BORDURE) {
+                    //System.out.println(g.getTuile(i, k).getNomTuile().toString());
+                    tabTuile[i][k].setBackground(Color.lightGray);
+                } else if (g.getTuile(i, k).getEtat() == Utils.EtatTuile.INONDEE) {
+                    System.out.println(g.getTuile(i, k).getNomTuile().toString());
+                    tabTuile[i][k].setBackground(new Color(30, 127, 203));
+                }
             }
 
         }
