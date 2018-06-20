@@ -69,7 +69,6 @@ public abstract class Aventurier {
     }
     public void piocherCarteInondation(ArrayList<CarteInondation> pileCarte,int nivEau) {
         for (int i = 0; i < nivEau ;i++){
-            System.out.println(pileCarte.get(0).getNomCarte().toString());
             if (pileCarte.get(0).getNomCarte().getEtat()==EtatTuile.INONDEE){
                 pileCarte.get(0).getNomCarte().setEtat(EtatTuile.COULEE);
             }else{

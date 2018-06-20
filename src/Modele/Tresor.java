@@ -6,4 +6,10 @@ public class Tresor extends Tuile {
         super(nomTuile,etat,lig,col);
         this.tresor=tresor;
     }
+
+    public NomTresors getTresor() {
+        return tresor;
+    }
+    
+    
 }

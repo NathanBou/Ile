@@ -45,7 +45,7 @@ public class Vue implements Observe {
     private JLabel tour = new JLabel("", SwingConstants.CENTER);
     private JLabel niveau = new JLabel("", SwingConstants.CENTER);
     private JLabel joueur = new JLabel("", SwingConstants.CENTER);
-    private JButton carte;
+    private Carte carte;
     private JButton[][] tabTuile;
     private JButton[][] tabCarte;
     private JButton prendreTresor;
@@ -59,7 +59,6 @@ public class Vue implements Observe {
     private JPanel panelCartes3;
     private JPanel panelCartes4;
     private JCheckBox[] selectionJoueurs;
-    
     private JButton calice;
     private JButton lion;
     private JButton pierre;
@@ -67,6 +66,7 @@ public class Vue implements Observe {
     
     private final String [] nivEau = { "Novice", 
          "Normal","Elite","Légende"};
+    private JButton crystal;
 
     public Vue() {
         fenetreInit.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
@@ -251,12 +251,12 @@ public class Vue implements Observe {
                                         lion.setBackground(new Color(120,120,120));
                                         lion.setForeground(Color.WHITE);
                                     } else {
-                                        rubis = new CelluleTuile(i, k);
-                                        rubis.setText("Rubis");
-                                        tabTuile[i][k] = rubis;
-                                        panelGrilleTuile.add(rubis);
-                                        rubis.setBackground(Color.RED);
-                                        rubis.setForeground(Color.WHITE);
+                                        crystal = new CelluleTuile(i, k);
+                                        crystal.setText("Rubis");
+                                        tabTuile[i][k] = crystal;
+                                        panelGrilleTuile.add(crystal);
+                                        crystal.setBackground(Color.RED);
+                                        crystal.setForeground(Color.WHITE);
                                     }
                                 }
                             } else {
@@ -355,9 +355,9 @@ public class Vue implements Observe {
                         carte.addActionListener(new ActionListener() {
                             @Override
                             public void actionPerformed(ActionEvent e) {
-                                Message m = new Message(TypesMessage.JOUERCARTE);
-
-                                //A compléter...
+                                Message m = new Message(TypesMessage.DEFAUSSERCARTE);
+                                m.setNumCarte(carte.getNumCarte());
+                                notifierObservateur(m);
                             }
                         });
                         carte.setEnabled(false);
@@ -458,7 +458,7 @@ public class Vue implements Observe {
         calice = new JButton("Calice");
         pierre = new JButton("Pierre");
         lion = new JButton("Lion");
-        rubis = new JButton("Rubis");
+        crystal = new JButton("Rubis");
         
         
         
@@ -504,6 +504,9 @@ public class Vue implements Observe {
     public void actualiserMain(Aventurier joueur,int numJoueur){
         tabCarte[numJoueur][joueur.cartePossedees.size()-2].setText(joueur.cartePossedees.get(joueur.cartePossedees.size()-2).getNomCarte().toString());
         tabCarte[numJoueur][joueur.cartePossedees.size()-1].setText(joueur.cartePossedees.get(joueur.cartePossedees.size()-1).getNomCarte().toString());
+    }
+    public void supprimerCarte(int numJoueurs,int numCarte){
+        tabCarte[numJoueurs][numCarte].setText("/");
     }
     public void assecherTuile(int lig, int col) {
         tabTuile[lig][col].setBackground(null);
@@ -633,7 +636,6 @@ public class Vue implements Observe {
                     //System.out.println(g.getTuile(i, k).getNomTuile().toString());
                     tabTuile[i][k].setBackground(Color.lightGray);
                 } else if (g.getTuile(i, k).getEtat() == Utils.EtatTuile.INONDEE) {
-                    System.out.println(g.getTuile(i, k).getNomTuile().toString());
                     tabTuile[i][k].setBackground(new Color(30, 127, 203));
                 }
             }
@@ -648,6 +650,18 @@ public class Vue implements Observe {
     public void notifierObservateur(Message m) {
         if (observateur != null) {
             observateur.traiterMessage(m);
+        }
+    }
+
+    public void tresorPris(int a) {
+        if(a==0) {
+            calice.setEnabled(false);
+        } else if(a==1) {
+            lion.setEnabled(false);
+        } else if(a==2) {
+            pierre.setEnabled(false);
+        } else {
+            crystal.setEnabled(false);
         }
     }
 
