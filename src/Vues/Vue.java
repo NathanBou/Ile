@@ -44,7 +44,9 @@ public class Vue implements Observe {
     private JLabel tour = new JLabel("", SwingConstants.CENTER);
     private JLabel niveau = new JLabel("", SwingConstants.CENTER);
     private JLabel joueur = new JLabel("", SwingConstants.CENTER);
+    private JButton carte;
     private JButton[][] tabTuile;
+    private JButton[]   tabCarte;
     private JButton prendreTresor;
     private JButton donnerCarte;
     private JButton deplacer;
@@ -59,6 +61,7 @@ public class Vue implements Observe {
     private ArrayList<JCheckBox> selections = new ArrayList();
 
     public Vue() {
+        fenetreInit.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
         fenetreInit.setTitle("L 'ILE INTERDITE INITIALISATION");
         // Définit la taille de la fenêtre en pixels
         fenetreInit.setSize(650, 500);
@@ -101,24 +104,6 @@ public class Vue implements Observe {
                         panelBAventu.add(pilote);
                     }
                 }
-                if (explorateur.isSelected()) {
-                    selections.add(explorateur);
-                }
-                if (ingenieur.isSelected()) {
-                    selections.add(ingenieur);
-                }
-                if (messager.isSelected()){
-                    selections.add(messager);
-                }
-                if(navigateur.isSelected()){
-                    selections.add(navigateur);
-                }
-                if(pilote.isSelected()){
-                    selections.add(pilote);
-                }
-                if(plongeur.isSelected()){
-                    selections.add(plongeur);
-                }
 
                 panelAventurier.add(panelBAventu, BorderLayout.CENTER);
                 JButton valider = new JButton("Valider");
@@ -151,11 +136,13 @@ public class Vue implements Observe {
                     }
                 });
                 mainPanelInit.add(panelAventurier);
+                
             }
         }
 
         fenetreInit.add(mainPanelInit);
         fenetreInit.setVisible(true);
+
     }
 
     public void creeJeu(Grille grille, ArrayList<Aventurier> joueurs) {
@@ -279,7 +266,13 @@ public class Vue implements Observe {
                 // dessin carrés dans panelCartes1,2,3 et 4
                 for (int a = 0; a < joueurs.size(); a++) {
                     for (int i = 0; i < 9; i++) {                        
-                        JButton carte = new JButton(!joueurs.get(a).getCartePossedees().isEmpty() ? joueurs.get(a).getCartePossedees().get(i).getNomCarte().toString() : "/");
+                        System.out.println(joueurs.get(a));
+                        if(i < joueurs.get(a).getCartePossedees().size()){
+                            System.out.println("*");
+                            carte = new JButton(joueurs.get(a).getCartePossedees().get(i).getNomCarte().toString());
+                        }else{
+                            carte = new JButton("/");
+                        }
                         carte.addActionListener(new ActionListener() {
                             @Override
                             public void actionPerformed(ActionEvent e) {
