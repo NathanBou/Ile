@@ -54,20 +54,17 @@ public class Controleur implements Observateur {
     @Override
     public void traiterMessage(Message m) {
         switch (m.type) {
+            
             case DEPLACER:
                 System.out.println("Clic sur Deplacer");
                 System.out.println(joueurCourant);
                 vue.setVueDeplacement();
                 vue.afficherTuileAccessible(joueurCourant.getTuilesAccessibles(grille));
-
-                if (joueurCourant instanceof Pilote) {
-                    Pilote p = (Pilote) joueurCourant;
-                    p.setUtilise(false);
-                }
-
                 deplacement = true;
                 break;
+                
             case COORDONNEE:
+                
                 if (deplacement) {
                     System.out.println("Clic sur tuile choisi pour deplacement");
                     joueurCourant.setNbAction(joueurCourant.getNbAction() + 1);
@@ -90,8 +87,8 @@ public class Controleur implements Observateur {
                         joueurCourant.deplacement(tuileApresDeplacement);
                         vue.afficherDeplacement(m.lig, m.col, joueurCourant, tuileAvantDeplacement, tuileApresDeplacement);
                     }
-
                     deplacement = false;
+                    
                 } else if (assechement) {
                     System.out.println("Clic sur tuile choisi pour assechement");
                     joueurCourant.setNbAction(joueurCourant.getNbAction() + 1);
@@ -101,12 +98,12 @@ public class Controleur implements Observateur {
                 }
 
                 if (joueurCourant.getNbAction() == 3) {
-                    System.out.println("ZOB");
                     vue.afficherFinTour();
                 } else {
                     vue.setVueBoutonsEnabled();
                 }
                 break;
+                
             case FINIRTOUR:
                 System.out.println("Clic sur FINTOUR");
                 if (joueurCourant instanceof Pilote) {
@@ -128,16 +125,24 @@ public class Controleur implements Observateur {
                     }
                 }
                 break;
+                
             case ASSECHER:
                 System.out.println("Clic sur ASSECHER");
                 vue.afficherTuileAssechable(joueurCourant.getTuilesInondees(grille));
                 System.out.println(joueurCourant.getTuilesInondees(grille));
                 vue.setVueAssecher();
+                if(joueurCourant instanceof Ingenieur) {
+                    Ingenieur i = (Ingenieur)joueurCourant;
+                    
+                    i.utiliseSpecial();
+                    
+                }
                 if (joueurCourant.getNbAction() == 3) {
                     vue.afficherFinTour();
                 }
                 assechement = true;
                 break;
+                
             case INITIALISATIONGRILLE:
                 System.out.println("INITIALISATION");
                 joueurs = new ArrayList<Aventurier>();
