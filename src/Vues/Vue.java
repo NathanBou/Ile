@@ -458,7 +458,9 @@ public class Vue implements Observe {
         }
     }
     public void activerCarte(int numJoueur){
-        
+        for (int i =0;i<9;i++){
+            tabCarte[numJoueur][i].setEnabled(true);
+        }
     }
     public void afficherFinTour() {
 

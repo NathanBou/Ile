@@ -137,7 +137,7 @@ public class Controleur implements Observateur {
                 joueurCourant.piocherCarte(pileCarteTresor);
                 if (this.joueurCourant.cartePossedees.size() > 9) {
                     Utils.afficherInformation("Choisir une carte a défausser");
-                    vue.activerCartes(numJoueurs);
+                    vue.activerCarte(numJoueurs);
                 }
                 vue.actualiserMain(joueurCourant, numJoueurs);
                 joueurCourant.piocherCarteInondation(pileCarteInondation, nivEau);
