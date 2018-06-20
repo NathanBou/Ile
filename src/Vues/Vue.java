@@ -62,7 +62,7 @@ public class Vue implements Observe {
     private JButton calice;
     private JButton lion;
     private JButton pierre;
-    private JButton rubis;
+    private JButton crystal;
 
     public Vue() {
         fenetreInit.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
@@ -235,12 +235,12 @@ public class Vue implements Observe {
                                         lion.setBackground(new Color(120,120,120));
                                         lion.setForeground(Color.WHITE);
                                     } else {
-                                        rubis = new CelluleTuile(i, k);
-                                        rubis.setText("Rubis");
-                                        tabTuile[i][k] = rubis;
-                                        panelGrilleTuile.add(rubis);
-                                        rubis.setBackground(Color.RED);
-                                        rubis.setForeground(Color.WHITE);
+                                        crystal = new CelluleTuile(i, k);
+                                        crystal.setText("Rubis");
+                                        tabTuile[i][k] = crystal;
+                                        panelGrilleTuile.add(crystal);
+                                        crystal.setBackground(Color.RED);
+                                        crystal.setForeground(Color.WHITE);
                                     }
                                 }
                             } else {
@@ -442,7 +442,7 @@ public class Vue implements Observe {
         calice = new JButton("Calice");
         pierre = new JButton("Pierre");
         lion = new JButton("Lion");
-        rubis = new JButton("Rubis");
+        crystal = new JButton("Rubis");
         
         
         
@@ -632,6 +632,18 @@ public class Vue implements Observe {
     public void notifierObservateur(Message m) {
         if (observateur != null) {
             observateur.traiterMessage(m);
+        }
+    }
+
+    public void tresorPris(int a) {
+        if(a==0) {
+            calice.setEnabled(false);
+        } else if(a==1) {
+            lion.setEnabled(false);
+        } else if(a==2) {
+            pierre.setEnabled(false);
+        } else {
+            crystal.setEnabled(false);
         }
     }
 

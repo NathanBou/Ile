@@ -16,9 +16,11 @@ import Modele.Ingenieur;
 import Modele.Messager;
 import Modele.Navigateur;
 import Modele.NomRole;
+import Modele.NomTresors;
 import Modele.NomTuile;
 import Modele.Pilote;
 import Modele.Plongeur;
+import Modele.Tresor;
 import Modele.Tuile;
 import Modele.Utils;
 import Vues.Vue;
@@ -45,6 +47,7 @@ public class Controleur implements Observateur {
     private int nbTour;
     private int nivEau;
     private int numJoueurs = 0;
+    private ArrayList<Tresor> collectionTresor;
 
     public Controleur(Vue vue, Grille grille) {
         this.vue = vue;
@@ -54,6 +57,7 @@ public class Controleur implements Observateur {
         pileDefausseTresor = new ArrayList();
         pileCarteInondation = new ArrayList();
         pileDefausseInondation = new ArrayList();
+        collectionTresor = new ArrayList();
     }
 
     @Override
@@ -262,6 +266,17 @@ public class Controleur implements Observateur {
                 System.out.println("**********");
                 System.out.println(joueurCourant.getNbAction());
                 break;
+                
+            case PRENDRETRESOR:
+                System.out.println("Prendre Trésor");
+                    if(grille.getTuile(m.lig, m.col) instanceof Tresor) {
+                        Tresor t = (Tresor)grille.getTuile(m.lig, m.col);
+                        int a = (t.getTresor()== NomTresors.CALICE? 0 : t.getTresor()== NomTresors.LION? 1 : t.getTresor()== NomTresors.PIERRE? 2 : 3 ); // Calice = 0, Lion = 1, Pierre = 2, Crystal = 3.
+                        vue.tresorPris(a);
+                        if(!collectionTresor.contains(t)) {
+                            collectionTresor.add(t);
+                        }
+                    }
         }
 
     }
