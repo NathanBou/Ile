@@ -129,20 +129,25 @@ public class Controleur implements Observateur {
                     Pilote p = (Pilote) joueurCourant;
                     p.setUtilise(false);
                 }
-                i++;
-                joueurCourant = joueurs.get(i == joueurs.size() ? i = 0 : i);
-                nbTour++;
-                vue.afficherEtatJeu(nbTour,joueurCourant.getRole().getNomRole().toString());
                 joueurCourant.piocherCarte(pileCarte.get(0));
+                System.out.println(joueurCourant);
+                System.out.println(joueurCourant.getCartePossedees());
+                vue.actualiserMain(joueurCourant,i , joueurCourant.getCartePossedees().size()-1);
                 pileCarte.remove(0);
-                joueurCourant.finTour();
-                vue.afficherDebutTour();
                 if (joueurCourant.getNbCarte()>9) {
                     for (int i = 0; i < joueurCourant.getNbCarte()-9; i++) {
                         joueurCourant.defausserCarte(joueurCourant.cartePossedees.get(m.numCarte));
                         pileDefausse.add(joueurCourant.cartePossedees.get(m.numCarte));
                     }
                 }
+                i++;
+                joueurCourant = joueurs.get(i == joueurs.size() ? i = 0 : i);
+                nbTour++;
+                vue.afficherEtatJeu(nbTour,joueurCourant.getRole().getNomRole().toString());
+                
+                joueurCourant.finTour();
+                vue.afficherDebutTour();
+                
                 break;
                 
             case ASSECHER:
