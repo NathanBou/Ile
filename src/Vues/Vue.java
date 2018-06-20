@@ -34,6 +34,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import Vues.CelluleTuile;
+import javax.swing.JComboBox;
 
 public class Vue implements Observe {
 
@@ -63,6 +64,9 @@ public class Vue implements Observe {
     private JButton lion;
     private JButton pierre;
     private JButton rubis;
+    
+    private final String [] nivEau = { "Novice", 
+         "Normal","Elite","Légende"};
 
     public Vue() {
         fenetreInit.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
@@ -86,10 +90,22 @@ public class Vue implements Observe {
                 JLabel saisirJ = new JLabel("Cocher le nombre de joueur");
                 JLabel messageErreur = new JLabel("", SwingConstants.CENTER);
                 saisirJ.setHorizontalAlignment(JLabel.CENTER);
-                JPanel casesTexte = new JPanel(new GridLayout(2,0));
+                JPanel casesTexte = new JPanel(new GridLayout(4,0));
                 panelAventurier.add(casesTexte, BorderLayout.NORTH);
+                
+                
+                JLabel eau = new JLabel("Veuillez choisir la difficulté :");
+                JComboBox listNivEau = new JComboBox(nivEau);
+                listNivEau.setSelectedIndex(0);
+                eau.setHorizontalAlignment(JLabel.CENTER);
+                //listNivEau.setPreferredSize(new Dimension(15, 15));
+                
+                
+         
                 casesTexte.add(saisirJ);
                 casesTexte.add(messageErreur);
+                casesTexte.add(eau);
+                casesTexte.add(listNivEau);
                 JCheckBox explorateur = new JCheckBox("Explorateur");
                 JCheckBox ingenieur = new JCheckBox("Ingenieur");
                 JCheckBox messager = new JCheckBox("Messager");
