@@ -73,7 +73,7 @@ public class Controleur implements Observateur {
                 deplacement = true;
                 break;
 
-            case COORDONNEE:
+            case COORDONNEE: // ENLEVER TUILES TRESORS DE LA FONCTION QUI DISABLE TOUTES LES TUILES
 
                 if (deplacement) {
                     System.out.println("Clic sur tuile choisi pour deplacement");
