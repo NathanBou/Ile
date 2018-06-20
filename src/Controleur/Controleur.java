@@ -5,12 +5,12 @@
  */
 package Controleur;
 
+import static Controleur.TypesMessage.DEFAUSSERCARTE;
 import Modele.Aventurier;
 import Modele.CarteInondation;
 import Modele.CarteTirage;
 import Modele.Cartes;
 import Modele.Explorateur;
-import Modele.Grille;
 import Modele.Grille;
 import Modele.Ingenieur;
 import Modele.Messager;
@@ -42,6 +42,7 @@ public class Controleur implements Observateur {
     private boolean gagner;
     private boolean deplacement;
     private boolean assechement;
+    private boolean defausser;
     private int nbTour;
     private int nivEau;
     private int numJoueurs = 0;
@@ -134,21 +135,29 @@ public class Controleur implements Observateur {
                     Pilote p = (Pilote) joueurCourant;
                     p.setUtilise(false);
                 }
-                joueurCourant.piocherCarte(pileCarteTresor);
-                if (this.joueurCourant.cartePossedees.size() > 9) {
-                    Utils.afficherInformation("Choisir une carte a défausser");
+
+                if (this.joueurCourant.cartePossedees.size() + 2 > 5) {
+
+                    Utils.afficherInformation("Choisir " + (this.joueurCourant.cartePossedees.size() + 2 - 5) + "carte a défausser");
+                    defausser = true;
                     vue.activerCarte(numJoueurs);
+                    System.out.println("suppr");
+                    switch (m.type.DEFAUSSERCARTE){
+                        case DEFAUSSERCARTE :
+                        System.out.println("Defausser carte");
+                        joueurCourant.defausserCarte(joueurCourant.cartePossedees.get(m.numCarte));
+                        pileDefausseTresor.add(joueurCourant.cartePossedees.get(m.numCarte));
+                        vue.supprimerCarte(numJoueurs, m.numCarte);
+                        System.out.println("suppr");
+                        defausser = this.joueurCourant.cartePossedees.size() > 5;
+                    }
+
                 }
+
+                joueurCourant.piocherCarte(pileCarteTresor);
                 vue.actualiserMain(joueurCourant, numJoueurs);
                 joueurCourant.piocherCarteInondation(pileCarteInondation, nivEau);
                 vue.actualiserGrille(grille);
-
-                if (joueurCourant.getNbCarte() > 9) {
-                    for (int i = 0; i < joueurCourant.getNbCarte() - 9; i++) {
-                        joueurCourant.defausserCarte(joueurCourant.cartePossedees.get(m.numCarte));
-                        pileDefausseTresor.add(joueurCourant.cartePossedees.get(m.numCarte));
-                    }
-                }
                 numJoueurs++;
                 joueurCourant = joueurs.get(numJoueurs == joueurs.size() ? numJoueurs = 0 : numJoueurs);
                 nbTour++;
@@ -209,8 +218,6 @@ public class Controleur implements Observateur {
                         pilote.setApparition(grille.getTuile(2, 3));
                         grille.getTuile(2, 3).estSurTuile(pilote);
                         System.out.println("PILOTE");
-                    } else {
-                        System.out.println("Trop de joueur");
                     }
                 }
                 for (Aventurier joueur : joueurs) {
@@ -259,9 +266,10 @@ public class Controleur implements Observateur {
                 vue.reinitialiserGrille();
                 deplacement = false;
                 assechement = false;
-                System.out.println("**********");
-                System.out.println(joueurCourant.getNbAction());
                 break;
+            case DEFAUSSERCARTE:
+                 
+                        break;
         }
 
     }

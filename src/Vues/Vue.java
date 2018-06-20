@@ -44,7 +44,7 @@ public class Vue implements Observe {
     private JLabel tour = new JLabel("", SwingConstants.CENTER);
     private JLabel niveau = new JLabel("", SwingConstants.CENTER);
     private JLabel joueur = new JLabel("", SwingConstants.CENTER);
-    private JButton carte;
+    private Carte carte;
     private JButton[][] tabTuile;
     private JButton[][] tabCarte;
     private JButton prendreTresor;
@@ -58,7 +58,6 @@ public class Vue implements Observe {
     private JPanel panelCartes3;
     private JPanel panelCartes4;
     private JCheckBox[] selectionJoueurs;
-    
     private JButton calice;
     private JButton lion;
     private JButton pierre;
@@ -339,9 +338,9 @@ public class Vue implements Observe {
                         carte.addActionListener(new ActionListener() {
                             @Override
                             public void actionPerformed(ActionEvent e) {
-                                Message m = new Message(TypesMessage.JOUERCARTE);
-
-                                //A compléter...
+                                Message m = new Message(TypesMessage.DEFAUSSERCARTE);
+                                m.setNumCarte(carte.getNumCarte());
+                                notifierObservateur(m);
                             }
                         });
                         carte.setEnabled(false);
@@ -489,6 +488,9 @@ public class Vue implements Observe {
         tabCarte[numJoueur][joueur.cartePossedees.size()-2].setText(joueur.cartePossedees.get(joueur.cartePossedees.size()-2).getNomCarte().toString());
         tabCarte[numJoueur][joueur.cartePossedees.size()-1].setText(joueur.cartePossedees.get(joueur.cartePossedees.size()-1).getNomCarte().toString());
     }
+    public void supprimerCarte(int numJoueurs,int numCarte){
+        tabCarte[numJoueurs][numCarte].setText("/");
+    }
     public void assecherTuile(int lig, int col) {
         tabTuile[lig][col].setBackground(null);
         tabTuile[lig][col].setEnabled(false);
@@ -617,7 +619,6 @@ public class Vue implements Observe {
                     //System.out.println(g.getTuile(i, k).getNomTuile().toString());
                     tabTuile[i][k].setBackground(Color.lightGray);
                 } else if (g.getTuile(i, k).getEtat() == Utils.EtatTuile.INONDEE) {
-                    System.out.println(g.getTuile(i, k).getNomTuile().toString());
                     tabTuile[i][k].setBackground(new Color(30, 127, 203));
                 }
             }

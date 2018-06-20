@@ -74,7 +74,6 @@ public class Grille {
                 }
             }
         }
-        System.out.println(arrtuiles.size());
         return arrtuiles;
     }
 }
