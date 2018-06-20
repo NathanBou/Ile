@@ -1,8 +1,9 @@
 package Modele;
 import Modele.Utils.EtatTuile;
 public class Tresor extends Tuile {
-
-    public Tresor(int x, int y, NomTuile nomTuile,EtatTuile etat,int lig, int col) {
+    private NomTresors tresor;
+    public Tresor(NomTuile nomTuile,EtatTuile etat,int lig, int col,NomTresors tresor) {
         super(nomTuile,etat,lig,col);
+        this.tresor=tresor;
     }
 }
