@@ -202,38 +202,42 @@ public class Controleur implements Observateur {
                 for (Aventurier joueur : joueurs) {
                     System.out.println("*" + joueur.getRole().getNomRole().toString());
                 }
-                vue.creeJeu(grille, joueurs);
-                vue.setVueBoutonsEnabled();
-                gagner = false;
-                nbTour = 1;
-                joueurCourant=joueurs.get(i);
-                vue.afficherEtatJeu(nbTour,0,joueurCourant.getRole().getNomRole().toString());
-                
-                for (int i = 0; i < 5; i++) {
+                //Creation et distribution des cartes
+                for (int i = 0; i < 5; i++) {                           //CARTE TRESOR
                     pileCarte.add(new CarteTirage(Cartes.CALICE));
                     pileCarte.add(new CarteTirage(Cartes.CRISTAL));
                     pileCarte.add(new CarteTirage(Cartes.PIERRE));
                     pileCarte.add(new CarteTirage(Cartes.ZEPHYR));
                 } 
                 
-                for (int i = 0; i < 2; i++) {
+                for (int i = 0; i < 2; i++) {                           //CARTE SPECIAL
                     pileCarte.add(new CarteTirage(Cartes.MONTEEDESEAUX));
                     pileCarte.add(new CarteTirage(Cartes.SACDESABLE));
                 }
                 
-                for (int i = 0; i < 3; i++) {
+                for (int i = 0; i < 3; i++) {                           //CARTE HELICOPTERE
                     pileCarte.add(new CarteTirage(Cartes.HELICOPTERE));
                 }
                 
-                Collections.shuffle(pileCarte);
+                Collections.shuffle(pileCarte);                         //MELANGE DES CARTES
                 
-                for (Aventurier joueur : joueurs) {
+                for (Aventurier joueur : joueurs) {                     //DISTRIBUTION DES CARTES
                     for (int i = 0; i < 2; i++) {
                         joueur.piocherCarte(pileCarte.get(0));
                         pileCarte.remove(0);
                     }
                 }
+                for (Aventurier joueur : joueurs) {
+                    System.out.println(joueur.getCartePossedees());
+                }
                 
+                vue.creeJeu(grille, joueurs);
+                vue.setVueBoutonsEnabled();
+                gagner = false;
+                nbTour = 1;
+                joueurCourant=joueurs.get(i);
+                vue.afficherEtatJeu(nbTour,0,joueurCourant.getRole().getNomRole().toString());
+
                 break;
             
             case ANNULER:
