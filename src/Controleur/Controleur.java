@@ -98,13 +98,13 @@ public class Controleur implements Observateur {
                 }
 
                 if (joueurCourant.getRole().getNomRole()!=NomRole.NAVIGATEUR){
-                    if(joueurCourant.getNbAction() == 3) {
+                    if(joueurCourant.getNbAction() >= 3) {
                         vue.afficherFinTour();
                     } else {
                         vue.setVueBoutonsEnabled();
                     }
-                }else if(joueurCourant.getRole().getNomRole()==NomRole.NAVIGATEUR){
-                    if(joueurCourant.getNbAction() == 4) {
+                }else { // Si le joueur est un navigateur, il dispose de 4 actions.
+                    if(joueurCourant.getNbAction() >= 4) {
                         vue.afficherFinTour();
                     } else {
                         vue.setVueBoutonsEnabled();
@@ -235,6 +235,8 @@ public class Controleur implements Observateur {
                 System.out.println("Annuler");
                 vue.setVueBoutonsEnabled();
                 vue.reinitialiserGrille();
+                deplacement = false;
+                assechement = false;
                 System.out.println("**********");
                 System.out.println(joueurCourant.getNbAction());
                 break;

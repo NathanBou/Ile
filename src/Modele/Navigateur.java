@@ -12,7 +12,6 @@ package Modele;
 public class Navigateur extends Aventurier {
     public Navigateur() {
         super(new Role(NomRole.NAVIGATEUR, Utils.Pion.JAUNE));
-        this.setNbAction(4);
     }
     
 }
