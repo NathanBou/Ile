@@ -29,4 +29,8 @@ public class Ingenieur extends Aventurier {
             }
         }
     }
+
+    public void reinitSpecial() {
+        this.special = -1;
+    }
 }

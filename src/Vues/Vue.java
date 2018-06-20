@@ -58,7 +58,7 @@ public class Vue implements Observe {
     private JPanel panelCartes2;
     private JPanel panelCartes3;
     private JPanel panelCartes4;
-    private ArrayList<JCheckBox> selections = new ArrayList();
+    private JCheckBox[] selectionJoueurs;
 
     public Vue() {
         fenetreInit.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
@@ -80,8 +80,12 @@ public class Vue implements Observe {
             } else {
                 JPanel panelAventurier = new JPanel(new BorderLayout());
                 JLabel saisirJ = new JLabel("Cocher le nombre de joueur");
+                JLabel messageErreur = new JLabel("", SwingConstants.CENTER);
                 saisirJ.setHorizontalAlignment(JLabel.CENTER);
-                panelAventurier.add(saisirJ, BorderLayout.NORTH);
+                JPanel casesTexte = new JPanel(new GridLayout(2,0));
+                panelAventurier.add(casesTexte, BorderLayout.NORTH);
+                casesTexte.add(saisirJ);
+                casesTexte.add(messageErreur);
                 JCheckBox explorateur = new JCheckBox("Explorateur");
                 JCheckBox ingenieur = new JCheckBox("Ingenieur");
                 JCheckBox messager = new JCheckBox("Messager");
@@ -89,18 +93,25 @@ public class Vue implements Observe {
                 JCheckBox pilote = new JCheckBox("Pilote");
                 JCheckBox plongeur = new JCheckBox("Plongeur");
                 JPanel panelBAventu = new JPanel(new GridLayout(0, 6));
+                selectionJoueurs = new JCheckBox[6];
                 for (int j = 0; j < 6; j++) {
                     if (j == 0) {
+                        selectionJoueurs[j] = explorateur;
                         panelBAventu.add(explorateur);
                     } else if (j == 1) {
+                        selectionJoueurs[j] = ingenieur;
                         panelBAventu.add(ingenieur);
                     } else if (j == 2) {
+                        selectionJoueurs[j] = messager;
                         panelBAventu.add(messager);
                     } else if (j == 3) {
+                        selectionJoueurs[j] = navigateur;
                         panelBAventu.add(navigateur);
                     } else if (j == 4) {
+                        selectionJoueurs[j] = plongeur;
                         panelBAventu.add(plongeur);
                     } else {
+                        selectionJoueurs[j] = pilote;
                         panelBAventu.add(pilote);
                     }
                 }
@@ -108,31 +119,42 @@ public class Vue implements Observe {
                 panelAventurier.add(panelBAventu, BorderLayout.CENTER);
                 JButton valider = new JButton("Valider");
                 panelAventurier.add(valider, BorderLayout.SOUTH);
+                
                 valider.addActionListener(
                         new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         Message m = new Message(TypesMessage.INITIALISATIONGRILLE);
-                        if (explorateur.isSelected()) {
-                            m.ajouterJoueur(NomRole.EXPLORATEUR);
+                        int compt = 0;
+                        for (int i = 0; i < selectionJoueurs.length; i++) {
+                            if (selectionJoueurs[i].isSelected()) {
+                                compt += 1;
+                            }
                         }
-                        if (ingenieur.isSelected()) {
-                            m.ajouterJoueur(NomRole.INGENIEUR);
+                        if (compt >= 2 && compt <= 4) {
+                            if(explorateur.isSelected()) {
+                                m.ajouterJoueur(NomRole.EXPLORATEUR);
+                            }
+                            if(ingenieur.isSelected()) {
+                                m.ajouterJoueur(NomRole.INGENIEUR);
+                            }
+                            if(messager.isSelected()) {
+                                m.ajouterJoueur(NomRole.MESSAGER);
+                            }
+                            if(navigateur.isSelected()) {
+                                m.ajouterJoueur(NomRole.NAVIGATEUR);
+                            }
+                            if(plongeur.isSelected()) {
+                                m.ajouterJoueur(NomRole.PLONGEUR);
+                            }
+                            if(pilote.isSelected()) {
+                                m.ajouterJoueur(NomRole.PILOTE);
+                            }
+                            notifierObservateur(m);
+                            fenetreInit.dispose();
+                        } else {
+                            messageErreur.setText("Pas assez ou trop de joueurs sélectionnés. Veuillez en sélectionner entre 2 et 4.");
                         }
-                        if (messager.isSelected()) {
-                            m.ajouterJoueur(NomRole.MESSAGER);
-                        }
-                        if (navigateur.isSelected()) {
-                            m.ajouterJoueur(NomRole.NAVIGATEUR);
-                        }
-                        if (pilote.isSelected()) {
-                            m.ajouterJoueur(NomRole.PILOTE);
-                        }
-                        if (plongeur.isSelected()) {
-                            m.ajouterJoueur(NomRole.PLONGEUR);
-                        }
-                        notifierObservateur(m);
-                        fenetreInit.dispose();
                     }
                 });
                 mainPanelInit.add(panelAventurier);
