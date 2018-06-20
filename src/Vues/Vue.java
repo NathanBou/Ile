@@ -149,7 +149,7 @@ public class Vue implements Observe {
                             notifierObservateur(m);
                             fenetreInit.dispose();
                         } else {
-                            messageErreur.setText("Pas assez ou trop de joueurs sélectionnés. Veuillez en sélectionner entre 2 et 4.");
+                            messageErreur.setText("Veuillez ne sélectionner que 2, 3 ou 4 joueurs.");
                         }
                     }
                 });
