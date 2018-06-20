@@ -256,11 +256,10 @@ public class Controleur implements Observateur {
                 vue.creeJeu(grille, joueurs);
                 vue.setVueBoutonsEnabled();
                 gagner = false;
-                nivEau = 1;
-                //nivEau = m.getNiveauEau();
+                nivEau = m.getNiveauEau();
                 nbTour = 1;
                 joueurCourant = joueurs.get(numJoueurs);
-                vue.afficherEtatJeu(nbTour, 0, joueurCourant.getRole().getNomRole().toString());
+                vue.afficherEtatJeu(nbTour, nivEau, joueurCourant.getRole().getNomRole().toString());
 
                 break;
 

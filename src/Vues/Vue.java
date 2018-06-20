@@ -63,9 +63,9 @@ public class Vue implements Observe {
     private JButton lion;
     private JButton pierre;
     private JButton rubis;
-    
-    private final String [] nivEau = { "Novice", 
-         "Normal","Elite","Légende"};
+    private JComboBox listNivEau;
+    private final String[] nivEau = {"Novice",
+        "Normal", "Elite", "Légende"};
     private JButton crystal;
 
     public Vue() {
@@ -90,18 +90,15 @@ public class Vue implements Observe {
                 JLabel saisirJ = new JLabel("Cocher le nombre de joueur");
                 JLabel messageErreur = new JLabel("", SwingConstants.CENTER);
                 saisirJ.setHorizontalAlignment(JLabel.CENTER);
-                JPanel casesTexte = new JPanel(new GridLayout(4,0));
+                JPanel casesTexte = new JPanel(new GridLayout(4, 0));
                 panelAventurier.add(casesTexte, BorderLayout.NORTH);
-                
-                
+
                 JLabel eau = new JLabel("Veuillez choisir la difficulté :");
-                JComboBox listNivEau = new JComboBox(nivEau);
+                listNivEau = new JComboBox(nivEau);
                 listNivEau.setSelectedIndex(0);
                 eau.setHorizontalAlignment(JLabel.CENTER);
                 //listNivEau.setPreferredSize(new Dimension(15, 15));
-                
-                
-         
+
                 casesTexte.add(saisirJ);
                 casesTexte.add(messageErreur);
                 casesTexte.add(eau);
@@ -135,12 +132,11 @@ public class Vue implements Observe {
                         panelBAventu.add(pilote);
                     }
                 }
-                
 
                 panelAventurier.add(panelBAventu, BorderLayout.CENTER);
                 JButton valider = new JButton("Valider");
                 panelAventurier.add(valider, BorderLayout.SOUTH);
-                
+
                 valider.addActionListener(
                         new ActionListener() {
                     @Override
@@ -153,23 +149,38 @@ public class Vue implements Observe {
                             }
                         }
                         if (compt >= 2 && compt <= 4) {
-                            if(explorateur.isSelected()) {
+                            if (explorateur.isSelected()) {
                                 m.ajouterJoueur(NomRole.EXPLORATEUR);
                             }
-                            if(ingenieur.isSelected()) {
+                            if (ingenieur.isSelected()) {
                                 m.ajouterJoueur(NomRole.INGENIEUR);
                             }
-                            if(messager.isSelected()) {
+                            if (messager.isSelected()) {
                                 m.ajouterJoueur(NomRole.MESSAGER);
                             }
-                            if(navigateur.isSelected()) {
+                            if (navigateur.isSelected()) {
                                 m.ajouterJoueur(NomRole.NAVIGATEUR);
                             }
-                            if(plongeur.isSelected()) {
+                            if (plongeur.isSelected()) {
                                 m.ajouterJoueur(NomRole.PLONGEUR);
                             }
-                            if(pilote.isSelected()) {
+                            if (pilote.isSelected()) {
                                 m.ajouterJoueur(NomRole.PILOTE);
+                            }
+                            if (listNivEau.getSelectedItem().equals("Novice") || listNivEau.getSelectedItem().equals("Normal")) {
+                                m.setNiveauEau(2);
+                                if(listNivEau.getSelectedItem().equals("Novice")){
+                                    m.setGrad(0);
+                                }else{
+                                    m.setGrad(1);
+                                }
+                            } else {
+                                if(listNivEau.getSelectedItem().equals("Elite")){
+                                    m.setGrad(2);
+                                }else{
+                                    m.setGrad(3);
+                                }
+                                m.setNiveauEau(3);
                             }
                             notifierObservateur(m);
                             fenetreInit.dispose();
@@ -179,7 +190,7 @@ public class Vue implements Observe {
                     }
                 });
                 mainPanelInit.add(panelAventurier);
-                
+
             }
         }
 
@@ -225,31 +236,15 @@ public class Vue implements Observe {
                 for (int i = 0; i < 6; i++) {
                     for (int k = 0; k < 6; k++) {
                         if (grille.getTuile(i, k).getNomTuile() == NomTuile.BORDURE) {
-                            if((i==0 && k==0) || (i==0 && k==5) || (i==5 && k==0) || (i==5 && k==5)) {
-                                if(i==0) {
-                                    if(k==0) {
+                            if ((i == 0 && k == 0) || (i == 0 && k == 5) || (i == 5 && k == 0) || (i == 5 && k == 5)) {
+                                if (i == 0) {
+                                    if (k == 0) {
                                         calice = new CelluleTuile(i, k);
                                         calice.setText("Calice");
                                         tabTuile[i][k] = calice;
                                         panelGrilleTuile.add(calice);
                                         calice.setBackground(new Color(0, 149, 182));
                                         calice.setForeground(Color.WHITE);
-                                    } else {
-                                        pierre = new CelluleTuile(i, k);
-                                        pierre.setText("Pierre");
-                                        tabTuile[i][k] = pierre;
-                                        panelGrilleTuile.add(pierre);
-                                        pierre.setBackground(new Color(91, 60, 17));
-                                        pierre.setForeground(Color.WHITE);
-                                    }
-                                } else {
-                                    if(k==0) {
-                                        lion = new CelluleTuile(i, k);
-                                        lion.setText("Lion");
-                                        tabTuile[i][k] = lion;
-                                        panelGrilleTuile.add(lion);
-                                        lion.setBackground(new Color(120,120,120));
-                                        lion.setForeground(Color.WHITE);
                                     } else {
                                         crystal = new CelluleTuile(i, k);
                                         crystal.setText("Rubis");
@@ -258,11 +253,28 @@ public class Vue implements Observe {
                                         crystal.setBackground(Color.RED);
                                         crystal.setForeground(Color.WHITE);
                                     }
+                                } else {
+                                    if (k == 0) {
+                                        lion = new CelluleTuile(i, k);
+                                        lion.setText("Lion");
+                                        tabTuile[i][k] = lion;
+                                        panelGrilleTuile.add(lion);
+                                        lion.setBackground(new Color(240, 195, 0));
+                                        lion.setForeground(Color.WHITE);
+                                    } else {
+
+                                        pierre = new CelluleTuile(i, k);
+                                        pierre.setText("Pierre");
+                                        tabTuile[i][k] = pierre;
+                                        panelGrilleTuile.add(pierre);
+                                        pierre.setBackground(new Color(91, 60, 17));
+                                        pierre.setForeground(Color.WHITE);
+                                    }
                                 }
                             } else {
-                            panelGrilleTuile.add(new JLabel("", SwingConstants.CENTER));
-                            CelluleTuile tuile = new CelluleTuile(i, k);
-                            tabTuile[i][k] = tuile;
+                                panelGrilleTuile.add(new JLabel("", SwingConstants.CENTER));
+                                CelluleTuile tuile = new CelluleTuile(i, k);
+                                tabTuile[i][k] = tuile;
                             }
                         } else {
                             CelluleTuile bTuile = new CelluleTuile(i, k);
@@ -343,15 +355,15 @@ public class Vue implements Observe {
                 BorderCartes4.add(panelCartes4, BorderLayout.CENTER);
 
                 // dessin carrés dans panelCartes1,2,3 et 4
-                tabCarte= new JButton[joueurs.size()][9];
+                tabCarte = new JButton[joueurs.size()][9];
                 for (int a = 0; a < joueurs.size(); a++) {
-                    for (int i = 0; i < 9; i++) {                        
-                        if(i < joueurs.get(a).getCartePossedees().size()){
-                            carte = new Carte(a,i,joueurs.get(a).getCartePossedees().get(i).getNomCarte().toString());                            
-                        }else{
-                            carte = new Carte(a,i,"/");
+                    for (int i = 0; i < 9; i++) {
+                        if (i < joueurs.get(a).getCartePossedees().size()) {
+                            carte = new Carte(a, i, joueurs.get(a).getCartePossedees().get(i).getNomCarte().toString());
+                        } else {
+                            carte = new Carte(a, i, "/");
                         }
-                        tabCarte[a][i]=carte;
+                        tabCarte[a][i] = carte;
                         carte.addActionListener(new ActionListener() {
                             @Override
                             public void actionPerformed(ActionEvent e) {
@@ -454,14 +466,12 @@ public class Vue implements Observe {
 
             }
         }
-        
+
         calice = new JButton("Calice");
         pierre = new JButton("Pierre");
         lion = new JButton("Lion");
         crystal = new JButton("Rubis");
-        
-        
-        
+
         panelMilieu.add(panelCentre);
         mainPanel.add(panelMilieu, BorderLayout.CENTER);
         // Panel Bas
@@ -501,13 +511,16 @@ public class Vue implements Observe {
 
         }
     }
-    public void actualiserMain(Aventurier joueur,int numJoueur){
-        tabCarte[numJoueur][joueur.cartePossedees.size()-2].setText(joueur.cartePossedees.get(joueur.cartePossedees.size()-2).getNomCarte().toString());
-        tabCarte[numJoueur][joueur.cartePossedees.size()-1].setText(joueur.cartePossedees.get(joueur.cartePossedees.size()-1).getNomCarte().toString());
+
+    public void actualiserMain(Aventurier joueur, int numJoueur) {
+        tabCarte[numJoueur][joueur.cartePossedees.size() - 2].setText(joueur.cartePossedees.get(joueur.cartePossedees.size() - 2).getNomCarte().toString());
+        tabCarte[numJoueur][joueur.cartePossedees.size() - 1].setText(joueur.cartePossedees.get(joueur.cartePossedees.size() - 1).getNomCarte().toString());
     }
-    public void supprimerCarte(int numJoueurs,int numCarte){
+
+    public void supprimerCarte(int numJoueurs, int numCarte) {
         tabCarte[numJoueurs][numCarte].setText("/");
     }
+
     public void assecherTuile(int lig, int col) {
         tabTuile[lig][col].setBackground(null);
         tabTuile[lig][col].setEnabled(false);
@@ -525,11 +538,13 @@ public class Vue implements Observe {
             }
         }
     }
-    public void activerCarte(int numJoueur){
-        for (int i =0;i<9;i++){
+
+    public void activerCarte(int numJoueur) {
+        for (int i = 0; i < 9; i++) {
             tabCarte[numJoueur][i].setEnabled(true);
         }
     }
+
     public void afficherFinTour() {
 
         finTour.setEnabled(true);
@@ -629,10 +644,11 @@ public class Vue implements Observe {
 
         }
     }
-    public void actualiserGrille(Grille g){
+
+    public void actualiserGrille(Grille g) {
         for (int i = 0; i < 6; i++) {
             for (int k = 0; k < 6; k++) {
-                if (g.getTuile(i, k).getEtat() == Utils.EtatTuile.COULEE && g.getTuile(i, k).getNomTuile()!=NomTuile.BORDURE) {
+                if (g.getTuile(i, k).getEtat() == Utils.EtatTuile.COULEE && g.getTuile(i, k).getNomTuile() != NomTuile.BORDURE) {
                     //System.out.println(g.getTuile(i, k).getNomTuile().toString());
                     tabTuile[i][k].setBackground(Color.lightGray);
                 } else if (g.getTuile(i, k).getEtat() == Utils.EtatTuile.INONDEE) {
@@ -654,11 +670,11 @@ public class Vue implements Observe {
     }
 
     public void tresorPris(int a) {
-        if(a==0) {
+        if (a == 0) {
             calice.setEnabled(false);
-        } else if(a==1) {
+        } else if (a == 1) {
             lion.setEnabled(false);
-        } else if(a==2) {
+        } else if (a == 2) {
             pierre.setEnabled(false);
         } else {
             crystal.setEnabled(false);

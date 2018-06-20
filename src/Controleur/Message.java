@@ -21,6 +21,7 @@ public class Message {
     int col;
     int numCarte;
     int niveauEau;
+    int grad;
     Tuile tuile;
     public Message(TypesMessage type) {
         this.type = type;    
@@ -68,6 +69,11 @@ public class Message {
     public void setNiveauEau(int niveauEau) {
         this.niveauEau = niveauEau;
     }
-    
+    public void setGrad(int grad){
+        this.grad=grad;
+    }
+    public int getGrad(){
+        return this.grad;
+    }
     
 }
