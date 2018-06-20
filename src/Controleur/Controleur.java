@@ -60,6 +60,11 @@ public class Controleur implements Observateur {
                 System.out.println(joueurCourant);
                 vue.setVueDeplacement();
                 vue.afficherTuileAccessible(joueurCourant.getTuilesAccessibles(grille));
+
+                if (joueurCourant instanceof Pilote) {
+                    Pilote p = (Pilote) joueurCourant;
+                    p.setUtilise(false);
+                }
                 deplacement = true;
                 break;
                 
@@ -97,10 +102,18 @@ public class Controleur implements Observateur {
                     assechement = false;
                 }
 
-                if (joueurCourant.getNbAction() == 3) {
-                    vue.afficherFinTour();
-                } else {
-                    vue.setVueBoutonsEnabled();
+                if (joueurCourant.getRole().getNomRole()!=NomRole.NAVIGATEUR){
+                    if(joueurCourant.getNbAction() == 3) {
+                        vue.afficherFinTour();
+                    } else {
+                        vue.setVueBoutonsEnabled();
+                    }
+                }else if(joueurCourant.getRole().getNomRole()==NomRole.NAVIGATEUR){
+                    if(joueurCourant.getNbAction() == 4) {
+                        vue.afficherFinTour();
+                    } else {
+                        vue.setVueBoutonsEnabled();
+                    }
                 }
                 break;
                 
@@ -129,7 +142,6 @@ public class Controleur implements Observateur {
             case ASSECHER:
                 System.out.println("Clic sur ASSECHER");
                 vue.afficherTuileAssechable(joueurCourant.getTuilesInondees(grille));
-                System.out.println(joueurCourant.getTuilesInondees(grille));
                 vue.setVueAssecher();
                 if(joueurCourant instanceof Ingenieur) {
                     Ingenieur i = (Ingenieur)joueurCourant;
@@ -147,42 +159,44 @@ public class Controleur implements Observateur {
                 System.out.println("INITIALISATION");
                 joueurs = new ArrayList<Aventurier>();
                 for (NomRole joueur : m.joueurs) {
-                    if (joueur == NomRole.EXPLORATEUR && joueurs.size() < 4) {
+                    if (joueur == NomRole.EXPLORATEUR) {
                         Explorateur explorateur = new Explorateur();
                         joueurs.add(explorateur);
                         explorateur.setApparition(grille.getTuile(2, 4));
                         grille.getTuile(2, 4).estSurTuile(explorateur);
                         System.out.println("EXPLORATEUR");
-                    } else if (joueur == NomRole.PLONGEUR && joueurs.size() < 4) {
+                    } else if (joueur == NomRole.PLONGEUR) {
                         Plongeur plongeur = new Plongeur();
                         joueurs.add(plongeur);
                         plongeur.setApparition(grille.getTuile(1, 2));
                         grille.getTuile(1, 2).estSurTuile(plongeur);
                         System.out.println("PLONGEUR");
-                    } else if (joueur == NomRole.INGENIEUR && joueurs.size() < 4) {
+                    } else if (joueur == NomRole.INGENIEUR) {
                         Ingenieur ingenieur = new Ingenieur();
                         joueurs.add(ingenieur);
                         ingenieur.setApparition(grille.getTuile(0, 3));
                         grille.getTuile(0, 3).estSurTuile(ingenieur);
                         System.out.println("INGENIEUR");
-                    } else if (joueur == NomRole.MESSAGER && joueurs.size() < 4) {
+                    } else if (joueur == NomRole.MESSAGER) {
                         Messager messager = new Messager();
                         joueurs.add(messager);
                         messager.setApparition(grille.getTuile(2, 1));
                         grille.getTuile(2, 1).estSurTuile(messager);
                         System.out.println("MESSAGER");
-                    } else if (joueur == NomRole.NAVIGATEUR && joueurs.size() < 4) {
+                    } else if (joueur == NomRole.NAVIGATEUR) {
                         Navigateur navigateur = new Navigateur();
                         joueurs.add(navigateur);
                         navigateur.setApparition(grille.getTuile(1, 3));
                         grille.getTuile(1, 3).estSurTuile(navigateur);
                         System.out.println("NAVIGATEUR");
-                    } else if (joueur == NomRole.PILOTE && joueurs.size() < 4) {
+                    } else if (joueur == NomRole.PILOTE) {
                         Pilote pilote = new Pilote();
                         joueurs.add(pilote);
                         pilote.setApparition(grille.getTuile(2, 3));
                         grille.getTuile(2, 3).estSurTuile(pilote);
                         System.out.println("PILOTE");
+                    } else{
+                        System.out.println("Trop de joueur");
                     }
                 }
                 for (Aventurier joueur : joueurs) {

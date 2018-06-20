@@ -109,6 +109,7 @@ public abstract class Aventurier {
                 }
             }
         }
+        tuilesAccessibles.remove(this.estSurTuile);
         return tuilesAccessibles;
     }
 
@@ -119,6 +120,9 @@ public abstract class Aventurier {
             if (tuile.getEtat() == EtatTuile.INONDEE) {
                 tuilesInondees.add(tuile);
             }
+        }
+        if(this.estSurTuile.getEtat()==EtatTuile.INONDEE){
+            tuilesInondees.add(estSurTuile);
         }
         return tuilesInondees;
     }
