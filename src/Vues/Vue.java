@@ -58,6 +58,11 @@ public class Vue implements Observe {
     private JPanel panelCartes3;
     private JPanel panelCartes4;
     private JCheckBox[] selectionJoueurs;
+    
+    private JButton calice;
+    private JButton lion;
+    private JButton pierre;
+    private JButton rubis;
 
     public Vue() {
         fenetreInit.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
@@ -153,7 +158,7 @@ public class Vue implements Observe {
                             notifierObservateur(m);
                             fenetreInit.dispose();
                         } else {
-                            messageErreur.setText("Pas assez ou trop de joueurs sélectionnés. Veuillez en sélectionner entre 2 et 4.");
+                            messageErreur.setText("Veuillez ne sélectionner que 2, 3 ou 4 joueurs.");
                         }
                     }
                 });
@@ -204,9 +209,45 @@ public class Vue implements Observe {
                 for (int i = 0; i < 6; i++) {
                     for (int k = 0; k < 6; k++) {
                         if (grille.getTuile(i, k).getNomTuile() == NomTuile.BORDURE) {
+                            if((i==0 && k==0) || (i==0 && k==5) || (i==5 && k==0) || (i==5 && k==5)) {
+                                if(i==0) {
+                                    if(k==0) {
+                                        calice = new CelluleTuile(i, k);
+                                        calice.setText("Calice");
+                                        tabTuile[i][k] = calice;
+                                        panelGrilleTuile.add(calice);
+                                        calice.setBackground(new Color(0, 149, 182));
+                                        calice.setForeground(Color.WHITE);
+                                    } else {
+                                        pierre = new CelluleTuile(i, k);
+                                        pierre.setText("Pierre");
+                                        tabTuile[i][k] = pierre;
+                                        panelGrilleTuile.add(pierre);
+                                        pierre.setBackground(new Color(91, 60, 17));
+                                        pierre.setForeground(Color.WHITE);
+                                    }
+                                } else {
+                                    if(k==0) {
+                                        lion = new CelluleTuile(i, k);
+                                        lion.setText("Lion");
+                                        tabTuile[i][k] = lion;
+                                        panelGrilleTuile.add(lion);
+                                        lion.setBackground(new Color(120,120,120));
+                                        lion.setForeground(Color.WHITE);
+                                    } else {
+                                        rubis = new CelluleTuile(i, k);
+                                        rubis.setText("Rubis");
+                                        tabTuile[i][k] = rubis;
+                                        panelGrilleTuile.add(rubis);
+                                        rubis.setBackground(Color.RED);
+                                        rubis.setForeground(Color.WHITE);
+                                    }
+                                }
+                            } else {
                             panelGrilleTuile.add(new JLabel("", SwingConstants.CENTER));
                             CelluleTuile tuile = new CelluleTuile(i, k);
                             tabTuile[i][k] = tuile;
+                            }
                         } else {
                             CelluleTuile bTuile = new CelluleTuile(i, k);
                             tabTuile[i][k] = bTuile;
@@ -397,6 +438,14 @@ public class Vue implements Observe {
 
             }
         }
+        
+        calice = new JButton("Calice");
+        pierre = new JButton("Pierre");
+        lion = new JButton("Lion");
+        rubis = new JButton("Rubis");
+        
+        
+        
         panelMilieu.add(panelCentre);
         mainPanel.add(panelMilieu, BorderLayout.CENTER);
         // Panel Bas
