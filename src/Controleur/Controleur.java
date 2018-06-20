@@ -60,11 +60,6 @@ public class Controleur implements Observateur {
                 System.out.println(joueurCourant);
                 vue.setVueDeplacement();
                 vue.afficherTuileAccessible(joueurCourant.getTuilesAccessibles(grille));
-
-                if (joueurCourant instanceof Pilote) {
-                    Pilote p = (Pilote) joueurCourant;
-                    p.setUtilise(false);
-                }
                 deplacement = true;
                 break;
                 
