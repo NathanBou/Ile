@@ -51,20 +51,19 @@ public abstract class Aventurier {
      * @param Carte
      */
     public void donnerCarte(Aventurier joueur, CarteTirage carte) {
-        if (nbAction >= 3) {
-            System.out.println("Action impossible, nombre d'actions disponibles insuffisants.");
-        } else {
             joueur.cartePossedees.add(carte);
             this.cartePossedees.remove(carte);
             joueur.nbCarte++;
             nbCarte--;
             nbAction++;
-        }
     }
 
-    public void piocherCarte(CarteTirage carte) {
-        this.cartePossedees.add(carte);
-        nbCarte++;
+    public void piocherCarte(ArrayList<CarteTirage> pileCarte) {
+        for (int i = 0; i < 2 ;i++){
+            this.cartePossedees.add(pileCarte.get(0));
+            pileCarte.remove(0);
+            nbCarte++;
+        }       
     }
     
     public void defausserCarte(CarteTirage carte) {

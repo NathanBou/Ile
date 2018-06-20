@@ -60,10 +60,21 @@ public class Grille {
 
     public Tuile[][] getTuiles() {
         return tuiles;
-
     }
     public Tuile getTuile(int i, int j){
         return tuiles[i][j];
     }
-    
+    public ArrayList<Tuile> getTuile(){
+        ArrayList<Tuile> arrtuiles = new ArrayList();
+        for (int i=0 ;i<6;i++){
+            for (int k=0 ;k<6;k++){
+                if (tuiles[i][k].getNomTuile()!=NomTuile.BORDURE){
+                    arrtuiles.add(tuiles[i][k]);
+                    //System.out.println(tuiles[i][k].getNomTuile().toString());
+                }
+            }
+        }
+        System.out.println(arrtuiles.size());
+        return arrtuiles;
+    }
 }

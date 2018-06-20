@@ -52,5 +52,4 @@ public enum NomTuile {
             return this.libelle ;
         }
 
-
 }

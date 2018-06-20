@@ -436,8 +436,9 @@ public class Vue implements Observe {
 
         }
     }
-    public void actualiserMain(Aventurier joueur,int numJoueur,int numCarte){
-        tabCarte[numJoueur][numCarte].setText(joueur.cartePossedees.get(numCarte).getNomCarte().toString());
+    public void actualiserMain(Aventurier joueur,int numJoueur){
+        tabCarte[numJoueur][joueur.cartePossedees.size()-2].setText(joueur.cartePossedees.get(joueur.cartePossedees.size()-2).getNomCarte().toString());
+        tabCarte[numJoueur][joueur.cartePossedees.size()-1].setText(joueur.cartePossedees.get(joueur.cartePossedees.size()-1).getNomCarte().toString());
     }
     public void assecherTuile(int lig, int col) {
         tabTuile[lig][col].setBackground(null);
