@@ -47,6 +47,7 @@ public class Controleur implements Observateur {
     private boolean defausser;
     private int nbTour;
     private int nivEau;
+    private int grad;
     private int numJoueurs = 0;
     private ArrayList<Tresor> collectionTresor;
 
@@ -142,31 +143,24 @@ public class Controleur implements Observateur {
 
                 if (this.joueurCourant.cartePossedees.size() + 2 > 5) {
 
-                    Utils.afficherInformation("Choisir " + (this.joueurCourant.cartePossedees.size() + 2 - 5) + "carte a défausser");
+                    Utils.afficherInformation("Choisir " + (this.joueurCourant.cartePossedees.size() + 2 - 5) + " carte a défausser");
                     defausser = true;
                     vue.activerCarte(numJoueurs);
-                    System.out.println("suppr");
-                    switch (m.type.DEFAUSSERCARTE){
-                        case DEFAUSSERCARTE :
-                        System.out.println("Defausser carte");
-                        joueurCourant.defausserCarte(joueurCourant.cartePossedees.get(m.numCarte));
-                        pileDefausseTresor.add(joueurCourant.cartePossedees.get(m.numCarte));
-                        vue.supprimerCarte(numJoueurs, m.numCarte);
-                        System.out.println("suppr");
-                        defausser = this.joueurCourant.cartePossedees.size() > 5;
-                    }
-
+                    System.out.println("suppr");                  
                 }
 
                 joueurCourant.piocherCarte(pileCarteTresor);
                 vue.actualiserMain(joueurCourant, numJoueurs);
                 joueurCourant.piocherCarteInondation(pileCarteInondation, nivEau);
                 vue.actualiserGrille(grille);
+                if(grad == 7){
+                    gagner=false;
+                    vue.finirJeu(gagner);
+                }
                 numJoueurs++;
                 joueurCourant = joueurs.get(numJoueurs == joueurs.size() ? numJoueurs = 0 : numJoueurs);
                 nbTour++;
                 vue.afficherEtatJeu(nbTour, joueurCourant.getRole().getNomRole().toString());
-
                 joueurCourant.finTour();
                 vue.afficherDebutTour();
 
@@ -257,6 +251,7 @@ public class Controleur implements Observateur {
                 vue.setVueBoutonsEnabled();
                 gagner = false;
                 nivEau = m.getNiveauEau();
+                grad = m.getGrad();
                 nbTour = 1;
                 joueurCourant = joueurs.get(numJoueurs);
                 vue.afficherEtatJeu(nbTour, nivEau, joueurCourant.getRole().getNomRole().toString());
