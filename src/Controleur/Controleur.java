@@ -91,7 +91,18 @@ public class Controleur implements Observateur {
                     
                 } else if (assechement) {
                     System.out.println("Clic sur tuile choisi pour assechement");
-                    joueurCourant.setNbAction(joueurCourant.getNbAction() + 1);
+                    if(joueurCourant instanceof Ingenieur) {
+                        Ingenieur i = (Ingenieur)joueurCourant;
+                        i.utiliseSpecial();
+                        if(i.getSpecial()!=1) {
+                            joueurCourant.setNbAction(joueurCourant.getNbAction() + 1);
+                        } else if (i.getSpecial()==1) {
+                            System.out.println ("Pouvoir utilisé");
+                            i.reinitSpecial();
+                        }
+                    } else {
+                        joueurCourant.setNbAction(joueurCourant.getNbAction() + 1);
+                    }
                     vue.assecherTuile(m.lig, m.col);
                     grille.getTuile(m.lig, m.col).assecher();
                     assechement = false;
@@ -138,12 +149,6 @@ public class Controleur implements Observateur {
                 System.out.println("Clic sur ASSECHER");
                 vue.afficherTuileAssechable(joueurCourant.getTuilesInondees(grille));
                 vue.setVueAssecher();
-                if(joueurCourant instanceof Ingenieur) {
-                    Ingenieur i = (Ingenieur)joueurCourant;
-                    
-                    i.utiliseSpecial();
-                    
-                }
                 if (joueurCourant.getNbAction() == 3) {
                     vue.afficherFinTour();
                 }
