@@ -46,7 +46,7 @@ public class Vue implements Observe {
     private JLabel joueur = new JLabel("", SwingConstants.CENTER);
     private JButton carte;
     private JButton[][] tabTuile;
-    private JButton[]   tabCarte;
+    private JButton[][] tabCarte;
     private JButton prendreTresor;
     private JButton donnerCarte;
     private JButton deplacer;
@@ -193,7 +193,7 @@ public class Vue implements Observe {
         mainPanel.add(panelEst, BorderLayout.EAST);
         mainPanel.add(panelOuest, BorderLayout.WEST);
 
-        // Panel Millieu
+        // Panel MillieuSystem.out.println(joueurCourant);
         JPanel panelMilieu = new JPanel(new BorderLayout()); // BorderLayout.CENTER
         JPanel panelCentre = new JPanel(new GridLayout(0, 2)); //SEPARATION GRILLE / COMMANDE
         JPanel panelGrille = new JPanel(new BorderLayout()); //Pânel contenant la grille
@@ -286,15 +286,15 @@ public class Vue implements Observe {
                 BorderCartes4.add(panelCartes4, BorderLayout.CENTER);
 
                 // dessin carrés dans panelCartes1,2,3 et 4
+                tabCarte= new JButton[joueurs.size()][9];
                 for (int a = 0; a < joueurs.size(); a++) {
                     for (int i = 0; i < 9; i++) {                        
-                        System.out.println(joueurs.get(a));
                         if(i < joueurs.get(a).getCartePossedees().size()){
-                            System.out.println("*");
-                            carte = new JButton(joueurs.get(a).getCartePossedees().get(i).getNomCarte().toString());
+                            carte = new Carte(a,i,joueurs.get(a).getCartePossedees().get(i).getNomCarte().toString());                            
                         }else{
-                            carte = new JButton("/");
+                            carte = new Carte(a,i,"/");
                         }
+                        tabCarte[a][i]=carte;
                         carte.addActionListener(new ActionListener() {
                             @Override
                             public void actionPerformed(ActionEvent e) {
@@ -436,7 +436,9 @@ public class Vue implements Observe {
 
         }
     }
-
+    public void actualiserMain(Aventurier joueur,int numJoueur,int numCarte){
+        tabCarte[numJoueur][numCarte].setText(joueur.cartePossedees.get(numCarte).getNomCarte().toString());
+    }
     public void assecherTuile(int lig, int col) {
         tabTuile[lig][col].setBackground(null);
         tabTuile[lig][col].setEnabled(false);
