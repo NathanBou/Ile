@@ -56,6 +56,7 @@ public class Vue implements Observe {
     private JPanel panelCartes2;
     private JPanel panelCartes3;
     private JPanel panelCartes4;
+    private ArrayList<JCheckBox> selections = new ArrayList();
 
     public Vue() {
         fenetreInit.setTitle("L 'ILE INTERDITE INITIALISATION");
@@ -100,6 +101,25 @@ public class Vue implements Observe {
                         panelBAventu.add(pilote);
                     }
                 }
+                if (explorateur.isSelected()) {
+                    selections.add(explorateur);
+                }
+                if (ingenieur.isSelected()) {
+                    selections.add(ingenieur);
+                }
+                if (messager.isSelected()){
+                    selections.add(messager);
+                }
+                if(navigateur.isSelected()){
+                    selections.add(navigateur);
+                }
+                if(pilote.isSelected()){
+                    selections.add(pilote);
+                }
+                if(plongeur.isSelected()){
+                    selections.add(plongeur);
+                }
+
                 panelAventurier.add(panelBAventu, BorderLayout.CENTER);
                 JButton valider = new JButton("Valider");
                 panelAventurier.add(valider, BorderLayout.SOUTH);
