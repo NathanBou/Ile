@@ -5,7 +5,6 @@
  */
 package Controleur;
 
-import static Controleur.TypesMessage.DEFAUSSERCARTE;
 import Modele.Aventurier;
 import Modele.CarteInondation;
 import Modele.CarteTirage;
@@ -17,7 +16,6 @@ import Modele.Messager;
 import Modele.Navigateur;
 import Modele.NomRole;
 import Modele.NomTresors;
-import Modele.NomTuile;
 import Modele.Pilote;
 import Modele.Plongeur;
 import Modele.Tresor;
@@ -149,9 +147,28 @@ public class Controleur implements Observateur {
                         vue.setVueBoutonsDesactive();
                     }
                 }
-
-                joueurCourant.piocherCarte(pileCarteTresor);
-                vue.actualiserMain(joueurCourant, numJoueurs);
+                if (this.getPileCarte().size() <= 2) {
+                    CarteTirage carte0 = (this.getPileCarte().size() == 1 ? this.getPileCarte().get(0) : null);
+                    CarteTirage carte1 = (this.getPileCarte().size() == 2 ? this.getPileCarte().get(1) : null);
+                    this.getPileCarte().remove(carte0);
+                    joueurCourant.piocherCarte(carte0);
+                    if (carte1 != null) {
+                        joueurCourant.piocherCarte(carte0);
+                        joueurCourant.piocherCarte(carte1);
+                        this.getPileDefausse().add(carte0);
+                        this.getPileDefausse().add(carte1);
+                        this.refillPileCarte(pileDefausseTresor);
+                    } else {
+                        if (carte0 != null) {
+                            joueurCourant.piocherCarte(carte0);
+                            this.getPileDefausse().add(carte0);
+                            this.refillPileCarte(pileDefausseTresor);
+                        }
+                    }
+                } else {
+                    joueurCourant.piocherCarte(pileCarteTresor);
+                    vue.actualiserMain(joueurCourant, numJoueurs);
+                }
                 joueurCourant.piocherCarteInondation(pileCarteInondation, nivEau);
                 vue.actualiserGrille(grille);
                 if (grad == 7) {
@@ -335,6 +352,14 @@ public class Controleur implements Observateur {
 
     public ArrayList<CarteTirage> getPileDefausse() {
         return pileDefausseTresor;
+    }
+
+    private void refillPileCarte(ArrayList<CarteTirage> pileDefausse) {
+        this.pileCarteTresor.clear();
+        Collections.shuffle(pileDefausse);
+        for (CarteTirage carte : pileDefausse) {
+            this.getPileCarte().add(carte);
+        }
     }
 
 }
