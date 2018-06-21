@@ -11,7 +11,7 @@ package Modele;
  */
 public enum Cartes {
     PIERRE("Pierre"),
-    ZEPHYR("Zephyr"),
+    ZEPHYR("Zéphyr"),
     CRISTAL("Cristal"),
     CALICE("Calice"),
     HELICOPTERE("Hélicoptère"),

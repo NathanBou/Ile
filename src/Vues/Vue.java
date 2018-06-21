@@ -658,12 +658,13 @@ public class Vue implements Observe {
 
         }
     }
+    
     public void finirJeu(boolean gagne){
         if (gagne){
-            Utils.afficherInformation("Vous avez gagner");
+            Utils.afficherInformation("Victoire !");
             fenetreJeu.dispose();
         }else{
-            Utils.afficherInformation("Vous avez perdu");
+            Utils.afficherInformation("Défaite...");
             fenetreJeu.dispose();
         }
     }

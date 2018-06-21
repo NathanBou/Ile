@@ -146,15 +146,15 @@ public class Controleur implements Observateur {
                     Utils.afficherInformation("Choisir " + (this.joueurCourant.cartePossedees.size() + 2 - 5) + " carte a défausser");
                     defausser = true;
                     vue.activerCarte(numJoueurs);
-                    System.out.println("suppr");                  
+                    System.out.println("suppr");
                 }
 
                 joueurCourant.piocherCarte(pileCarteTresor);
                 vue.actualiserMain(joueurCourant, numJoueurs);
                 joueurCourant.piocherCarteInondation(pileCarteInondation, nivEau);
                 vue.actualiserGrille(grille);
-                if(grad == 7){
-                    gagner=false;
+                if (grad == 7) {
+                    gagner = false;
                     vue.finirJeu(gagner);
                 }
                 numJoueurs++;
@@ -265,19 +265,34 @@ public class Controleur implements Observateur {
                 deplacement = false;
                 assechement = false;
                 break;
-                
+
             case PRENDRETRESOR:
                 System.out.println("Prendre Trésor");
-                    if(grille.getTuile(m.lig, m.col) instanceof Tresor) {
-                        Tresor t = (Tresor)grille.getTuile(m.lig, m.col);
-                        int a = (t.getTresor()== NomTresors.CALICE? 0 : t.getTresor()== NomTresors.LION? 1 : t.getTresor()== NomTresors.PIERRE? 2 : 3 ); // Calice = 0, Lion = 1, Pierre = 2, Crystal = 3.
-                        vue.tresorPris(a);
-                        if(!collectionTresor.contains(t)) {
-                            collectionTresor.add(t);
+                if (grille.getTuile(m.lig, m.col) instanceof Tresor) {
+                    Tresor t = (Tresor) grille.getTuile(m.lig, m.col);
+                    NomTresors nt = t.getTresor();
+                    int compt = 0;
+                    for (CarteTirage ct : joueurCourant.getCartePossedees()) {
+                        if (ct.getNomCarte().toString() == nt.toString()) {
+                            compt += 1;
                         }
                     }
+                    if (compt >= 4) {
+                        int i = 0;
+                        int compt2 = 0;
+                        int a = (nt == NomTresors.CALICE ? 0 : nt == NomTresors.ZEPHYR ? 1 : nt == NomTresors.PIERRE ? 2 : 3); // Calice = 0, Lion = 1, Pierre = 2, Crystal = 3.
+                        vue.tresorPris(a);
+                        while (compt2 != 4) {
+                            if (joueurCourant.getCartePossedees().get(i).getNomCarte().toString() == nt.toString()) {
+                                joueurCourant.getCartePossedees().remove(joueurCourant.getCartePossedees().get(i));
+                                compt2++;
+                            } else {
+                                i++;
+                            }
+                        }
+                    }
+                }
         }
-
     }
 
     public ArrayList<Aventurier> getJoueurs() {

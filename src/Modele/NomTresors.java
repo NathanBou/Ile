@@ -10,9 +10,9 @@ package Modele;
  * @author perrbeno
  */
 public enum NomTresors {
-    LION("Lion"),
+    ZEPHYR("Zéphyr"),
     CALICE("Calice"),
-    CRYSTAL("Crystal"),
+    CRISTAL("Cristal"),
     PIERRE("Pierre");
     
     private String libelle;
