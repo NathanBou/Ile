@@ -140,13 +140,13 @@ public class Controleur implements Observateur {
                     Pilote p = (Pilote) joueurCourant;
                     p.setUtilise(false);
                 }
-
                 if (this.joueurCourant.getCartePossedees().size() + 2 > 5) {
 
                     Utils.afficherInformation("Choisir " + (this.joueurCourant.cartePossedees.size() + 2 - 5) + " carte a défausser");
                     defausser = true;
                     if (joueurCourant.getCartePossedees().size() + 2 > 5) {
                         vue.activerCarte(numJoueurs);
+                        vue.setVueBoutonsDesactive();
                     }
                 }
 
@@ -300,7 +300,7 @@ public class Controleur implements Observateur {
                 this.getPileDefausse().add(joueurCourant.getCartePossedees().get(m.numCarte));
                 joueurCourant.getCartePossedees().remove(joueurCourant.getCartePossedees().get(m.numCarte));
                 vue.supprimerCarte(numJoueurs, m.numCarte);
-                defausser = false;
+                vue.actualiserMain(joueurCourant, numJoueurs);
                 if (joueurCourant.getCartePossedees().size() <= 5) {
                     vue.disableBoutonsMain(numJoueurs);
                     System.out.println(joueurCourant.getCartePossedees());
