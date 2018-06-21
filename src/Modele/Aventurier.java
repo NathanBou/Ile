@@ -54,7 +54,7 @@ public abstract class Aventurier {
             joueur.cartePossedees.add(carte);
             this.cartePossedees.remove(carte);
             joueur.nbCarte++;
-            nbCarte--;
+            this.nbCarte--;
             nbAction++;
     }
 

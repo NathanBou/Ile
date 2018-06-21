@@ -6,6 +6,7 @@
 package Controleur;
 
 import Controleur.TypesMessage;
+import Modele.Aventurier;
 import Modele.NomRole;
 import Modele.Tuile;
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ public class Message {
     int niveauEau;
     int grad;
     Tuile tuile;
+    Aventurier joueurCible;
     public Message(TypesMessage type) {
         this.type = type;    
     }
@@ -74,6 +76,14 @@ public class Message {
     }
     public int getGrad(){
         return this.grad;
+    }
+
+    public Aventurier getJoueurCible() {
+        return joueurCible;
+    }
+
+    public void setJoueurCible(Aventurier joueurCible) {
+        this.joueurCible = joueurCible;
     }
     
 }

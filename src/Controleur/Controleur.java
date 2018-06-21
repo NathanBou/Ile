@@ -314,6 +314,16 @@ public class Controleur implements Observateur {
 
                 }
                 break;
+            case DONNERCARTE:
+                System.out.println("Donner une carte");
+                vue.setVueDonnerCarte();
+                vue.activerJoueur(this.joueurCourant.getEstSurTuile().getASurTuile());
+                break;
+            case JOUEURCIBLE:
+                this.joueurCourant.donnerCarte(m.getJoueurCible(), joueurCourant.getCartePossedees().get(m.numCarte));
+                vue.actualiserMain(joueurCourant, numJoueurs);
+                vue.actualiserMain(m.getJoueurCible(), numJoueurs);
+                break;
         }
     }
 

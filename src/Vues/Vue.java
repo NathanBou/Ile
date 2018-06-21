@@ -59,6 +59,7 @@ public class Vue implements Observe {
     private JPanel panelCartes3;
     private JPanel panelCartes4;
     private JCheckBox[] selectionJoueurs;
+    private JButton[] tabJoueurs;
     private JButton calice;
     private JButton lion;
     private JButton pierre;
@@ -97,15 +98,14 @@ public class Vue implements Observe {
                 listNivEau = new JComboBox(nivEau);
                 listNivEau.setSelectedIndex(0);
                 eau.setHorizontalAlignment(JLabel.CENTER);
-                JPanel jcombobox = new JPanel (new GridLayout(0,3));
-                for (int l = 0; l < 3; l++){
-                    if (l==1){
+                JPanel jcombobox = new JPanel(new GridLayout(0, 3));
+                for (int l = 0; l < 3; l++) {
+                    if (l == 1) {
                         jcombobox.add(listNivEau);
-                    }else{
+                    } else {
                         jcombobox.add(new JLabel(" "));
                     }
                 }
-                
 
                 casesTexte.add(saisirJ);
                 casesTexte.add(messageErreur);
@@ -177,13 +177,13 @@ public class Vue implements Observe {
                             }
                             if (listNivEau.getSelectedItem().equals("Novice (niveau d'eau 2)") || listNivEau.getSelectedItem().equals("Normal (niveau d'eau 2)")) {
                                 m.setNiveauEau(2);
-                                if(listNivEau.getSelectedItem().equals("Novice (niveau d'eau 2)")){
+                                if (listNivEau.getSelectedItem().equals("Novice (niveau d'eau 2)")) {
                                     m.setGrad(0);
                                 } else {
                                     m.setGrad(1);
                                 }
                             } else {
-                                if(listNivEau.getSelectedItem().equals("Elite (niveau d'eau 3)")){
+                                if (listNivEau.getSelectedItem().equals("Elite (niveau d'eau 3)")) {
                                     m.setGrad(2);
                                 } else {
                                     m.setGrad(3);
@@ -395,14 +395,43 @@ public class Vue implements Observe {
                             panelCartes4.add(carte);
                         }
                     }
+                    tabJoueurs = new JButton[joueurs.size()];
                     if (a == 0) {
-                        BorderCartes1.add(new JLabel(joueurs.get(a).getRole().getNomRole().toString()), BorderLayout.NORTH);
+                        boutonJoueur joueur1 = new boutonJoueur(a,joueurs.get(a).getRole().getNomRole().toString());
+                        joueur1.setEnabled(false);
+
+                        System.out.println("LOL " + a);
+                        tabJoueurs[a] = joueur1;
+                         System.out.println(this.getTabJoueurs()[0]);
+                          System.out.println(this.getTabJoueurs()[a]);
+                        BorderCartes1.add(joueur1, BorderLayout.NORTH);
+                        joueur1.addActionListener(
+                                new ActionListener() {
+                            @Override
+                            public void actionPerformed(ActionEvent e) {
+                                Message m = new Message(TypesMessage.JOUEURCIBLE);
+                                notifierObservateur(m);
+                            }
+                        });
                     } else if (a == 1) {
-                        BorderCartes2.add(new JLabel(joueurs.get(a).getRole().getNomRole().toString()), BorderLayout.NORTH);
+                        boutonJoueur joueur2 = new boutonJoueur(a,joueurs.get(a).getRole().getNomRole().toString());
+                        joueur2.setEnabled(false);
+
+                        System.out.println("LL " + a);
+                        tabJoueurs[a] = joueur2;
+                                                                         System.out.println(this.getTabJoueurs()[0]);
+                          System.out.println(this.getTabJoueurs()[a]);
+                        BorderCartes2.add(joueur2, BorderLayout.NORTH);
                     } else if (a == 2) {
-                        BorderCartes3.add(new JLabel(joueurs.get(a).getRole().getNomRole().toString()), BorderLayout.NORTH);
+                        boutonJoueur joueur3 = new boutonJoueur(a,joueurs.get(a).getRole().getNomRole().toString());
+                        joueur3.setEnabled(false);
+                        tabJoueurs[a] = joueur3;
+                        BorderCartes3.add(joueur3, BorderLayout.NORTH);
                     } else if (a == 3) {
-                        BorderCartes4.add(new JLabel(joueurs.get(a).getRole().getNomRole().toString()), BorderLayout.NORTH);
+                        boutonJoueur joueur4 = new boutonJoueur(a,joueurs.get(a).getRole().getNomRole().toString());
+                        joueur4.setEnabled(false);
+                        tabJoueurs[a] = joueur4;
+                        BorderCartes4.add(joueur4, BorderLayout.NORTH);
                     }
                 }
 
@@ -450,6 +479,14 @@ public class Vue implements Observe {
                     } else if (v == 3) {
                         donnerCarte = new JButton("Donner une carte");
                         donnerCarte.setPreferredSize(new Dimension(40, 25));
+                        donnerCarte.addActionListener(
+                                new ActionListener() {
+                            @Override
+                            public void actionPerformed(ActionEvent e) {
+                                Message m = new Message(TypesMessage.DONNERCARTE);
+                                notifierObservateur(m);
+                            }
+                        });
                         panelGrilleBouton.add(donnerCarte);                     //ActionListener a ajouter
                     } else if (v == 4) {
                         prendreTresor = new JButton("Prendre trésor");
@@ -525,8 +562,8 @@ public class Vue implements Observe {
     }
 
     public void actualiserMain(Aventurier joueur, int numJoueur) {
-        for (int i = 0; i< 9; i++) {
-            tabCarte[numJoueur][i].setText(joueur.getCartePossedees().size()>i?joueur.getCartePossedees().get(i).getNomCarte().toString():"/");
+        for (int i = 0; i < 9; i++) {
+            tabCarte[numJoueur][i].setText(joueur.getCartePossedees().size() > i ? joueur.getCartePossedees().get(i).getNomCarte().toString() : "/");
         }
     }
 
@@ -710,4 +747,27 @@ public class Vue implements Observe {
         }
     }
 
+    public void activerJoueur(ArrayList<Aventurier> joueursCibles) {
+        System.out.println(this.getTabJoueurs()[0]);
+        System.out.println(this.getTabJoueurs()[1]);
+        System.out.println(this.getTabJoueurs()[2]);
+        System.out.println(this.getTabJoueurs()[3]);
+        for (int i = 0; i < this.tabJoueurs.length - 1; i++) {
+            for (Aventurier joueur : joueursCibles) {
+
+                System.out.println(tabJoueurs.length);
+                System.out.println(i);
+                System.out.println(tabJoueurs[i]/*.getText()*/);
+                System.out.println(joueur.getRole().getNomRole().toString());
+                if (tabJoueurs[i].getText() == joueur.getRole().getNomRole().toString()) {
+                    tabJoueurs[i].setEnabled(true);
+                }
+            }
+        }
+    }
+
+    public JButton[] getTabJoueurs() {
+        return tabJoueurs;
+    }
+    
 }
