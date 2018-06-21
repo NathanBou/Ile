@@ -5,7 +5,6 @@
  */
 package Controleur;
 
-import static Controleur.TypesMessage.DEFAUSSERCARTE;
 import Modele.Aventurier;
 import Modele.CarteInondation;
 import Modele.CarteTirage;
@@ -17,7 +16,6 @@ import Modele.Messager;
 import Modele.Navigateur;
 import Modele.NomRole;
 import Modele.NomTresors;
-import Modele.NomTuile;
 import Modele.Pilote;
 import Modele.Plongeur;
 import Modele.Tresor;
@@ -140,18 +138,37 @@ public class Controleur implements Observateur {
                     Pilote p = (Pilote) joueurCourant;
                     p.setUtilise(false);
                 }
-
                 if (this.joueurCourant.getCartePossedees().size() + 2 > 5) {
 
                     Utils.afficherInformation("Choisir " + (this.joueurCourant.cartePossedees.size() + 2 - 5) + " carte a défausser");
                     defausser = true;
                     if (joueurCourant.getCartePossedees().size() + 2 > 5) {
                         vue.activerCarte(numJoueurs);
+                        vue.setVueBoutonsDesactive();
                     }
                 }
-
-                joueurCourant.piocherCarte(pileCarteTresor);
-                vue.actualiserMain(joueurCourant, numJoueurs);
+                if (this.getPileCarte().size() <= 2) {
+                    CarteTirage carte0 = (this.getPileCarte().size() == 1 ? this.getPileCarte().get(0) : null);
+                    CarteTirage carte1 = (this.getPileCarte().size() == 2 ? this.getPileCarte().get(1) : null);
+                    this.getPileCarte().remove(carte0);
+                    joueurCourant.piocherCarte(carte0);
+                    if (carte1 != null) {
+                        joueurCourant.piocherCarte(carte0);
+                        joueurCourant.piocherCarte(carte1);
+                        this.getPileDefausse().add(carte0);
+                        this.getPileDefausse().add(carte1);
+                        this.refillPileCarte(pileDefausseTresor);
+                    } else {
+                        if (carte0 != null) {
+                            joueurCourant.piocherCarte(carte0);
+                            this.getPileDefausse().add(carte0);
+                            this.refillPileCarte(pileDefausseTresor);
+                        }
+                    }
+                } else {
+                    joueurCourant.piocherCarte(pileCarteTresor);
+                    vue.actualiserMain(joueurCourant, numJoueurs);
+                }
                 joueurCourant.piocherCarteInondation(pileCarteInondation, nivEau);
                 vue.actualiserGrille(grille);
                 if (grad == 7) {
@@ -300,7 +317,7 @@ public class Controleur implements Observateur {
                 this.getPileDefausse().add(joueurCourant.getCartePossedees().get(m.numCarte));
                 joueurCourant.getCartePossedees().remove(joueurCourant.getCartePossedees().get(m.numCarte));
                 vue.supprimerCarte(numJoueurs, m.numCarte);
-                defausser = false;
+                vue.actualiserMain(joueurCourant, numJoueurs);
                 if (joueurCourant.getCartePossedees().size() <= 5) {
                     vue.disableBoutonsMain(numJoueurs);
                     System.out.println(joueurCourant.getCartePossedees());
@@ -345,6 +362,14 @@ public class Controleur implements Observateur {
 
     public ArrayList<CarteTirage> getPileDefausse() {
         return pileDefausseTresor;
+    }
+
+    private void refillPileCarte(ArrayList<CarteTirage> pileDefausse) {
+        this.pileCarteTresor.clear();
+        Collections.shuffle(pileDefausse);
+        for (CarteTirage carte : pileDefausse) {
+            this.getPileCarte().add(carte);
+        }
     }
 
 }

@@ -685,7 +685,19 @@ public class Vue implements Observe {
         annuler.setBackground(Color.GREEN);
         annuler.setEnabled(false);
     }
-
+    public void setVueBoutonsDesactive(){
+        deplacer.setBackground(Color.GREEN);
+        deplacer.setEnabled(false);
+        prendreTresor.setBackground(Color.GREEN);
+        prendreTresor.setEnabled(false);
+        donnerCarte.setBackground(Color.GREEN);
+        donnerCarte.setEnabled(false);
+        assecher.setBackground(Color.GREEN);
+        assecher.setEnabled(false);
+        finTour.setEnabled(false);
+        annuler.setBackground(Color.GREEN);
+        annuler.setEnabled(false);
+    }
     public void reinitialiserGrille() {
         for (int i = 0; i < 6; i++) {
             for (int k = 0; k < 6; k++) {
