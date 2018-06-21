@@ -64,8 +64,8 @@ public class Vue implements Observe {
     private JButton pierre;
     private JButton rubis;
     private JComboBox listNivEau;
-    private final String[] nivEau = {"Novice",
-        "Normal", "Elite", "Légende"};
+    private final String[] nivEau = {"Novice (niveau d'eau 2)",
+        "Normal (niveau d'eau 2)", "Elite (niveau d'eau 3)", "Légende (niveau d'eau 3)"};
     private JButton crystal;
 
     public Vue() {
@@ -97,12 +97,20 @@ public class Vue implements Observe {
                 listNivEau = new JComboBox(nivEau);
                 listNivEau.setSelectedIndex(0);
                 eau.setHorizontalAlignment(JLabel.CENTER);
-                //listNivEau.setPreferredSize(new Dimension(15, 15));
+                JPanel jcombobox = new JPanel (new GridLayout(0,3));
+                for (int l = 0; l < 3; l++){
+                    if (l==1){
+                        jcombobox.add(listNivEau);
+                    }else{
+                        jcombobox.add(new JLabel(" "));
+                    }
+                }
+                
 
                 casesTexte.add(saisirJ);
                 casesTexte.add(messageErreur);
                 casesTexte.add(eau);
-                casesTexte.add(listNivEau);
+                casesTexte.add(jcombobox);
                 JCheckBox explorateur = new JCheckBox("Explorateur");
                 JCheckBox ingenieur = new JCheckBox("Ingenieur");
                 JCheckBox messager = new JCheckBox("Messager");
@@ -167,15 +175,15 @@ public class Vue implements Observe {
                             if (pilote.isSelected()) {
                                 m.ajouterJoueur(NomRole.PILOTE);
                             }
-                            if (listNivEau.getSelectedItem().equals("Novice") || listNivEau.getSelectedItem().equals("Normal")) {
+                            if (listNivEau.getSelectedItem().equals("Novice (niveau d'eau 2)") || listNivEau.getSelectedItem().equals("Normal (niveau d'eau 2)")) {
                                 m.setNiveauEau(2);
-                                if(listNivEau.getSelectedItem().equals("Novice")){
+                                if(listNivEau.getSelectedItem().equals("Novice (niveau d'eau 2)")){
                                     m.setGrad(0);
                                 }else{
                                     m.setGrad(1);
                                 }
                             } else {
-                                if(listNivEau.getSelectedItem().equals("Elite")){
+                                if(listNivEau.getSelectedItem().equals("Elite (niveau d'eau 3)")){
                                     m.setGrad(2);
                                 }else{
                                     m.setGrad(3);
