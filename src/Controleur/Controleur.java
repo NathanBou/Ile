@@ -141,12 +141,13 @@ public class Controleur implements Observateur {
                     p.setUtilise(false);
                 }
 
-                if (this.joueurCourant.cartePossedees.size() + 2 > 5) {
+                if (this.joueurCourant.getCartePossedees().size() + 2 > 5) {
 
                     Utils.afficherInformation("Choisir " + (this.joueurCourant.cartePossedees.size() + 2 - 5) + " carte a défausser");
                     defausser = true;
-                    vue.activerCarte(numJoueurs);
-                    System.out.println("suppr");
+                    if (joueurCourant.getCartePossedees().size() + 2 > 5) {
+                        vue.activerCarte(numJoueurs);
+                    }
                 }
 
                 joueurCourant.piocherCarte(pileCarteTresor);
@@ -157,7 +158,9 @@ public class Controleur implements Observateur {
                     gagner = false;
                     vue.finirJeu(gagner);
                 }
-                numJoueurs++;
+                if (!defausser) {
+                    numJoueurs++;
+                }
                 joueurCourant = joueurs.get(numJoueurs == joueurs.size() ? numJoueurs = 0 : numJoueurs);
                 nbTour++;
                 vue.afficherEtatJeu(nbTour, joueurCourant.getRole().getNomRole().toString());
@@ -292,6 +295,25 @@ public class Controleur implements Observateur {
                         }
                     }
                 }
+                break;
+            case DEFAUSSERCARTE:
+                this.getPileDefausse().add(joueurCourant.getCartePossedees().get(m.numCarte));
+                joueurCourant.getCartePossedees().remove(joueurCourant.getCartePossedees().get(m.numCarte));
+                vue.supprimerCarte(numJoueurs, m.numCarte);
+                defausser = false;
+                if (joueurCourant.getCartePossedees().size() <= 5) {
+                    vue.disableBoutonsMain(numJoueurs);
+                    System.out.println(joueurCourant.getCartePossedees());
+                    vue.actualiserMain(joueurCourant, numJoueurs);
+                    joueurCourant.finTour();
+                    numJoueurs++;
+                    joueurCourant = joueurs.get(numJoueurs == joueurs.size() ? numJoueurs = 0 : numJoueurs);
+                    nbTour++;
+                    vue.afficherEtatJeu(nbTour, joueurCourant.getRole().getNomRole().toString());
+                    vue.afficherDebutTour();
+
+                }
+                break;
         }
     }
 

@@ -45,7 +45,7 @@ public class Vue implements Observe {
     private JLabel tour = new JLabel("", SwingConstants.CENTER);
     private JLabel niveau = new JLabel("", SwingConstants.CENTER);
     private JLabel joueur = new JLabel("", SwingConstants.CENTER);
-    private Carte carte;
+    //private Carte carte;
     private JButton[][] tabTuile;
     private JButton[][] tabCarte;
     private JButton prendreTresor;
@@ -169,15 +169,15 @@ public class Vue implements Observe {
                             }
                             if (listNivEau.getSelectedItem().equals("Novice") || listNivEau.getSelectedItem().equals("Normal")) {
                                 m.setNiveauEau(2);
-                                if(listNivEau.getSelectedItem().equals("Novice")){
+                                if (listNivEau.getSelectedItem().equals("Novice")) {
                                     m.setGrad(0);
-                                }else{
+                                } else {
                                     m.setGrad(1);
                                 }
                             } else {
-                                if(listNivEau.getSelectedItem().equals("Elite")){
+                                if (listNivEau.getSelectedItem().equals("Elite")) {
                                     m.setGrad(2);
-                                }else{
+                                } else {
                                     m.setGrad(3);
                                 }
                                 m.setNiveauEau(3);
@@ -358,10 +358,13 @@ public class Vue implements Observe {
                 tabCarte = new JButton[joueurs.size()][9];
                 for (int a = 0; a < joueurs.size(); a++) {
                     for (int i = 0; i < 9; i++) {
+                        Carte carte = new Carte(a, i, "");
                         if (i < joueurs.get(a).getCartePossedees().size()) {
-                            carte = new Carte(a, i, joueurs.get(a).getCartePossedees().get(i).getNomCarte().toString());
+                            carte.setText(joueurs.get(a).getCartePossedees().get(i).getNomCarte().toString());
+                            carte.setNumCarte(i);
                         } else {
-                            carte = new Carte(a, i, "/");
+                            carte.setText("/");
+                            carte.setNumCarte(i);
                         }
                         tabCarte[a][i] = carte;
                         carte.addActionListener(new ActionListener() {
@@ -369,6 +372,7 @@ public class Vue implements Observe {
                             public void actionPerformed(ActionEvent e) {
                                 Message m = new Message(TypesMessage.DEFAUSSERCARTE);
                                 m.setNumCarte(carte.getNumCarte());
+                                System.out.println(carte.getNumCarte());
                                 notifierObservateur(m);
                             }
                         });
@@ -513,8 +517,9 @@ public class Vue implements Observe {
     }
 
     public void actualiserMain(Aventurier joueur, int numJoueur) {
-        tabCarte[numJoueur][joueur.cartePossedees.size() - 2].setText(joueur.cartePossedees.get(joueur.cartePossedees.size() - 2).getNomCarte().toString());
-        tabCarte[numJoueur][joueur.cartePossedees.size() - 1].setText(joueur.cartePossedees.get(joueur.cartePossedees.size() - 1).getNomCarte().toString());
+        for (int i = 0; i< 9; i++) {
+            tabCarte[numJoueur][i].setText(joueur.getCartePossedees().size()>i?joueur.getCartePossedees().get(i).getNomCarte().toString():"/");
+        }
     }
 
     public void supprimerCarte(int numJoueurs, int numCarte) {
@@ -658,16 +663,17 @@ public class Vue implements Observe {
 
         }
     }
-    
-    public void finirJeu(boolean gagne){
-        if (gagne){
+
+    public void finirJeu(boolean gagne) {
+        if (gagne) {
             Utils.afficherInformation("Victoire !");
             fenetreJeu.dispose();
-        }else{
+        } else {
             Utils.afficherInformation("Défaite...");
             fenetreJeu.dispose();
         }
     }
+
     public void addObservateur(Observateur o) {
         this.observateur = o;
     }
@@ -687,6 +693,12 @@ public class Vue implements Observe {
             pierre.setEnabled(false);
         } else {
             crystal.setEnabled(false);
+        }
+    }
+
+    public void disableBoutonsMain(int numJoueur) {
+        for (int i = 0; i < 9; i++) {
+            tabCarte[numJoueur][i].setEnabled(false);
         }
     }
 
