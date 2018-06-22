@@ -169,7 +169,19 @@ public class Controleur implements Observateur {
                         }
                     }
                 } else {
-                    joueurCourant.piocherCarte(pileCarteTresor);
+                    ArrayList<CarteTirage> cartesPiochees = joueurCourant.piocherCarte(pileCarteTresor);
+                    for (CarteTirage cartePiochee : cartesPiochees) {
+                        if (cartePiochee.getNomCarte() == Cartes.MONTEEDESEAUX) {
+                            ArrayList<CarteInondation> temp = new ArrayList();
+                            for (CarteInondation carte : this.getPileInondation()) {
+                                temp.add(carte);
+                            }
+                            this.getPileInondation().clear();
+                            for (CarteInondation carte2 : this.getPileDefausseInondation()) {
+                                this.getPileInondation().add(carte2);
+                            }
+                        }
+                    }
                     vue.actualiserMain(joueurCourant, numJoueurs);
                 }
                 joueurCourant.piocherCarteInondation(pileCarteInondation, nivEau);
@@ -317,6 +329,7 @@ public class Controleur implements Observateur {
                     }
                 }
                 break;
+
             case CARTE:
                 if (defausser) {
                     this.getPileDefausse().add(joueurCourant.getCartePossedees().get(m.numCarte));
@@ -417,6 +430,14 @@ public class Controleur implements Observateur {
         for (CarteTirage carte : pileDefausse) {
             this.getPileCarte().add(carte);
         }
+    }
+
+    private ArrayList<CarteInondation> getPileInondation() {
+        return this.pileCarteInondation;
+    }
+
+    public ArrayList<CarteInondation> getPileDefausseInondation() {
+        return this.pileDefausseInondation;
     }
 
 }

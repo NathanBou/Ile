@@ -239,7 +239,7 @@ public class Vue implements Observe {
         JPanel panelGrille = new JPanel(new BorderLayout()); //Pânel contenant la grille
         for (int j = 0; j <= 1; j++) {
             if (j == 0) {
-                JPanel panelGrilleTuile = new JPanel(new GridLayout(6, 6, 2, 2)); //Grille
+                JPanel panelGrilleTuile = new JPanel(new GridLayout(6, 6, 4, 4)); //Grille
                 tabTuile = new JButton[6][6];
                 for (int i = 0; i < 6; i++) {
                     for (int k = 0; k < 6; k++) {
