@@ -354,7 +354,7 @@ public class Controleur implements Observateur {
                     vue.supprimerCarte(numJoueurs, m.numCarte);
                     vue.actualiserMain(joueurCourant, numJoueurs);
                     vue.setVueBoutonsEnabled();
-                    if (joueurCourant.getCartePossedees().size() <= 5 && !donnerCarte) {
+                    if (joueurCourant.getCartePossedees().size() <= 5) {
                         vue.disableBoutonsMain(numJoueurs);
                         vue.actualiserMain(joueurCourant, numJoueurs);
                         joueurCourant.debutTour();

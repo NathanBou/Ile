@@ -396,11 +396,15 @@ public class Vue implements Observe {
                             panelCartes4.add(carte);
                         }
                     }
+                    JButton action = new JButton("Utiliser carte");
+                    JPanel panelJoueur = new JPanel(new GridLayout(0, 2));
                     if (a == 0) {
                         boutonJoueur joueur = new boutonJoueur(a, joueurs.get(a).getRole().getNomRole().toString());
                         joueur.setEnabled(false);
                         tabJoueurs[a] = joueur;
-                        BorderCartes1.add(joueur, BorderLayout.NORTH);
+                        panelJoueur.add(joueur);
+                        panelJoueur.add(action);
+                        BorderCartes1.add(panelJoueur, BorderLayout.NORTH);
                         joueur.addActionListener(
                                 new ActionListener() {
                             @Override
@@ -414,7 +418,9 @@ public class Vue implements Observe {
                         boutonJoueur joueur = new boutonJoueur(a, joueurs.get(a).getRole().getNomRole().toString());
                         joueur.setEnabled(false);
                         tabJoueurs[a] = joueur;
-                        BorderCartes2.add(joueur, BorderLayout.NORTH);
+                        panelJoueur.add(joueur);
+                        panelJoueur.add(action);
+                        BorderCartes2.add(panelJoueur, BorderLayout.NORTH);
                         joueur.addActionListener(
                                 new ActionListener() {
                             @Override
@@ -426,9 +432,19 @@ public class Vue implements Observe {
                         });
                     } else if (a == 2) {
                         boutonJoueur joueur = new boutonJoueur(a, joueurs.get(a).getRole().getNomRole().toString());
+                        action.addActionListener(
+                                new ActionListener() {
+                            @Override
+                            public void actionPerformed(ActionEvent e) {
+                                Message m = new Message(TypesMessage.JOUEURCIBLE);
+
+                            }
+                        });
                         joueur.setEnabled(false);
                         tabJoueurs[a] = joueur;
-                        BorderCartes3.add(joueur, BorderLayout.NORTH);
+                        panelJoueur.add(joueur);
+                        panelJoueur.add(action);
+                        BorderCartes3.add(panelJoueur, BorderLayout.NORTH);
                         joueur.addActionListener(
                                 new ActionListener() {
                             @Override
@@ -438,11 +454,14 @@ public class Vue implements Observe {
                                 notifierObservateur(m);
                             }
                         });
+
                     } else if (a == 3) {
                         boutonJoueur joueur = new boutonJoueur(a, joueurs.get(a).getRole().getNomRole().toString());
                         joueur.setEnabled(false);
                         tabJoueurs[a] = joueur;
-                        BorderCartes4.add(joueur, BorderLayout.NORTH);
+                        panelJoueur.add(joueur);
+                        panelJoueur.add(action);
+                        BorderCartes4.add(panelJoueur, BorderLayout.NORTH);
                         joueur.addActionListener(
                                 new ActionListener() {
                             @Override
