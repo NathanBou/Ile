@@ -274,6 +274,7 @@ public class Controleur implements Observateur {
                         System.out.println("PILOTE");
                     }
                 }
+                Collections.shuffle(joueurs);
                 for (Aventurier joueur : joueurs) {
                     System.out.println("*" + joueur.getRole().getNomRole().toString());
                 }
