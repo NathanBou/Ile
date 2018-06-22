@@ -395,9 +395,9 @@ public class Vue implements Observe {
                         } else if (a == 3) {
                             panelCartes4.add(carte);
                         }
-                    }                    
+                    }
                     if (a == 0) {
-                        boutonJoueur joueur = new boutonJoueur(a,joueurs.get(a).getRole().getNomRole().toString());
+                        boutonJoueur joueur = new boutonJoueur(a, joueurs.get(a).getRole().getNomRole().toString());
                         joueur.setEnabled(false);
                         tabJoueurs[a] = joueur;
                         BorderCartes1.add(joueur, BorderLayout.NORTH);
@@ -411,7 +411,7 @@ public class Vue implements Observe {
                             }
                         });
                     } else if (a == 1) {
-                        boutonJoueur joueur = new boutonJoueur(a,joueurs.get(a).getRole().getNomRole().toString());
+                        boutonJoueur joueur = new boutonJoueur(a, joueurs.get(a).getRole().getNomRole().toString());
                         joueur.setEnabled(false);
                         tabJoueurs[a] = joueur;
                         BorderCartes2.add(joueur, BorderLayout.NORTH);
@@ -425,7 +425,7 @@ public class Vue implements Observe {
                             }
                         });
                     } else if (a == 2) {
-                        boutonJoueur joueur = new boutonJoueur(a,joueurs.get(a).getRole().getNomRole().toString());
+                        boutonJoueur joueur = new boutonJoueur(a, joueurs.get(a).getRole().getNomRole().toString());
                         joueur.setEnabled(false);
                         tabJoueurs[a] = joueur;
                         BorderCartes3.add(joueur, BorderLayout.NORTH);
@@ -439,7 +439,7 @@ public class Vue implements Observe {
                             }
                         });
                     } else if (a == 3) {
-                        boutonJoueur joueur = new boutonJoueur(a,joueurs.get(a).getRole().getNomRole().toString());
+                        boutonJoueur joueur = new boutonJoueur(a, joueurs.get(a).getRole().getNomRole().toString());
                         joueur.setEnabled(false);
                         tabJoueurs[a] = joueur;
                         BorderCartes4.add(joueur, BorderLayout.NORTH);
@@ -703,7 +703,8 @@ public class Vue implements Observe {
         annuler.setBackground(Color.GREEN);
         annuler.setEnabled(false);
     }
-    public void setVueBoutonsDesactive(){
+
+    public void setVueBoutonsDesactive() {
         deplacer.setBackground(Color.GREEN);
         deplacer.setEnabled(false);
         prendreTresor.setBackground(Color.GREEN);
@@ -716,6 +717,7 @@ public class Vue implements Observe {
         annuler.setBackground(Color.GREEN);
         annuler.setEnabled(false);
     }
+
     public void reinitialiserGrille() {
         for (int i = 0; i < 6; i++) {
             for (int k = 0; k < 6; k++) {
@@ -748,7 +750,8 @@ public class Vue implements Observe {
             fenetreJeu.dispose();
         }
     }
-        public void tresorPris(int a) {
+
+    public void tresorPris(int a) {
         if (a == 0) {
             calice.setEnabled(false);
         } else if (a == 1) {
@@ -765,16 +768,18 @@ public class Vue implements Observe {
             tabCarte[numJoueur][i].setEnabled(false);
         }
     }
-    public void desactiverJoueur(){
-        for (int i = 0; i < this.tabJoueurs.length ; i++) {
+
+    public void desactiverJoueur() {
+        for (int i = 0; i < this.tabJoueurs.length; i++) {
             tabJoueurs[i].setEnabled(false);
         }
     }
-    public void activerJoueur(Aventurier joueurCourant,ArrayList<Aventurier> joueursCibles) {
 
-        for (int i = 0; i < this.tabJoueurs.length ; i++) {
+    public void activerJoueur(Aventurier joueurCourant, ArrayList<Aventurier> joueursCibles) {
+
+        for (int i = 0; i < this.tabJoueurs.length; i++) {
             for (Aventurier joueur : joueursCibles) {
-                if (tabJoueurs[i].getText() == joueur.getRole().getNomRole().toString() && tabJoueurs[i].getText()!=joueurCourant.getRole().getNomRole().toString()) {
+                if (tabJoueurs[i].getText() == joueur.getRole().getNomRole().toString() && tabJoueurs[i].getText() != joueurCourant.getRole().getNomRole().toString()) {
                     tabJoueurs[i].setEnabled(true);
                 }
             }
@@ -797,6 +802,4 @@ public class Vue implements Observe {
         }
     }
 
-
-    
 }

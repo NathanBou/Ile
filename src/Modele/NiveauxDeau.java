@@ -2,27 +2,27 @@ package Modele;
 
 public class NiveauxDeau {
 
-	private int niveaux;
-	private int initial;
+    private int niveaux;
+    private int initial;
 
-	public int getNiveaux() {
-		return this.niveaux;
-	}
+    public int getNiveaux() {
+        return this.niveaux;
+    }
 
-	public void setInitial(int initial) {
-		this.initial = initial;
-	}
+    public void setInitial(int initial) {
+        this.initial = initial;
+    }
 
-	/**
-	 * 
-	 * @param Niveaux
-	 */
-	public void setNiveaux(int Niveaux) {
-		this.niveaux = Niveaux;
-	}
+    /**
+     *
+     * @param Niveaux
+     */
+    public void setNiveaux(int Niveaux) {
+        this.niveaux = Niveaux;
+    }
 
-	public int getInitial() {
-		return this.initial;
-	}
+    public int getInitial() {
+        return this.initial;
+    }
 
 }

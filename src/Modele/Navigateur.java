@@ -10,8 +10,9 @@ package Modele;
  * @author perrbeno
  */
 public class Navigateur extends Aventurier {
+
     public Navigateur() {
         super(new Role(NomRole.NAVIGATEUR, Utils.Pion.JAUNE));
     }
-    
+
 }

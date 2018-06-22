@@ -9,10 +9,10 @@ package Modele;
  *
  * @author commeroy
  */
-public class CarteMonteeDesEaux extends CarteTirage{
-    
-    public CarteMonteeDesEaux(){
+public class CarteMonteeDesEaux extends CarteTirage {
+
+    public CarteMonteeDesEaux() {
         super(Cartes.MONTEEDESEAUX);
     }
-    
+
 }

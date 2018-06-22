@@ -17,15 +17,15 @@ public enum Cartes {
     HELICOPTERE("Hélicoptère"),
     SACDESABLE("Sac de sable"),
     MONTEEDESEAUX("Montée des eaux");
-    
-    String libelle ;
-        
-       Cartes(String libelle) {
-            this.libelle = libelle ;
-        }
 
-        @Override
-        public String toString() {
-            return this.libelle ;
-        }
+    String libelle;
+
+    Cartes(String libelle) {
+        this.libelle = libelle;
+    }
+
+    @Override
+    public String toString() {
+        return this.libelle;
+    }
 }

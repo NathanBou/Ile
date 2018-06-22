@@ -12,6 +12,7 @@ import javax.swing.JButton;
  * @author commeroy
  */
 public class boutonJoueur extends JButton {
+
     private int numJoueur;
     private String nomJoueur;
 
@@ -36,5 +37,5 @@ public class boutonJoueur extends JButton {
     public void setNomJoueur(String nomJoueur) {
         this.nomJoueur = nomJoueur;
     }
-    
+
 }

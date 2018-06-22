@@ -8,13 +8,14 @@ package Controleur;
 import Modele.Grille;
 import Vues.Vue;
 
-
 /**
  *
  * @author bouviern
  */
 public class Main {
+
     private Vue ihm;
+
     /**
      * @param args the command line arguments
      */
@@ -22,7 +23,7 @@ public class Main {
         // TODO code application logic here
         Grille grille = new Grille();
         Vue ihm = new Vue();
-        Controleur cont = new Controleur(ihm,grille);
+        Controleur cont = new Controleur(ihm, grille);
     }
-    
+
 }

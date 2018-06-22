@@ -6,7 +6,7 @@ public class Role {
 
     private NomRole nomRole;
     private Pion pion;
-        
+
     Role(NomRole nomRole, Pion pion) {
         this.pion = pion;
         this.nomRole = nomRole;
@@ -27,6 +27,5 @@ public class Role {
     public void setCouleur(Pion pion) {
         this.pion = pion;
     }
-    
-    
+
 }

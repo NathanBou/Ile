@@ -10,9 +10,10 @@ package Modele;
  * @author commeroy
  */
 public class CarteTirage {
+
     private Cartes nomCarte;
-    
-    public CarteTirage(Cartes nomCarte){
+
+    public CarteTirage(Cartes nomCarte) {
         this.nomCarte = nomCarte;
     }
 
@@ -23,6 +24,5 @@ public class CarteTirage {
     public void setNomCarte(Cartes nomCarte) {
         this.nomCarte = nomCarte;
     }
-    
-    
+
 }

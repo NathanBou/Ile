@@ -186,7 +186,7 @@ public class Controleur implements Observateur {
                 vue.afficherEtatJeu(nbTour, joueurCourant.getRole().getNomRole().toString());
                 joueurCourant.finTour();
                 vue.afficherDebutTour();
-                
+
                 break;
 
             case ASSECHER:
@@ -334,9 +334,8 @@ public class Controleur implements Observateur {
                         nbTour++;
                         vue.afficherEtatJeu(nbTour, joueurCourant.getRole().getNomRole().toString());
                         defausser = false;
-                        
+
                     }
-                    
 
                 } else if (donnerCarte) {
                     joueurCourant.donnerCarte(this.getJoueurCible(), joueurCourant.getCartePossedees().get(m.getNumCarte()));

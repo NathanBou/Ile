@@ -16,6 +16,7 @@ import java.util.ArrayList;
  * @author bouviern
  */
 public class Message {
+
     TypesMessage type;
     ArrayList<NomRole> joueurs = new ArrayList<NomRole>();
     int lig;
@@ -25,8 +26,9 @@ public class Message {
     int grad;
     Tuile tuile;
     int numJoueurs;
+
     public Message(TypesMessage type) {
-        this.type = type;    
+        this.type = type;
     }
 
     public TypesMessage getType() {
@@ -36,7 +38,8 @@ public class Message {
     public void setType(TypesMessage type) {
         this.type = type;
     }
-    public void ajouterJoueur(NomRole joueur){
+
+    public void ajouterJoueur(NomRole joueur) {
         joueurs.add(joueur);
     }
 
@@ -71,22 +74,22 @@ public class Message {
     public void setNiveauEau(int niveauEau) {
         this.niveauEau = niveauEau;
     }
-    public void setGrad(int grad){
-        this.grad=grad;
+
+    public void setGrad(int grad) {
+        this.grad = grad;
     }
-    public int getGrad(){
+
+    public int getGrad() {
         return this.grad;
     }
 
     public int getNumJoueur() {
-        
-        return this.numJoueurs ;
+
+        return this.numJoueurs;
     }
 
     public void setNumJoueur(int numJoueurs) {
         this.numJoueurs = numJoueurs;
     }
-    
-    
-    
+
 }

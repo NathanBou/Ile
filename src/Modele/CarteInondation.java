@@ -10,9 +10,11 @@ package Modele;
  * @author bouviern
  */
 public class CarteInondation {
+
     private Tuile nomCarte;
-    public CarteInondation(Tuile tuile){
-        this.nomCarte=tuile;
+
+    public CarteInondation(Tuile tuile) {
+        this.nomCarte = tuile;
     }
 
     public Tuile getNomCarte() {
@@ -22,5 +24,5 @@ public class CarteInondation {
     public void setNomCarte(Tuile nomtuile) {
         this.nomCarte = nomtuile;
     }
-    
+
 }
