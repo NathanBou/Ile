@@ -427,6 +427,9 @@ public class Controleur implements Observateur {
                 vue.afficherMessage1("Sélectionnez la carte à donner à");
                 vue.afficherMessage2(this.joueurs.get(m.getNumJoueur()).toString());
                 break;
+            case CARTESPECIAL:
+                System.out.println("Utilisation carte special");
+                vue.activerCarteSpecial(this.numJoueurs);
         }
     }
 

@@ -7,6 +7,7 @@ package Controleur;
 
 import Controleur.TypesMessage;
 import Modele.Aventurier;
+import Modele.Cartes;
 import Modele.NomRole;
 import Modele.Tuile;
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ public class Message {
     int grad;
     Tuile tuile;
     int numJoueurs;
+    Cartes typeCarte;
 
     public Message(TypesMessage type) {
         this.type = type;
@@ -92,4 +94,12 @@ public class Message {
         this.numJoueurs = numJoueurs;
     }
 
+    public Cartes getTypeCarte() {
+        return typeCarte;
+    }
+
+    public void setTypeCarte(Cartes typeCarte) {
+        this.typeCarte = typeCarte;
+    }
+    
 }
