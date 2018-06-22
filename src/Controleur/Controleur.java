@@ -177,18 +177,17 @@ public class Controleur implements Observateur {
                         if (grad == 2 || grad == 5 || grad == 7) {
                             nivEau++;
                         }
+                        
                         ArrayList<CarteInondation> temp = new ArrayList();
                         for (CarteInondation carte : this.getPileInondation()) {
-                             System.out.println(carte.getNomCarte().getNomTuile().toString()+"+");
                             temp.add(carte);
                         }
                         this.getPileInondation().clear();
+                        Collections.shuffle(this.getPileDefausseInondation());
                         for (CarteInondation carte2 : this.getPileDefausseInondation()) {
-                             System.out.println(carte2.getNomCarte().getNomTuile().toString()+"*");
                             this.getPileInondation().add(carte2);
                         }
                         for (CarteInondation carte2 : temp) {
-                             System.out.println(carte2.getNomCarte().getNomTuile().toString()+"**");
                             this.getPileInondation().add(carte2);
                         }
                     }
@@ -205,7 +204,7 @@ public class Controleur implements Observateur {
                 }
                 joueurCourant = joueurs.get(numJoueurs == joueurs.size() ? numJoueurs = 0 : numJoueurs);
                 nbTour++;
-                vue.afficherEtatJeu(nbTour, joueurCourant.getRole().getNomRole().toString());
+                vue.afficherEtatJeu(nbTour, nivEau, joueurCourant.getRole().getNomRole().toString());
                 joueurCourant.finTour();
                 vue.afficherDebutTour();
 
