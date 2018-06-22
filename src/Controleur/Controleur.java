@@ -172,29 +172,25 @@ public class Controleur implements Observateur {
                     boolean montee = false;
                     montee = joueurCourant.piocherCarte(pileCarteTresor, pileDefausseTresor);
                     if (montee) {
-                        System.out.println("SEXE");
                         grad++;
                         if (grad == 2 || grad == 5 || grad == 7) {
                             nivEau++;
                         }
                         ArrayList<CarteInondation> temp = new ArrayList();
                         for (CarteInondation carte : this.getPileInondation()) {
-                             System.out.println(carte.getNomCarte().getNomTuile().toString()+"+");
                             temp.add(carte);
                         }
                         this.getPileInondation().clear();
                         for (CarteInondation carte2 : this.getPileDefausseInondation()) {
-                             System.out.println(carte2.getNomCarte().getNomTuile().toString()+"*");
                             this.getPileInondation().add(carte2);
                         }
                         for (CarteInondation carte2 : temp) {
-                             System.out.println(carte2.getNomCarte().getNomTuile().toString()+"**");
                             this.getPileInondation().add(carte2);
                         }
                     }
                     vue.actualiserMain(joueurCourant, numJoueurs);
                 }
-                joueurCourant.piocherCarteInondation(this.getPileInondation(),this.getPileDefausseInondation(), nivEau);
+                joueurCourant.piocherCarteInondation(this.getPileInondation(), this.getPileDefausseInondation(), nivEau);
                 vue.actualiserGrille(grille);
                 if (grad == 9) {
                     gagner = false;
@@ -209,15 +205,11 @@ public class Controleur implements Observateur {
                 joueurCourant.debutTour();
                 if (donnerCarte) {
                     if (this.joueurCourant.getCartePossedees().size() > 5) {
-
                         Utils.afficherInformation("Choisir " + (this.joueurCourant.cartePossedees.size() - 5) + " carte a défausser");
                         defausser = true;
-                        if (joueurCourant.getCartePossedees().size() > 5) {
-                            vue.activerCarte(numJoueurs);
-                            vue.setVueBoutonsDesactive();
-                        }
+                        vue.activerCarte(numJoueurs);
+                        vue.setVueBoutonsDesactive();
                     }
-                    this.donnerCarte=false;
                 }
                 vue.afficherDebutTour();
 
@@ -359,9 +351,8 @@ public class Controleur implements Observateur {
                     vue.supprimerCarte(numJoueurs, m.numCarte);
                     vue.actualiserMain(joueurCourant, numJoueurs);
                     vue.setVueBoutonsEnabled();
-                    if (joueurCourant.getCartePossedees().size() <= 5) {
+                    if (joueurCourant.getCartePossedees().size() <= 5 && !donnerCarte) {
                         vue.disableBoutonsMain(numJoueurs);
-                        System.out.println(joueurCourant.getCartePossedees());
                         vue.actualiserMain(joueurCourant, numJoueurs);
                         joueurCourant.debutTour();
                         numJoueurs++;
@@ -397,7 +388,6 @@ public class Controleur implements Observateur {
                 System.out.println("Donner une carte");
                 vue.setVueDonnerCarte();
                 vue.activerJoueur(joueurCourant, this.joueurCourant.getEstSurTuile().getASurTuile());
-
                 break;
             case JOUEURCIBLE:
                 System.out.println("JOUEUR CIBLE");
