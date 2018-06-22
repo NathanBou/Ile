@@ -54,8 +54,8 @@ public abstract class Aventurier {
             joueur.getCartePossedees().add(carte);
             this.getCartePossedees().remove(carte);
             joueur.setNbCarte(joueur.getNbCarte()+1);
-            this.nbCarte--;
-            nbAction++;
+            this.setNbCarte(this.getNbCarte()-1);
+            this.setNbAction(this.getNbAction()+1);
     }
 
     public void piocherCarte(ArrayList<CarteTirage> pileCarte) {
@@ -66,6 +66,7 @@ public abstract class Aventurier {
             pileCarte.remove(0);
             nbCarte++;
         }       
+        
     }
     
     public void piocherCarte(CarteTirage carte) {

@@ -618,6 +618,8 @@ public class Vue implements Observe {
         deplacer.setBackground(Color.GREEN);
         assecher.setEnabled(false);
         assecher.setBackground(Color.GREEN);
+        prendreTresor.setBackground(Color.GREEN);
+        donnerCarte.setBackground(Color.GREEN);
         prendreTresor.setEnabled(false);
         donnerCarte.setEnabled(false);
         annuler.setEnabled(false);
