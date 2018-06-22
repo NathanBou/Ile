@@ -14,13 +14,13 @@ public enum NomTresors {
     CALICE("Calice"),
     CRISTAL("Cristal"),
     PIERRE("Pierre");
-    
+
     private String libelle;
-    
-    NomTresors(String libelle){
+
+    NomTresors(String libelle) {
         this.libelle = libelle;
     }
-    
+
     @Override
     public String toString() {
         return this.libelle;

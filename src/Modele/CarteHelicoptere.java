@@ -10,9 +10,9 @@ package Modele;
  * @author commeroy
  */
 public class CarteHelicoptere extends CarteTirage {
-    
-    public CarteHelicoptere(){
+
+    public CarteHelicoptere() {
         super(Cartes.HELICOPTERE);
     }
-    
+
 }

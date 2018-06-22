@@ -11,7 +11,8 @@ import javax.swing.JButton;
  *
  * @author bouviern
  */
-public class Carte extends JButton{
+public class Carte extends JButton {
+
     private int numJoueur;
     private int numCarte;
     private String nomCarte;
@@ -21,7 +22,6 @@ public class Carte extends JButton{
         this.numCarte = numCarte;
         this.setText(nomCarte);
     }
-    
 
     public int getNumJoueur() {
         return numJoueur;
@@ -38,7 +38,5 @@ public class Carte extends JButton{
     public void setNumCarte(int numCarte) {
         this.numCarte = numCarte;
     }
-    
-    
-    
+
 }

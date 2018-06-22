@@ -10,9 +10,9 @@ package Modele;
  * @author commeroy
  */
 public class CarteSacDeSable extends CarteTirage {
-    
-    public CarteSacDeSable(){
+
+    public CarteSacDeSable() {
         super(Cartes.SACDESABLE);
     }
-    
+
 }

@@ -11,18 +11,17 @@ public class Tuile {
     private int lig;
     private int col;
 
-    Tuile(NomTuile nomTuile, EtatTuile etat,int lig,int col) {
+    Tuile(NomTuile nomTuile, EtatTuile etat, int lig, int col) {
         this.nomTuile = nomTuile;
         this.etat = etat;
-        this.lig=lig;
-        this.col=col;
+        this.lig = lig;
+        this.col = col;
         aSurTuile = new ArrayList<Aventurier>();
     }
 
     public EtatTuile getEtat() {
         return this.etat;
     }
-
 
     /**
      *
@@ -74,5 +73,5 @@ public class Tuile {
     public int getLig() {
         return this.lig;
     }
-    
+
 }

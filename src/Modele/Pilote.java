@@ -25,7 +25,7 @@ public class Pilote extends Aventurier {
     public ArrayList<Tuile> getTuilesAccessibles(Grille g) {
         ArrayList<Tuile> tuilesAccessibles = new ArrayList();
         if (utilise) {
-            tuilesAccessibles=super.getTuilesAccessibles(g);
+            tuilesAccessibles = super.getTuilesAccessibles(g);
         } else {
             for (int i = 0; i < 6; i++) {
                 for (int k = 0; k < 6; k++) {
@@ -38,7 +38,7 @@ public class Pilote extends Aventurier {
         }
         return tuilesAccessibles;
     }
-    
+
     public void setUtilise(boolean utilise) {
         this.utilise = utilise;
     }

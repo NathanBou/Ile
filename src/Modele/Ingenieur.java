@@ -10,10 +10,11 @@ package Modele;
  * @author perrbeno
  */
 public class Ingenieur extends Aventurier {
+
     public int special;
-    
+
     public Ingenieur() {
-        super(new Role(NomRole.INGENIEUR,Utils.Pion.ROUGE));
+        super(new Role(NomRole.INGENIEUR, Utils.Pion.ROUGE));
         special = -1;
     }
 
@@ -22,9 +23,9 @@ public class Ingenieur extends Aventurier {
     }
 
     public void utiliseSpecial() {
-        if(getSpecial()<1) {
+        if (getSpecial() < 1) {
             special++;
-            if(special ==0) {
+            if (special == 0) {
                 System.out.println("Pouvoir Ingenieur : assechement possible.");
             }
         }
