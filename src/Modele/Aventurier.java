@@ -58,19 +58,20 @@ public abstract class Aventurier {
         this.setNbAction(this.getNbAction() + 1);
     }
 
-    public ArrayList<CarteTirage> piocherCarte(ArrayList<CarteTirage> pileCarte) {
-        ArrayList<CarteTirage> cartesPiochees = new ArrayList();
-        for (int i = 0; i < 2 ;i++){
-            if(pileCarte.get(0).getNomCarte()!= Cartes.MONTEEDESEAUX){
-              this.cartePossedees.add(pileCarte.get(0));   
+    public boolean piocherCarte(ArrayList<CarteTirage> pileCarte, ArrayList<CarteTirage> pileCarteDefausse) {
+        boolean montee = false;
+        for (int i = 0; i < 2; i++) {
+            if (pileCarte.get(0).getNomCarte() != Cartes.MONTEEDESEAUX) {
+                this.cartePossedees.add(pileCarte.get(0));
             } else {
-              
+                montee = true;
             }
-            cartesPiochees.add(pileCarte.get(0));
+
+            pileCarteDefausse.add(pileCarte.get(0));
             pileCarte.remove(0);
             nbCarte++;
-        }       
-        return cartesPiochees;
+        }
+        return montee;
     }
 
     public void piocherCarte(CarteTirage carte) {
@@ -78,14 +79,16 @@ public abstract class Aventurier {
         nbCarte++;
     }
 
-    public void piocherCarteInondation(ArrayList<CarteInondation> pileCarte, int nivEau) {
+    public void piocherCarteInondation(ArrayList<CarteInondation> pileCarte, ArrayList<CarteInondation> pileDefausse, int nivEau) {
         for (int i = 0; i < nivEau; i++) {
             if (pileCarte.get(0).getNomCarte().getEtat() == EtatTuile.INONDEE) {
                 pileCarte.get(0).getNomCarte().setEtat(EtatTuile.COULEE);
-            }else if (pileCarte.get(0).getNomCarte().getEtat()==EtatTuile.ASSECHEE){
+            } else if (pileCarte.get(0).getNomCarte().getEtat() == EtatTuile.ASSECHEE) {
                 pileCarte.get(0).getNomCarte().setEtat(EtatTuile.INONDEE);
             }
+            pileDefausse.add(pileCarte.get(0));
             pileCarte.remove(0);
+
         }
     }
 

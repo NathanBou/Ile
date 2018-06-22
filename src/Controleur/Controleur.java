@@ -169,24 +169,34 @@ public class Controleur implements Observateur {
                         }
                     }
                 } else {
-                    ArrayList<CarteTirage> cartesPiochees = joueurCourant.piocherCarte(pileCarteTresor);
-                    for (CarteTirage cartePiochee : cartesPiochees) {
-                        if (cartePiochee.getNomCarte() == Cartes.MONTEEDESEAUX) {
-                            ArrayList<CarteInondation> temp = new ArrayList();
-                            for (CarteInondation carte : this.getPileInondation()) {
-                                temp.add(carte);
-                            }
-                            this.getPileInondation().clear();
-                            for (CarteInondation carte2 : this.getPileDefausseInondation()) {
-                                this.getPileInondation().add(carte2);
-                            }
+                    boolean montee = false;
+                    montee = joueurCourant.piocherCarte(pileCarteTresor, pileDefausseTresor);
+                    if (montee) {
+                        System.out.println("SEXE");
+                        grad++;
+                        if (grad == 2 || grad == 5 || grad == 7) {
+                            nivEau++;
+                        }
+                        ArrayList<CarteInondation> temp = new ArrayList();
+                        for (CarteInondation carte : this.getPileInondation()) {
+                             System.out.println(carte.getNomCarte().getNomTuile().toString()+"+");
+                            temp.add(carte);
+                        }
+                        this.getPileInondation().clear();
+                        for (CarteInondation carte2 : this.getPileDefausseInondation()) {
+                             System.out.println(carte2.getNomCarte().getNomTuile().toString()+"*");
+                            this.getPileInondation().add(carte2);
+                        }
+                        for (CarteInondation carte2 : temp) {
+                             System.out.println(carte2.getNomCarte().getNomTuile().toString()+"**");
+                            this.getPileInondation().add(carte2);
                         }
                     }
                     vue.actualiserMain(joueurCourant, numJoueurs);
                 }
-                joueurCourant.piocherCarteInondation(pileCarteInondation, nivEau);
+                joueurCourant.piocherCarteInondation(this.getPileInondation(),this.getPileDefausseInondation(), nivEau);
                 vue.actualiserGrille(grille);
-                if (grad == 7) {
+                if (grad == 9) {
                     gagner = false;
                     vue.finirJeu(gagner);
                 }
@@ -200,7 +210,7 @@ public class Controleur implements Observateur {
                 if (donnerCarte) {
                     if (this.joueurCourant.getCartePossedees().size() > 5) {
 
-                        Utils.afficherInformation("Choisir " + (this.joueurCourant.cartePossedees.size() + 2 - 5) + " carte a défausser");
+                        Utils.afficherInformation("Choisir " + (this.joueurCourant.cartePossedees.size() - 5) + " carte a défausser");
                         defausser = true;
                         if (joueurCourant.getCartePossedees().size() > 5) {
                             vue.activerCarte(numJoueurs);
@@ -292,7 +302,7 @@ public class Controleur implements Observateur {
                 Collections.shuffle(pileCarteTresor);                         //MELANGE DES CARTES  TRESOR
 
                 for (Aventurier joueur : joueurs) {                     //DISTRIBUTION DES CARTES
-                    joueur.piocherCarte(pileCarteTresor);
+                    joueur.piocherCarte(pileCarteTresor, pileDefausseTresor);
                 }
                 vue.creeJeu(grille, joueurs);
                 vue.setVueBoutonsEnabled();
