@@ -51,9 +51,9 @@ public abstract class Aventurier {
      * @param Carte
      */
     public void donnerCarte(Aventurier joueur, CarteTirage carte) {
-            joueur.cartePossedees.add(carte);
-            this.cartePossedees.remove(carte);
-            joueur.nbCarte++;
+            joueur.getCartePossedees().add(carte);
+            this.getCartePossedees().remove(carte);
+            joueur.setNbCarte(joueur.getNbCarte()+1);
             this.nbCarte--;
             nbAction++;
     }
@@ -205,6 +205,10 @@ public abstract class Aventurier {
 
     public ArrayList<CarteTirage> getCartePossedees() {
         return cartePossedees;
+    }
+
+    public void setNbCarte(int nbCarte) {
+        this.nbCarte = nbCarte;
     }
     
     

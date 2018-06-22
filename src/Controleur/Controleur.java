@@ -39,10 +39,12 @@ public class Controleur implements Observateur {
     private ArrayList<CarteInondation> pileCarteInondation;
     private ArrayList<CarteInondation> pileDefausseInondation;
     private Aventurier joueurCourant;
+    private Aventurier joueurCible;
     private boolean gagner;
     private boolean deplacement;
     private boolean assechement;
     private boolean defausser;
+    private boolean donnerCarte = false;
     private int nbTour;
     private int nivEau;
     private int grad;
@@ -281,6 +283,7 @@ public class Controleur implements Observateur {
             case ANNULER:
                 System.out.println("Annuler");
                 vue.setVueBoutonsEnabled();
+                vue.desactiverJoueur();
                 vue.reinitialiserGrille();
                 deplacement = false;
                 assechement = false;
@@ -313,7 +316,8 @@ public class Controleur implements Observateur {
                     }
                 }
                 break;
-            case DEFAUSSERCARTE:
+            case CARTE:
+            if (defausser){
                 this.getPileDefausse().add(joueurCourant.getCartePossedees().get(m.numCarte));
                 joueurCourant.getCartePossedees().remove(joueurCourant.getCartePossedees().get(m.numCarte));
                 vue.supprimerCarte(numJoueurs, m.numCarte);
@@ -327,19 +331,34 @@ public class Controleur implements Observateur {
                     joueurCourant = joueurs.get(numJoueurs == joueurs.size() ? numJoueurs = 0 : numJoueurs);
                     nbTour++;
                     vue.afficherEtatJeu(nbTour, joueurCourant.getRole().getNomRole().toString());
+                    defausser=false;
                     vue.afficherDebutTour();
-
                 }
+
+
+            }else if(donnerCarte){
+                System.out.println("Donner carte");
+                System.out.println(this.getJoueurCible().getRole().getNomRole().toString());
+                System.out.println(joueurCourant.getCartePossedees().get(m.getNumCarte()).getNomCarte().toString());
+                joueurCourant.donnerCarte(this.getJoueurCible(), joueurCourant.getCartePossedees().get(m.getNumCarte()));
+                vue.actualiserMain(joueurCourant, numJoueurs);
+                vue.actualiserMain(this.getJoueurCible(), numJoueurs);
+                vue.desactiverJoueur();
+            }
+            vue.setVueBoutonsEnabled();
                 break;
             case DONNERCARTE:
                 System.out.println("Donner une carte");
                 vue.setVueDonnerCarte();
-                vue.activerJoueur(this.joueurCourant.getEstSurTuile().getASurTuile());
+                vue.activerJoueur(joueurCourant,this.joueurCourant.getEstSurTuile().getASurTuile());
+                
                 break;
             case JOUEURCIBLE:
-                this.joueurCourant.donnerCarte(m.getJoueurCible(), joueurCourant.getCartePossedees().get(m.numCarte));
-                vue.actualiserMain(joueurCourant, numJoueurs);
-                vue.actualiserMain(m.getJoueurCible(), numJoueurs);
+                System.out.println("JOUEUR CIBLE");
+                donnerCarte=true;
+                setJoueurCible(this.joueurs.get(m.getNumJoueur()));
+                vue.activerCarte(this.numJoueurs);
+                vue.desactiverJoueur();
                 break;
         }
     }
@@ -364,6 +383,14 @@ public class Controleur implements Observateur {
         return pileDefausseTresor;
     }
 
+    public Aventurier getJoueurCible() {
+        return joueurCible;
+    }
+
+    public void setJoueurCible(Aventurier joueurCible) {
+        this.joueurCible = joueurCible;
+    }
+    
     private void refillPileCarte(ArrayList<CarteTirage> pileDefausse) {
         this.pileCarteTresor.clear();
         Collections.shuffle(pileDefausse);

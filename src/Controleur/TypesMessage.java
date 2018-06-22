@@ -18,7 +18,7 @@ public enum TypesMessage {
     ANNULER,
     JOUERCARTE,
     PRENDRETRESOR,
-    DEFAUSSERCARTE,
+    CARTE,
     DONNERCARTE,
     JOUEURCIBLE;
 }

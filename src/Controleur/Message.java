@@ -24,7 +24,7 @@ public class Message {
     int niveauEau;
     int grad;
     Tuile tuile;
-    Aventurier joueurCible;
+    int numJoueurs;
     public Message(TypesMessage type) {
         this.type = type;    
     }
@@ -78,12 +78,15 @@ public class Message {
         return this.grad;
     }
 
-    public Aventurier getJoueurCible() {
-        return joueurCible;
+    public int getNumJoueur() {
+        
+        return this.numJoueurs ;
     }
 
-    public void setJoueurCible(Aventurier joueurCible) {
-        this.joueurCible = joueurCible;
+    public void setNumJoueur(int numJoueurs) {
+        this.numJoueurs = numJoueurs;
     }
+    
+    
     
 }

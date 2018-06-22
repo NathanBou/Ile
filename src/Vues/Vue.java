@@ -364,6 +364,7 @@ public class Vue implements Observe {
 
                 // dessin carrés dans panelCartes1,2,3 et 4
                 tabCarte = new JButton[joueurs.size()][9];
+                tabJoueurs = new JButton[joueurs.size()];
                 for (int a = 0; a < joueurs.size(); a++) {
                     for (int i = 0; i < 9; i++) {
                         Carte carte = new Carte(a, i, "");
@@ -378,7 +379,7 @@ public class Vue implements Observe {
                         carte.addActionListener(new ActionListener() {
                             @Override
                             public void actionPerformed(ActionEvent e) {
-                                Message m = new Message(TypesMessage.DEFAUSSERCARTE);
+                                Message m = new Message(TypesMessage.CARTE);
                                 m.setNumCarte(carte.getNumCarte());
                                 System.out.println(carte.getNumCarte());
                                 notifierObservateur(m);
@@ -394,44 +395,63 @@ public class Vue implements Observe {
                         } else if (a == 3) {
                             panelCartes4.add(carte);
                         }
-                    }
-                    tabJoueurs = new JButton[joueurs.size()];
+                    }                    
                     if (a == 0) {
-                        boutonJoueur joueur1 = new boutonJoueur(a,joueurs.get(a).getRole().getNomRole().toString());
-                        joueur1.setEnabled(false);
-
-                        System.out.println("LOL " + a);
-                        tabJoueurs[a] = joueur1;
-                         System.out.println(this.getTabJoueurs()[0]);
-                          System.out.println(this.getTabJoueurs()[a]);
-                        BorderCartes1.add(joueur1, BorderLayout.NORTH);
-                        joueur1.addActionListener(
+                        boutonJoueur joueur = new boutonJoueur(a,joueurs.get(a).getRole().getNomRole().toString());
+                        joueur.setEnabled(false);
+                        tabJoueurs[a] = joueur;
+                        BorderCartes1.add(joueur, BorderLayout.NORTH);
+                        joueur.addActionListener(
                                 new ActionListener() {
                             @Override
                             public void actionPerformed(ActionEvent e) {
                                 Message m = new Message(TypesMessage.JOUEURCIBLE);
+                                m.setNumJoueur(joueur.getNumJoueur());
                                 notifierObservateur(m);
                             }
                         });
                     } else if (a == 1) {
-                        boutonJoueur joueur2 = new boutonJoueur(a,joueurs.get(a).getRole().getNomRole().toString());
-                        joueur2.setEnabled(false);
-
-                        System.out.println("LL " + a);
-                        tabJoueurs[a] = joueur2;
-                                                                         System.out.println(this.getTabJoueurs()[0]);
-                          System.out.println(this.getTabJoueurs()[a]);
-                        BorderCartes2.add(joueur2, BorderLayout.NORTH);
+                        boutonJoueur joueur = new boutonJoueur(a,joueurs.get(a).getRole().getNomRole().toString());
+                        joueur.setEnabled(false);
+                        tabJoueurs[a] = joueur;
+                        BorderCartes2.add(joueur, BorderLayout.NORTH);
+                        joueur.addActionListener(
+                                new ActionListener() {
+                            @Override
+                            public void actionPerformed(ActionEvent e) {
+                                Message m = new Message(TypesMessage.JOUEURCIBLE);
+                                m.setNumJoueur(joueur.getNumJoueur());
+                                notifierObservateur(m);
+                            }
+                        });
                     } else if (a == 2) {
-                        boutonJoueur joueur3 = new boutonJoueur(a,joueurs.get(a).getRole().getNomRole().toString());
-                        joueur3.setEnabled(false);
-                        tabJoueurs[a] = joueur3;
-                        BorderCartes3.add(joueur3, BorderLayout.NORTH);
+                        boutonJoueur joueur = new boutonJoueur(a,joueurs.get(a).getRole().getNomRole().toString());
+                        joueur.setEnabled(false);
+                        tabJoueurs[a] = joueur;
+                        BorderCartes3.add(joueur, BorderLayout.NORTH);
+                        joueur.addActionListener(
+                                new ActionListener() {
+                            @Override
+                            public void actionPerformed(ActionEvent e) {
+                                Message m = new Message(TypesMessage.JOUEURCIBLE);
+                                m.setNumJoueur(joueur.getNumJoueur());
+                                notifierObservateur(m);
+                            }
+                        });
                     } else if (a == 3) {
-                        boutonJoueur joueur4 = new boutonJoueur(a,joueurs.get(a).getRole().getNomRole().toString());
-                        joueur4.setEnabled(false);
-                        tabJoueurs[a] = joueur4;
-                        BorderCartes4.add(joueur4, BorderLayout.NORTH);
+                        boutonJoueur joueur = new boutonJoueur(a,joueurs.get(a).getRole().getNomRole().toString());
+                        joueur.setEnabled(false);
+                        tabJoueurs[a] = joueur;
+                        BorderCartes4.add(joueur, BorderLayout.NORTH);
+                        joueur.addActionListener(
+                                new ActionListener() {
+                            @Override
+                            public void actionPerformed(ActionEvent e) {
+                                Message m = new Message(TypesMessage.JOUEURCIBLE);
+                                m.setNumJoueur(joueur.getNumJoueur());
+                                notifierObservateur(m);
+                            }
+                        });
                     }
                 }
 
@@ -553,12 +573,7 @@ public class Vue implements Observe {
     public void afficherDeplacement(int lig, int col, Aventurier joueur, Tuile tuileAvantDeplacement, Tuile tuileApresDeplacement) {
         tabTuile[tuileAvantDeplacement.getLig()][tuileAvantDeplacement.getCol()].setBorder((BorderFactory.createLineBorder(Color.LIGHT_GRAY)));
         tabTuile[tuileApresDeplacement.getLig()][tuileApresDeplacement.getCol()].setBorder(BorderFactory.createLineBorder(joueur.getRole().getCouleur().getCouleur(), 4));
-        for (int i = 0; i < 6; i++) {
-            for (int k = 0; k < 6; k++) {
-                tabTuile[i][k].setEnabled(false);
-            }
-
-        }
+        this.reinitialiserGrille();
     }
 
     public void actualiserMain(Aventurier joueur, int numJoueur) {
@@ -574,6 +589,7 @@ public class Vue implements Observe {
     public void assecherTuile(int lig, int col) {
         tabTuile[lig][col].setBackground(null);
         tabTuile[lig][col].setEnabled(false);
+        this.reinitialiserGrille();
     }
 
     public void afficherTuileAssechable(ArrayList<Tuile> tuilesInondees) {
@@ -730,18 +746,7 @@ public class Vue implements Observe {
             fenetreJeu.dispose();
         }
     }
-
-    public void addObservateur(Observateur o) {
-        this.observateur = o;
-    }
-
-    public void notifierObservateur(Message m) {
-        if (observateur != null) {
-            observateur.traiterMessage(m);
-        }
-    }
-
-    public void tresorPris(int a) {
+        public void tresorPris(int a) {
         if (a == 0) {
             calice.setEnabled(false);
         } else if (a == 1) {
@@ -758,20 +763,16 @@ public class Vue implements Observe {
             tabCarte[numJoueur][i].setEnabled(false);
         }
     }
+    public void desactiverJoueur(){
+        for (int i = 0; i < this.tabJoueurs.length ; i++) {
+            tabJoueurs[i].setEnabled(false);
+        }
+    }
+    public void activerJoueur(Aventurier joueurCourant,ArrayList<Aventurier> joueursCibles) {
 
-    public void activerJoueur(ArrayList<Aventurier> joueursCibles) {
-        System.out.println(this.getTabJoueurs()[0]);
-        System.out.println(this.getTabJoueurs()[1]);
-        System.out.println(this.getTabJoueurs()[2]);
-        System.out.println(this.getTabJoueurs()[3]);
-        for (int i = 0; i < this.tabJoueurs.length - 1; i++) {
+        for (int i = 0; i < this.tabJoueurs.length ; i++) {
             for (Aventurier joueur : joueursCibles) {
-
-                System.out.println(tabJoueurs.length);
-                System.out.println(i);
-                System.out.println(tabJoueurs[i]/*.getText()*/);
-                System.out.println(joueur.getRole().getNomRole().toString());
-                if (tabJoueurs[i].getText() == joueur.getRole().getNomRole().toString()) {
+                if (tabJoueurs[i].getText() == joueur.getRole().getNomRole().toString() && tabJoueurs[i].getText()!=joueurCourant.getRole().getNomRole().toString()) {
                     tabJoueurs[i].setEnabled(true);
                 }
             }
@@ -781,5 +782,19 @@ public class Vue implements Observe {
     public JButton[] getTabJoueurs() {
         return tabJoueurs;
     }
+
+    @Override
+    public void addObservateur(Observateur o) {
+        this.observateur = o;
+    }
+
+    @Override
+    public void notifierObservateur(Message m) {
+        if (observateur != null) {
+            observateur.traiterMessage(m);
+        }
+    }
+
+
     
 }

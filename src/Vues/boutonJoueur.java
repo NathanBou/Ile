@@ -18,6 +18,7 @@ public class boutonJoueur extends JButton {
     public boutonJoueur(int numJoueur, String nomJoueur) {
         this.numJoueur = numJoueur;
         this.nomJoueur = nomJoueur;
+        this.setText(nomJoueur);
     }
 
     public int getNumJoueur() {
