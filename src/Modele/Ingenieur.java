@@ -26,7 +26,6 @@ public class Ingenieur extends Aventurier {
         if (getSpecial() < 1) {
             special++;
             if (special == 0) {
-                System.out.println("Pouvoir Ingenieur : assechement possible.");
             }
         }
     }

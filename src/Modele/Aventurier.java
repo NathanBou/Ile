@@ -111,15 +111,7 @@ public abstract class Aventurier {
      *
      * @param Tresor
      */
-    public void prendreTresor(Tresor tresor) {
-        // TODO - implement Aventurier.prendreTresor
-        if (nbAction >= 3) {
-            System.out.println("Action impossible, nombre d'actions disponibles insuffisants.");
-        } else {
 
-            nbAction++;
-        }
-    }
 
     public ArrayList<Tuile> getTuilesAccessibles(Grille g) {
         // TODO - implement Aventurier.TuilesAccessibles
@@ -238,5 +230,10 @@ public abstract class Aventurier {
             }
             index++;
         }
+    }
+    
+    @Override
+    public String toString() {
+        return this.role.getNomRole().toString();
     }
 }

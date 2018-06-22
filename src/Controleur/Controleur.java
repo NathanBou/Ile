@@ -68,18 +68,16 @@ public class Controleur implements Observateur {
         switch (m.type) {
 
             case DEPLACER:
-                System.out.println("Clic sur Deplacer");
-                System.out.println(joueurCourant);
                 vue.setVueDeplacement();
                 vue.afficherTuileAccessible(joueurCourant.getTuilesAccessibles(grille));
                 deplacement = true;
                 vue.afficherMessage1("Veuillez cliquer sur la case où vous voulez vous déplacer.");
+                vue.afficherMessage2("“Annuler“ pour choisir une autre action à réaliser");
                 break;
 
             case COORDONNEE: // ENLEVER TUILES TRESORS DE LA FONCTION QUI DISABLE TOUTES LES TUILES
 
                 if (deplacement) {
-                    System.out.println("Clic sur tuile choisi pour deplacement");
                     joueurCourant.setNbAction(joueurCourant.getNbAction() + 1);
                     Tuile tuileAvantDeplacement = joueurCourant.getEstSurTuile();
                     Tuile tuileApresDeplacement = grille.getTuile(m.lig, m.col);
@@ -105,16 +103,14 @@ public class Controleur implements Observateur {
                     vue.afficherMessage2(grille.getTuile(m.lig, m.col).toString());
 
                 } else if (assechement) {
-                    System.out.println("Clic sur tuile choisi pour assechement");
                     if (joueurCourant instanceof Ingenieur) {
                         Ingenieur i = (Ingenieur) joueurCourant;
                         i.utiliseSpecial();
                         if (i.getSpecial() != 1) {
                             joueurCourant.setNbAction(joueurCourant.getNbAction() + 1);
-                        } else if (i.getSpecial() == 1) {
-                            System.out.println("Pouvoir utilisé");
-                            i.reinitSpecial();
                         }
+                        i.reinitSpecial();
+                        
                     } else {
                         joueurCourant.setNbAction(joueurCourant.getNbAction() + 1);
                     }
@@ -141,7 +137,6 @@ public class Controleur implements Observateur {
                 break;
 
             case FINIRTOUR:
-                System.out.println("Clic sur FINTOUR");
                 if (joueurCourant instanceof Pilote) {
                     Pilote p = (Pilote) joueurCourant;
                     p.setUtilise(false);
@@ -220,12 +215,11 @@ public class Controleur implements Observateur {
                     }
                 }
                 vue.afficherDebutTour();
-                vue.afficherMessage1(joueurCourant.toString()+"a vous de jouer !");
+                vue.afficherMessage1(joueurCourant.toString()+", a vous de jouer !");
                 vue.afficherMessage2("Choisissez une action à réaliser.");
                 break;
 
             case ASSECHER:
-                System.out.println("Clic sur ASSECHER");
                 vue.afficherTuileAssechable(joueurCourant.getTuilesInondees(grille));
                 vue.setVueAssecher();
                 if (joueurCourant.getNbAction() == 3) {
@@ -237,7 +231,6 @@ public class Controleur implements Observateur {
                 break;
 
             case INITIALISATIONGRILLE:
-                System.out.println("INITIALISATION");
                 joueurs = new ArrayList<Aventurier>();
                 for (NomRole joueur : m.joueurs) {
                     if (joueur == NomRole.EXPLORATEUR) {
@@ -245,43 +238,34 @@ public class Controleur implements Observateur {
                         joueurs.add(explorateur);
                         explorateur.setApparition(grille.getTuile(2, 4));
                         grille.getTuile(2, 4).estSurTuile(explorateur);
-                        System.out.println("EXPLORATEUR");
                     } else if (joueur == NomRole.PLONGEUR) {
                         Plongeur plongeur = new Plongeur();
                         joueurs.add(plongeur);
                         plongeur.setApparition(grille.getTuile(1, 2));
                         grille.getTuile(1, 2).estSurTuile(plongeur);
-                        System.out.println("PLONGEUR");
                     } else if (joueur == NomRole.INGENIEUR) {
                         Ingenieur ingenieur = new Ingenieur();
                         joueurs.add(ingenieur);
                         ingenieur.setApparition(grille.getTuile(0, 3));
                         grille.getTuile(0, 3).estSurTuile(ingenieur);
-                        System.out.println("INGENIEUR");
                     } else if (joueur == NomRole.MESSAGER) {
                         Messager messager = new Messager();
                         joueurs.add(messager);
                         messager.setApparition(grille.getTuile(2, 1));
                         grille.getTuile(2, 1).estSurTuile(messager);
-                        System.out.println("MESSAGER");
                     } else if (joueur == NomRole.NAVIGATEUR) {
                         Navigateur navigateur = new Navigateur();
                         joueurs.add(navigateur);
                         navigateur.setApparition(grille.getTuile(1, 3));
                         grille.getTuile(1, 3).estSurTuile(navigateur);
-                        System.out.println("NAVIGATEUR");
                     } else if (joueur == NomRole.PILOTE) {
                         Pilote pilote = new Pilote();
                         joueurs.add(pilote);
                         pilote.setApparition(grille.getTuile(2, 3));
                         grille.getTuile(2, 3).estSurTuile(pilote);
-                        System.out.println("PILOTE");
                     }
                 }
                 Collections.shuffle(joueurs);
-                for (Aventurier joueur : joueurs) {
-                    System.out.println("*" + joueur.getRole().getNomRole().toString());
-                }
                 //Creation et distribution des cartes
                 for (int i = 0; i < 5; i++) {                           //CARTE TRESOR
                     pileCarteTresor.add(new CarteTirage(Cartes.CALICE));
@@ -316,11 +300,11 @@ public class Controleur implements Observateur {
                 nbTour = 1;
                 joueurCourant = joueurs.get(numJoueurs);
                 vue.afficherEtatJeu(nbTour, nivEau, grad, joueurCourant.getRole().getNomRole().toString());
+                vue.afficherMessage2(joueurCourant.toString()+", a toi de jouer !");
 
                 break;
 
             case ANNULER:
-                System.out.println("Annuler");
                 vue.setVueBoutonsEnabled();
                 vue.desactiverJoueur();
                 vue.reinitialiserGrille();
@@ -329,7 +313,6 @@ public class Controleur implements Observateur {
                 break;
 
             case PRENDRETRESOR:
-                System.out.println("Prendre Trésor");
                 if (joueurCourant.getEstSurTuile() instanceof Tresor) {
                     Tresor t = (Tresor) joueurCourant.getEstSurTuile();
                     NomTresors nt = t.getTresor();
@@ -411,14 +394,12 @@ public class Controleur implements Observateur {
                 }
                 break;
             case DONNERCARTE:
-                System.out.println("Donner une carte");
                 vue.setVueDonnerCarte();
                 vue.activerJoueur(joueurCourant, this.joueurCourant.getEstSurTuile().getASurTuile());
                 vue.afficherMessage1("Sélectionnez le joueur à qui donner une carte.");
                 vue.afficherMessage2("");
                 break;
             case JOUEURCIBLE:
-                System.out.println("JOUEUR CIBLE");
                 donnerCarte = true;
                 setJoueurCible(this.joueurs.get(m.getNumJoueur()));
                 numJoueurCible = m.getNumJoueur();
@@ -428,7 +409,6 @@ public class Controleur implements Observateur {
                 vue.afficherMessage2(this.joueurs.get(m.getNumJoueur()).toString());
                 break;
             case CARTESPECIAL:
-                System.out.println("Utilisation carte special");
                 vue.activerCarteSpecial(this.numJoueurs);
         }
     }

@@ -2,7 +2,7 @@ package Modele;
 
 public enum NomRole {
     EXPLORATEUR("Explorateur"),
-    INGENIEUR("Ingenieur"),
+    INGENIEUR("Ingénieur"),
     MESSAGER("Messager"),
     NAVIGATEUR("Navigateur"),
     PILOTE("Pilote"),

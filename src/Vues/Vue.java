@@ -237,7 +237,6 @@ public class Vue implements Observe {
         mainPanel.add(panelEst, BorderLayout.EAST);
         mainPanel.add(panelOuest, BorderLayout.WEST);
 
-        // Panel MillieuSystem.out.println(joueurCourant);
         JPanel panelMilieu = new JPanel(new BorderLayout()); // BorderLayout.CENTER
         JPanel panelCentre = new JPanel(new GridLayout(0, 2)); //SEPARATION GRILLE / COMMANDE
         JPanel panelGrille = new JPanel(new BorderLayout()); //Pânel contenant la grille
@@ -390,7 +389,6 @@ public class Vue implements Observe {
                             public void actionPerformed(ActionEvent e) {
                                 Message m = new Message(TypesMessage.CARTE);
                                 m.setNumCarte(carte.getNumCarte());
-                                System.out.println(carte.getNumCarte());
                                 notifierObservateur(m);
                             }
                         });
@@ -585,9 +583,13 @@ public class Vue implements Observe {
         popup1.setFont(new Font("Monospaced",0, 30));
         popup2 = new JLabel("a la ligne", SwingConstants.CENTER);
         popup2.setFont(new Font("Monospaced",0, 30));
+        popup1.setBackground(Color.CYAN);
+        popup2.setBackground(Color.CYAN);
         popups.add(popup1);
         popups.add(popup2);
         panelBas.add(popups, SwingConstants.CENTER);
+        panelBas.setBackground(Color.CYAN);
+        
         panelBas.setPreferredSize(new Dimension(1650, 100));
         mainPanel.add(panelBas, BorderLayout.SOUTH);
         fenetreJeu.setVisible(true);
@@ -785,7 +787,6 @@ public class Vue implements Observe {
         for (int i = 0; i < 6; i++) {
             for (int k = 0; k < 6; k++) {
                 if (g.getTuile(i, k).getEtat() == Utils.EtatTuile.COULEE && g.getTuile(i, k).getNomTuile() != NomTuile.BORDURE) {
-                    //System.out.println(g.getTuile(i, k).getNomTuile().toString());
                     tabTuile[i][k].setBackground(Color.lightGray);
                 } else if (g.getTuile(i, k).getEtat() == Utils.EtatTuile.INONDEE) {
                     tabTuile[i][k].setBackground(new Color(30, 127, 203));
