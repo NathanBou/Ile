@@ -207,7 +207,7 @@ public class Controleur implements Observateur {
                             vue.setVueBoutonsDesactive();
                         }
                     }
-                    donnerCarte==false;
+                    this.donnerCarte=false;
                 }
                 vue.afficherDebutTour();
 
