@@ -196,7 +196,19 @@ public class Controleur implements Observateur {
                 joueurCourant = joueurs.get(numJoueurs == joueurs.size() ? numJoueurs = 0 : numJoueurs);
                 nbTour++;
                 vue.afficherEtatJeu(nbTour, joueurCourant.getRole().getNomRole().toString());
-                joueurCourant.finTour();
+                joueurCourant.debutTour();
+                if (donnerCarte) {
+                    if (this.joueurCourant.getCartePossedees().size() > 5) {
+
+                        Utils.afficherInformation("Choisir " + (this.joueurCourant.cartePossedees.size() + 2 - 5) + " carte a défausser");
+                        defausser = true;
+                        if (joueurCourant.getCartePossedees().size() > 5) {
+                            vue.activerCarte(numJoueurs);
+                            vue.setVueBoutonsDesactive();
+                        }
+                    }
+                    donnerCarte==false;
+                }
                 vue.afficherDebutTour();
 
                 break;
@@ -341,7 +353,7 @@ public class Controleur implements Observateur {
                         vue.disableBoutonsMain(numJoueurs);
                         System.out.println(joueurCourant.getCartePossedees());
                         vue.actualiserMain(joueurCourant, numJoueurs);
-                        joueurCourant.finTour();
+                        joueurCourant.debutTour();
                         numJoueurs++;
                         joueurCourant = joueurs.get(numJoueurs == joueurs.size() ? numJoueurs = 0 : numJoueurs);
                         nbTour++;

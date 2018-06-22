@@ -204,7 +204,7 @@ public abstract class Aventurier {
         this.role = role;
     }
 
-    public void finTour() {
+    public void debutTour() {
         nbAction = 0;
     }
 
