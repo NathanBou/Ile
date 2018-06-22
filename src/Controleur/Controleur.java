@@ -400,6 +400,9 @@ public class Controleur implements Observateur {
                 vue.activerCarte(this.numJoueurs);
                 vue.desactiverJoueur();
                 break;
+            case CARTESPECIAL:
+                System.out.println("Utilisation carte special");
+                vue.activerCarteSpecial(this.numJoueurs);
         }
     }
 

@@ -397,6 +397,14 @@ public class Vue implements Observe {
                         }
                     }
                     JButton action = new JButton("Utiliser carte");
+                    action.addActionListener(
+                            new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            Message m = new Message(TypesMessage.CARTESPECIAL);
+                            notifierObservateur(m);
+                        }
+                    });
                     JPanel panelJoueur = new JPanel(new GridLayout(0, 2));
                     if (a == 0) {
                         boutonJoueur joueur = new boutonJoueur(a, joueurs.get(a).getRole().getNomRole().toString());
@@ -432,14 +440,6 @@ public class Vue implements Observe {
                         });
                     } else if (a == 2) {
                         boutonJoueur joueur = new boutonJoueur(a, joueurs.get(a).getRole().getNomRole().toString());
-                        action.addActionListener(
-                                new ActionListener() {
-                            @Override
-                            public void actionPerformed(ActionEvent e) {
-                                Message m = new Message(TypesMessage.JOUEURCIBLE);
-
-                            }
-                        });
                         joueur.setEnabled(false);
                         tabJoueurs[a] = joueur;
                         panelJoueur.add(joueur);
@@ -629,7 +629,13 @@ public class Vue implements Observe {
             tabCarte[numJoueur][i].setEnabled(true);
         }
     }
-
+        public void activerCarteSpecial(int numJoueur) {
+        for (int i = 0; i < 9; i++) {
+            if(tabCarte[numJoueur][i].getText()==Cartes.HELICOPTERE.toString() || tabCarte[numJoueur][i].getText()== Cartes.SACDESABLE.toString()){
+                tabCarte[numJoueur][i].setEnabled(true);
+            }
+        }
+    }
     public void afficherFinTour() {
 
         finTour.setEnabled(true);

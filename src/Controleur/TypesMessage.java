@@ -20,5 +20,6 @@ public enum TypesMessage {
     PRENDRETRESOR,
     CARTE,
     DONNERCARTE,
-    JOUEURCIBLE;
+    JOUEURCIBLE,
+    CARTESPECIAL;
 }
