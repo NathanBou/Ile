@@ -186,7 +186,7 @@ public class Controleur implements Observateur {
                 vue.afficherEtatJeu(nbTour, joueurCourant.getRole().getNomRole().toString());
                 joueurCourant.finTour();
                 vue.afficherDebutTour();
-
+                
                 break;
 
             case ASSECHER:
@@ -323,6 +323,7 @@ public class Controleur implements Observateur {
                     joueurCourant.getCartePossedees().remove(joueurCourant.getCartePossedees().get(m.numCarte));
                     vue.supprimerCarte(numJoueurs, m.numCarte);
                     vue.actualiserMain(joueurCourant, numJoueurs);
+                    vue.setVueBoutonsEnabled();
                     if (joueurCourant.getCartePossedees().size() <= 5) {
                         vue.disableBoutonsMain(numJoueurs);
                         System.out.println(joueurCourant.getCartePossedees());
@@ -333,8 +334,9 @@ public class Controleur implements Observateur {
                         nbTour++;
                         vue.afficherEtatJeu(nbTour, joueurCourant.getRole().getNomRole().toString());
                         defausser = false;
-                        vue.afficherDebutTour();
+                        
                     }
+                    
 
                 } else if (donnerCarte) {
                     joueurCourant.donnerCarte(this.getJoueurCible(), joueurCourant.getCartePossedees().get(m.getNumCarte()));
