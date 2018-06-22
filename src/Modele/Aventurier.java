@@ -58,15 +58,19 @@ public abstract class Aventurier {
             this.setNbAction(this.getNbAction()+1);
     }
 
-    public void piocherCarte(ArrayList<CarteTirage> pileCarte) {
+    public ArrayList<CarteTirage> piocherCarte(ArrayList<CarteTirage> pileCarte) {
+        ArrayList<CarteTirage> cartesPiochees = new ArrayList();
         for (int i = 0; i < 2 ;i++){
             if(pileCarte.get(0).getNomCarte()!= Cartes.MONTEEDESEAUX){
               this.cartePossedees.add(pileCarte.get(0));   
+            } else {
+              
             }
+            cartesPiochees.add(pileCarte.get(0));
             pileCarte.remove(0);
             nbCarte++;
         }       
-        
+        return cartesPiochees;
     }
     
     public void piocherCarte(CarteTirage carte) {
@@ -78,7 +82,7 @@ public abstract class Aventurier {
         for (int i = 0; i < nivEau ;i++){
             if (pileCarte.get(0).getNomCarte().getEtat()==EtatTuile.INONDEE){
                 pileCarte.get(0).getNomCarte().setEtat(EtatTuile.COULEE);
-            }else{
+            }else if (pileCarte.get(0).getNomCarte().getEtat()==EtatTuile.ASSECHEE){
                 pileCarte.get(0).getNomCarte().setEtat(EtatTuile.INONDEE);
             }
             pileCarte.remove(0);
