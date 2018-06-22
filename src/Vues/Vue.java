@@ -61,7 +61,7 @@ public class Vue implements Observe {
     private JCheckBox[] selectionJoueurs;
     private JButton[] tabJoueurs;
     private JButton calice;
-    private JButton lion;
+    private JButton zephyr;
     private JButton pierre;
     private JButton rubis;
     private JComboBox listNivEau;
@@ -263,12 +263,12 @@ public class Vue implements Observe {
                                     }
                                 } else {
                                     if (k == 0) {
-                                        lion = new CelluleTuile(i, k);
-                                        lion.setText("Lion");
-                                        tabTuile[i][k] = lion;
-                                        panelGrilleTuile.add(lion);
-                                        lion.setBackground(new Color(240, 195, 0));
-                                        lion.setForeground(Color.WHITE);
+                                        zephyr = new CelluleTuile(i, k);
+                                        zephyr.setText("Lion");
+                                        tabTuile[i][k] = zephyr;
+                                        panelGrilleTuile.add(zephyr);
+                                        zephyr.setBackground(new Color(240, 195, 0));
+                                        zephyr.setForeground(Color.WHITE);
                                     } else {
 
                                         pierre = new CelluleTuile(i, k);
@@ -538,7 +538,7 @@ public class Vue implements Observe {
 
         calice = new JButton("Calice");
         pierre = new JButton("Pierre");
-        lion = new JButton("Lion");
+        zephyr = new JButton("Zéphyr");
         crystal = new JButton("Rubis");
 
         panelMilieu.add(panelCentre);
@@ -755,7 +755,7 @@ public class Vue implements Observe {
         if (a == 0) {
             calice.setEnabled(false);
         } else if (a == 1) {
-            lion.setEnabled(false);
+            zephyr.setEnabled(false);
         } else if (a == 2) {
             pierre.setEnabled(false);
         } else {

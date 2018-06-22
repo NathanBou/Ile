@@ -176,11 +176,13 @@ public class Controleur implements Observateur {
                         if (grad == 2 || grad == 5 || grad == 7) {
                             nivEau++;
                         }
+                        
                         ArrayList<CarteInondation> temp = new ArrayList();
                         for (CarteInondation carte : this.getPileInondation()) {
                             temp.add(carte);
                         }
                         this.getPileInondation().clear();
+                        Collections.shuffle(this.getPileDefausseInondation());
                         for (CarteInondation carte2 : this.getPileDefausseInondation()) {
                             this.getPileInondation().add(carte2);
                         }
@@ -201,7 +203,7 @@ public class Controleur implements Observateur {
                 }
                 joueurCourant = joueurs.get(numJoueurs == joueurs.size() ? numJoueurs = 0 : numJoueurs);
                 nbTour++;
-                vue.afficherEtatJeu(nbTour, joueurCourant.getRole().getNomRole().toString());
+                vue.afficherEtatJeu(nbTour, nivEau,joueurCourant.getRole().getNomRole().toString());
                 joueurCourant.debutTour();
                 if (donnerCarte) {
                     if (this.joueurCourant.getCartePossedees().size() > 5) {
@@ -267,6 +269,7 @@ public class Controleur implements Observateur {
                         System.out.println("PILOTE");
                     }
                 }
+                Collections.shuffle(joueurs);
                 for (Aventurier joueur : joueurs) {
                     System.out.println("*" + joueur.getRole().getNomRole().toString());
                 }
