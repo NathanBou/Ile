@@ -219,4 +219,24 @@ public abstract class Aventurier {
         this.nbCarte = nbCarte;
     }
 
+    public boolean containsQuatre(NomTresors nt) {
+        int compt = 0;
+        for(CarteTirage ct : this.getCartePossedees()) {
+            if(ct.getNomCarte().toString()==nt.toString()) {
+                compt++;
+            }
+        }
+        return compt>=4;
+    }
+    
+    public void enleverCartesPourTresor(Tresor t) {
+        int i=0;
+        int index = 0;
+        while(i<4) {
+            if(this.getCartePossedees().get(index).getNomCarte().toString()==t.getTresor().toString()) {
+                i++;
+            }
+            index++;
+        }
+    }
 }

@@ -73,6 +73,7 @@ public class Controleur implements Observateur {
                 vue.setVueDeplacement();
                 vue.afficherTuileAccessible(joueurCourant.getTuilesAccessibles(grille));
                 deplacement = true;
+                vue.afficherMessage1("Veuillez cliquer sur la case où vous voulez vous déplacer.");
                 break;
 
             case COORDONNEE: // ENLEVER TUILES TRESORS DE LA FONCTION QUI DISABLE TOUTES LES TUILES
@@ -100,6 +101,8 @@ public class Controleur implements Observateur {
                         vue.afficherDeplacement(m.lig, m.col, joueurCourant, tuileAvantDeplacement, tuileApresDeplacement);
                     }
                     deplacement = false;
+                    vue.afficherMessage1("Déplacement vers la case :");
+                    vue.afficherMessage2(grille.getTuile(m.lig, m.col).toString());
 
                 } else if (assechement) {
                     System.out.println("Clic sur tuile choisi pour assechement");
@@ -118,6 +121,8 @@ public class Controleur implements Observateur {
                     vue.assecherTuile(m.lig, m.col);
                     grille.getTuile(m.lig, m.col).assecher();
                     assechement = false;
+                    vue.afficherMessage1("La case suivante a été asséchée :");
+                    vue.afficherMessage2(grille.getTuile(m.lig, m.col).toString());
                 }
 
                 if (joueurCourant.getRole().getNomRole() != NomRole.NAVIGATEUR) {
@@ -175,6 +180,7 @@ public class Controleur implements Observateur {
                         grad++;
                         if (grad == 2 || grad == 5 || grad == 7) {
                             nivEau++;
+                            vue.afficherEtatJeu(nivEau, grad);
                         }
                         
                         ArrayList<CarteInondation> temp = new ArrayList();
@@ -203,7 +209,7 @@ public class Controleur implements Observateur {
                 }
                 joueurCourant = joueurs.get(numJoueurs == joueurs.size() ? numJoueurs = 0 : numJoueurs);
                 nbTour++;
-                vue.afficherEtatJeu(nbTour, nivEau,joueurCourant.getRole().getNomRole().toString());
+                vue.afficherEtatJeu(nbTour, nivEau, grad ,joueurCourant.getRole().getNomRole().toString());
                 joueurCourant.debutTour();
                 if (donnerCarte) {
                     if (this.joueurCourant.getCartePossedees().size() > 5) {
@@ -214,7 +220,8 @@ public class Controleur implements Observateur {
                     }
                 }
                 vue.afficherDebutTour();
-
+                vue.afficherMessage1(joueurCourant.toString()+"a vous de jouer !");
+                vue.afficherMessage2("Choisissez une action à réaliser.");
                 break;
 
             case ASSECHER:
@@ -225,6 +232,8 @@ public class Controleur implements Observateur {
                     vue.afficherFinTour();
                 }
                 assechement = true;
+                vue.afficherMessage1("Veuillez cliquer sur la case à assécher.");
+                vue.afficherMessage2("“Annuler“ pour choisir une autre action à réaliser");
                 break;
 
             case INITIALISATIONGRILLE:
@@ -306,7 +315,7 @@ public class Controleur implements Observateur {
                 grad = m.getGrad();
                 nbTour = 1;
                 joueurCourant = joueurs.get(numJoueurs);
-                vue.afficherEtatJeu(nbTour, nivEau, joueurCourant.getRole().getNomRole().toString());
+                vue.afficherEtatJeu(nbTour, nivEau, grad, joueurCourant.getRole().getNomRole().toString());
 
                 break;
 
@@ -321,12 +330,26 @@ public class Controleur implements Observateur {
 
             case PRENDRETRESOR:
                 System.out.println("Prendre Trésor");
-                if (grille.getTuile(m.lig, m.col) instanceof Tresor) {
+                if (joueurCourant.getEstSurTuile() instanceof Tresor) {
+                    Tresor t = (Tresor) joueurCourant.getEstSurTuile();
+                    NomTresors nt = t.getTresor();
+                    if(joueurCourant.containsQuatre(nt)) {
+                        this.collectionTresor.add(t);
+                        joueurCourant.enleverCartesPourTresor(t);
+                    } else {
+                        vue.afficherMessage1("Il faut 4 cartes du même type pour");
+                        vue.afficherMessage2("ramasser le trésor correspondant.");
+                    }
+                }
+                
+                
+                
+                /*if (grille.getTuile(m.lig, m.col) instanceof Tresor) {
                     Tresor t = (Tresor) grille.getTuile(m.lig, m.col);
                     NomTresors nt = t.getTresor();
                     int compt = 0;
                     for (CarteTirage ct : joueurCourant.getCartePossedees()) {
-                        if (ct.getNomCarte().toString() == nt.toString()) {
+                        if (ct.getNomCarte().toString().equals(nt.toString())) {
                             compt += 1;
                         }
                     }
@@ -344,7 +367,7 @@ public class Controleur implements Observateur {
                             }
                         }
                     }
-                }
+                }*/
                 break;
 
             case CARTE:
@@ -354,7 +377,7 @@ public class Controleur implements Observateur {
                     vue.supprimerCarte(numJoueurs, m.numCarte);
                     vue.actualiserMain(joueurCourant, numJoueurs);
                     vue.setVueBoutonsEnabled();
-                    if (joueurCourant.getCartePossedees().size() <= 5 && !donnerCarte) {
+                    if (joueurCourant.getCartePossedees().size() <= 5) {
                         vue.disableBoutonsMain(numJoueurs);
                         vue.actualiserMain(joueurCourant, numJoueurs);
                         joueurCourant.debutTour();
@@ -391,6 +414,8 @@ public class Controleur implements Observateur {
                 System.out.println("Donner une carte");
                 vue.setVueDonnerCarte();
                 vue.activerJoueur(joueurCourant, this.joueurCourant.getEstSurTuile().getASurTuile());
+                vue.afficherMessage1("Sélectionnez le joueur à qui donner une carte.");
+                vue.afficherMessage2("");
                 break;
             case JOUEURCIBLE:
                 System.out.println("JOUEUR CIBLE");
@@ -399,6 +424,8 @@ public class Controleur implements Observateur {
                 numJoueurCible = m.getNumJoueur();
                 vue.activerCarte(this.numJoueurs);
                 vue.desactiverJoueur();
+                vue.afficherMessage1("Sélectionnez la carte à donner à");
+                vue.afficherMessage2(this.joueurs.get(m.getNumJoueur()).toString());
                 break;
         }
     }

@@ -45,6 +45,7 @@ public class Vue implements Observe {
     private JLabel tour = new JLabel("", SwingConstants.CENTER);
     private JLabel niveau = new JLabel("", SwingConstants.CENTER);
     private JLabel joueur = new JLabel("", SwingConstants.CENTER);
+    private JLabel graduation = new JLabel("",SwingConstants.CENTER);
     //private Carte carte;
     private JButton[][] tabTuile;
     private JButton[][] tabCarte;
@@ -68,6 +69,9 @@ public class Vue implements Observe {
     private final String[] nivEau = {"Novice (niveau d'eau 2)",
         "Normal (niveau d'eau 2)", "Elite (niveau d'eau 3)", "Légende (niveau d'eau 3)"};
     private JButton crystal;
+    private JLabel popup1;
+    private JLabel popup2;
+    
 
     public Vue() {
         fenetreInit.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
@@ -328,15 +332,20 @@ public class Vue implements Observe {
                 // Panel Top
                 JPanel panelBouton = new JPanel(new BorderLayout());
                 JPanel panelInfo = new JPanel(new GridLayout(0, 3));
+                JPanel panelInfoEau = new JPanel(new GridLayout(2,0));
                 JLabel Tour = new JLabel();
                 tour.setText("Tour numéro : ");
                 niveau.setText("Niveau d'eau : ");
+                graduation.setText("Graduation : ");
                 joueur.setText("Joueur : ");
                 tour.setPreferredSize(new Dimension(200, 100));
-                niveau.setPreferredSize(new Dimension(200, 100));
+                niveau.setPreferredSize(new Dimension(200, 50));
+                graduation.setPreferredSize(new Dimension(200,50));
                 joueur.setPreferredSize(new Dimension(200, 100));
+                panelInfoEau.add(niveau);
+                panelInfoEau.add(graduation);
                 panelInfo.add(tour);
-                panelInfo.add(niveau);
+                panelInfo.add(panelInfoEau);
                 panelInfo.add(joueur);
 
                 // PanelCartes
@@ -507,16 +516,23 @@ public class Vue implements Observe {
                                 notifierObservateur(m);
                             }
                         });
-                        panelGrilleBouton.add(donnerCarte);                     //ActionListener a ajouter
+                        panelGrilleBouton.add(donnerCarte);
                     } else if (v == 4) {
                         prendreTresor = new JButton("Prendre trésor");
                         prendreTresor.setPreferredSize(new Dimension(40, 25));
-                        panelGrilleBouton.add(prendreTresor);                   //ActionListener a ajouter
+                        panelGrilleBouton.add(prendreTresor);
+                        prendreTresor.addActionListener(new ActionListener() {
+                            @Override
+                            public void actionPerformed(ActionEvent e) {
+                                Message m = new Message(TypesMessage.PRENDRETRESOR);
+                                notifierObservateur(m);
+                            }
+                        });
                     } else if (v == 5) {
                         annuler = new JButton("Annuler");
                         annuler.setPreferredSize(new Dimension(40, 25));
                         panelGrilleBouton.add(annuler);
-                        annuler.setEnabled(false);                              //ActionListener a ajouter
+                        annuler.setEnabled(false);
                         annuler.addActionListener(new ActionListener() {
                             @Override
                             public void actionPerformed(ActionEvent e) {
@@ -545,7 +561,14 @@ public class Vue implements Observe {
         mainPanel.add(panelMilieu, BorderLayout.CENTER);
         // Panel Bas
         JPanel panelBas = new JPanel();
-        panelBas.setBackground(Color.PINK);
+        JPanel popups = new JPanel(new GridLayout(2,0));
+        popup1 = new JLabel("Bonne chance ;)", SwingConstants.CENTER);
+        popup1.setFont(new Font("Monospaced",0, 30));
+        popup2 = new JLabel("a la ligne", SwingConstants.CENTER);
+        popup2.setFont(new Font("Monospaced",0, 30));
+        popups.add(popup1);
+        popups.add(popup2);
+        panelBas.add(popups, SwingConstants.CENTER);
         panelBas.setPreferredSize(new Dimension(1650, 100));
         mainPanel.add(panelBas, BorderLayout.SOUTH);
         fenetreJeu.setVisible(true);
@@ -633,9 +656,10 @@ public class Vue implements Observe {
         donnerCarte.setEnabled(true);
     }
 
-    public void afficherEtatJeu(int nbTour, int nivEau, String nomJoueur) {
+    public void afficherEtatJeu(int nbTour, int nivEau, int grad, String nomJoueur) {
         tour.setText("Tour numero :" + nbTour);
         niveau.setText("Niveau d'eau :" + nivEau);
+        graduation.setText("Graduation : "+grad);
         joueur.setText("Joueur :" + nomJoueur);
     }
 
@@ -646,6 +670,11 @@ public class Vue implements Observe {
     public void afficherEtatJeu(int nbTour, String nomJoueur) {
         tour.setText("Tour numero :" + nbTour);
         joueur.setText("Joueur :" + nomJoueur);
+    }
+    
+    public void afficherEtatJeu(int nivEau, int grad) {
+        niveau.setText("Niveau d'eau : " + nivEau);
+        graduation.setText("Graduation : "+grad);
     }
 
     public void setVueDeplacement() {
@@ -802,4 +831,15 @@ public class Vue implements Observe {
         }
     }
 
+    public void afficherMessage1(String msg) {
+        popup1.setText(msg);
+    }
+    
+    public void afficherMessage2(String msg) {
+        popup2.setText(msg);
+    }
+
+    public JButton getDeplacer() {
+        return deplacer;
+    }
 }
