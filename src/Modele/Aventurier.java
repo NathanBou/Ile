@@ -79,17 +79,22 @@ public abstract class Aventurier {
         nbCarte++;
     }
 
-    public void piocherCarteInondation(ArrayList<CarteInondation> pileCarte, ArrayList<CarteInondation> pileDefausse, int nivEau) {
+    public ArrayList<Tuile> piocherCarteInondation(ArrayList<CarteInondation> pileCarte, ArrayList<CarteInondation> pileDefausse, int nivEau) {
+        ArrayList<Tuile> joueursCoule = new ArrayList();
         for (int i = 0; i < nivEau; i++) {
             if (pileCarte.get(0).getNomCarte().getEtat() == EtatTuile.INONDEE) {
                 pileCarte.get(0).getNomCarte().setEtat(EtatTuile.COULEE);
             } else if (pileCarte.get(0).getNomCarte().getEtat() == EtatTuile.ASSECHEE) {
                 pileCarte.get(0).getNomCarte().setEtat(EtatTuile.INONDEE);
+                if (!pileCarte.get(0).getNomCarte().getASurTuile().isEmpty()) {
+                    joueursCoule.add(pileCarte.get(0).getNomCarte());
+                }
+                pileDefausse.add(pileCarte.get(0));
             }
-            pileDefausse.add(pileCarte.get(0));
             pileCarte.remove(0);
 
         }
+        return joueursCoule;
     }
 
     public void defausserCarte(CarteTirage carte) {
@@ -111,8 +116,6 @@ public abstract class Aventurier {
      *
      * @param Tresor
      */
-
-
     public ArrayList<Tuile> getTuilesAccessibles(Grille g) {
         // TODO - implement Aventurier.TuilesAccessibles
         ArrayList<Tuile> tuilesAccessibles = new ArrayList();
@@ -213,19 +216,19 @@ public abstract class Aventurier {
 
     public boolean containsQuatre(NomTresors nt) {
         int compt = 0;
-        for(CarteTirage ct : this.getCartePossedees()) {
-            if(ct.getNomCarte().toString()==nt.toString()) {
+        for (CarteTirage ct : this.getCartePossedees()) {
+            if (ct.getNomCarte().toString() == nt.toString()) {
                 compt++;
             }
         }
-        return compt>=4;
+        return compt >= 4;
     }
-    
+
     public void enleverCartesPourTresor(Tresor t) {
-        int i=0;
+        int i = 0;
         int index = 0;
-        while(i<4) {
-            if(this.getCartePossedees().get(index).getNomCarte().toString()==t.getTresor().toString()) {
+        while (i < 4) {
+            if (this.getCartePossedees().get(index).getNomCarte().toString() == t.getTresor().toString()) {
                 this.getCartePossedees().remove(index);
                 index--;
                 i++;
@@ -233,7 +236,7 @@ public abstract class Aventurier {
             index++;
         }
     }
-    
+
     @Override
     public String toString() {
         return this.role.getNomRole().toString();

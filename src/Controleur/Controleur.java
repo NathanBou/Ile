@@ -51,6 +51,8 @@ public class Controleur implements Observateur {
     private int grad;
     private int numJoueurs = 0;
     private ArrayList<Tresor> collectionTresor;
+    private boolean heliportPossible;
+    private boolean sauvetage;
 
     public Controleur(Vue vue, Grille grille) {
         this.vue = vue;
@@ -78,7 +80,9 @@ public class Controleur implements Observateur {
             case COORDONNEE: // ENLEVER TUILES TRESORS DE LA FONCTION QUI DISABLE TOUTES LES TUILES
 
                 if (deplacement) {
-                    joueurCourant.setNbAction(joueurCourant.getNbAction() + 1);
+                    //if (!sauvetage) {
+                        joueurCourant.setNbAction(joueurCourant.getNbAction() + 1);
+                    //}
                     Tuile tuileAvantDeplacement = joueurCourant.getEstSurTuile();
                     Tuile tuileApresDeplacement = grille.getTuile(m.lig, m.col);
                     if (joueurCourant instanceof Pilote) {
@@ -110,7 +114,7 @@ public class Controleur implements Observateur {
                             joueurCourant.setNbAction(joueurCourant.getNbAction() + 1);
                         }
                         i.reinitSpecial();
-                        
+
                     } else {
                         joueurCourant.setNbAction(joueurCourant.getNbAction() + 1);
                     }
@@ -178,7 +182,7 @@ public class Controleur implements Observateur {
                             nivEau++;
                             vue.afficherEtatJeu(nivEau, grad);
                         }
-                        
+
                         ArrayList<CarteInondation> temp = new ArrayList();
                         for (CarteInondation carte : this.getPileInondation()) {
                             temp.add(carte);
@@ -194,7 +198,28 @@ public class Controleur implements Observateur {
                     }
                     vue.actualiserMain(joueurCourant, numJoueurs);
                 }
-                joueurCourant.piocherCarteInondation(this.getPileInondation(), this.getPileDefausseInondation(), nivEau);
+                ArrayList<Tuile> joueurCoule = new ArrayList();
+                joueurCoule = joueurCourant.piocherCarteInondation(this.getPileInondation(), this.getPileDefausseInondation(), nivEau);
+                if (!joueurCoule.isEmpty()) {
+                    ArrayList<Tuile> tuilesACote = new ArrayList();
+                    for (Tuile t : joueurCoule) {
+                        for (Aventurier j : t.getASurTuile()) {
+                            if (!(j instanceof Pilote)) {
+                                tuilesACote = j.getTuilesAccessibles(grille);
+                            } else {
+                                Messager joueur = (Messager) j;
+                                tuilesACote = joueur.getTuilesAccessibles(grille);
+                            }
+                            sauvetage = true;
+                            deplacement = false;
+                            vue.afficherTuileAccessible(tuilesACote);
+                            vue.setVueBoutonsDesactive();
+                            vue.afficherMessage1("La tuile qui vient de couler contenait des joueurs...");
+                            vue.afficherMessage2("Cliquer sur une tuile pour nager avant de succomber");
+                            tuilesACote = j.getTuilesAccessibles(grille);
+                        }
+                    }
+                }
                 vue.actualiserGrille(grille);
                 if (grad == 9) {
                     gagner = false;
@@ -205,7 +230,7 @@ public class Controleur implements Observateur {
                 }
                 joueurCourant = joueurs.get(numJoueurs == joueurs.size() ? numJoueurs = 0 : numJoueurs);
                 nbTour++;
-                vue.afficherEtatJeu(nbTour, nivEau, grad ,joueurCourant.getRole().getNomRole().toString());
+                vue.afficherEtatJeu(nbTour, nivEau, grad, joueurCourant.getRole().getNomRole().toString());
                 joueurCourant.debutTour();
                 if (donnerCarte) {
                     if (this.joueurCourant.getCartePossedees().size() > 5) {
@@ -216,7 +241,7 @@ public class Controleur implements Observateur {
                     }
                 }
                 vue.afficherDebutTour();
-                vue.afficherMessage1(joueurCourant.toString()+", a vous de jouer !");
+                vue.afficherMessage1(joueurCourant.toString() + ", a vous de jouer !");
                 vue.afficherMessage2("Choisissez une action à réaliser.");
                 break;
 
@@ -301,7 +326,7 @@ public class Controleur implements Observateur {
                 nbTour = 1;
                 joueurCourant = joueurs.get(numJoueurs);
                 vue.afficherEtatJeu(nbTour, nivEau, grad, joueurCourant.getRole().getNomRole().toString());
-                vue.afficherMessage2(joueurCourant.toString()+", a toi de jouer !");
+                vue.afficherMessage2(joueurCourant.toString() + ", a toi de jouer !");
 
                 break;
 
@@ -316,12 +341,16 @@ public class Controleur implements Observateur {
             case PRENDRETRESOR:
                 if (joueurCourant.getEstSurTuile() instanceof Tresor) {
                     Tresor t = (Tresor) joueurCourant.getEstSurTuile();
-                    
+
                     NomTresors nt = t.getTresor();
-                    if(joueurCourant.containsQuatre(nt)) {
+                    if (joueurCourant.containsQuatre(nt)) {
                         this.collectionTresor.add(t);
+                        if (this.collectionTresor.size() == 4) {
+                            this.heliportPossible = true;
+                        }
                         joueurCourant.enleverCartesPourTresor(t);
-                        vue.tresorPris(nt==NomTresors.CALICE?0:nt==NomTresors.ZEPHYR?1:nt==NomTresors.PIERRE?2:3);
+                        vue.tresorPris(nt == NomTresors.CALICE ? 0 : nt == NomTresors.ZEPHYR ? 1 : nt == NomTresors.PIERRE ? 2 : 3);
+                        joueurCourant.setNbAction(joueurCourant.getNbAction() + 1);
                     } else {
                         vue.afficherMessage1("Il faut 4 cartes du même type pour");
                         vue.afficherMessage2("ramasser le trésor correspondant.");
@@ -330,33 +359,6 @@ public class Controleur implements Observateur {
                     vue.afficherMessage1("Vous n'êtes pas sur une casee à trésor.");
                     vue.afficherMessage2("Choisissez une autre action.");
                 }
-                
-                
-                
-                /*if (grille.getTuile(m.lig, m.col) instanceof Tresor) {
-                    Tresor t = (Tresor) grille.getTuile(m.lig, m.col);
-                    NomTresors nt = t.getTresor();
-                    int compt = 0;
-                    for (CarteTirage ct : joueurCourant.getCartePossedees()) {
-                        if (ct.getNomCarte().toString().equals(nt.toString())) {
-                            compt += 1;
-                        }
-                    }
-                    if (compt >= 4) {
-                        int i = 0;
-                        int compt2 = 0;
-                        int a = (nt == NomTresors.CALICE ? 0 : nt == NomTresors.ZEPHYR ? 1 : nt == NomTresors.PIERRE ? 2 : 3); // Calice = 0, Lion = 1, Pierre = 2, Crystal = 3.
-                        vue.tresorPris(a);
-                        while (compt2 != 4) {
-                            if (joueurCourant.getCartePossedees().get(i).getNomCarte().toString() == nt.toString()) {
-                                joueurCourant.getCartePossedees().remove(joueurCourant.getCartePossedees().get(i));
-                                compt2++;
-                            } else {
-                                i++;
-                            }
-                        }
-                    }
-                }*/
                 break;
 
             case CARTE:
@@ -400,7 +402,7 @@ public class Controleur implements Observateur {
                 }
                 break;
             case DONNERCARTE:
-                if(joueurCourant.getEstSurTuile().getASurTuile().size()>1) {
+                if (joueurCourant.getEstSurTuile().getASurTuile().size() > 1) {
                     vue.setVueDonnerCarte();
                     vue.activerJoueur(joueurCourant, this.joueurCourant.getEstSurTuile().getASurTuile());
                     vue.afficherMessage1("Sélectionnez le joueur à qui donner une carte.");
