@@ -168,6 +168,7 @@ public class Controleur implements Observateur {
                             this.refillPileCarte(pileDefausseTresor);
                         }
                     }
+                    vue.actualiserMain(joueurCourant, numJoueurs);
                 } else {
                     boolean montee = false;
                     montee = joueurCourant.piocherCarte(pileCarteTresor, pileDefausseTresor);
@@ -315,14 +316,19 @@ public class Controleur implements Observateur {
             case PRENDRETRESOR:
                 if (joueurCourant.getEstSurTuile() instanceof Tresor) {
                     Tresor t = (Tresor) joueurCourant.getEstSurTuile();
+                    
                     NomTresors nt = t.getTresor();
                     if(joueurCourant.containsQuatre(nt)) {
                         this.collectionTresor.add(t);
                         joueurCourant.enleverCartesPourTresor(t);
+                        vue.tresorPris(nt==NomTresors.CALICE?0:nt==NomTresors.ZEPHYR?1:nt==NomTresors.PIERRE?2:3);
                     } else {
                         vue.afficherMessage1("Il faut 4 cartes du même type pour");
                         vue.afficherMessage2("ramasser le trésor correspondant.");
                     }
+                } else {
+                    vue.afficherMessage1("Vous n'êtes pas sur une casee à trésor.");
+                    vue.afficherMessage2("Choisissez une autre action.");
                 }
                 
                 
@@ -394,10 +400,15 @@ public class Controleur implements Observateur {
                 }
                 break;
             case DONNERCARTE:
-                vue.setVueDonnerCarte();
-                vue.activerJoueur(joueurCourant, this.joueurCourant.getEstSurTuile().getASurTuile());
-                vue.afficherMessage1("Sélectionnez le joueur à qui donner une carte.");
-                vue.afficherMessage2("");
+                if(joueurCourant.getEstSurTuile().getASurTuile().size()>1) {
+                    vue.setVueDonnerCarte();
+                    vue.activerJoueur(joueurCourant, this.joueurCourant.getEstSurTuile().getASurTuile());
+                    vue.afficherMessage1("Sélectionnez le joueur à qui donner une carte.");
+                    vue.afficherMessage2("Annuler pour changer d'action à réaliser.");
+                } else {
+                    vue.afficherMessage1("Aucun autre aventurier sur la même case");
+                    vue.afficherMessage2("Veuillez choisir une autre action.");
+                }
                 break;
             case JOUEURCIBLE:
                 donnerCarte = true;

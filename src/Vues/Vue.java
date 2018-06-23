@@ -267,7 +267,7 @@ public class Vue implements Observe {
                                 } else {
                                     if (k == 0) {
                                         zephyr = new CelluleTuile(i, k);
-                                        zephyr.setText("Lion");
+                                        zephyr.setText("Zéphyr");
                                         tabTuile[i][k] = zephyr;
                                         panelGrilleTuile.add(zephyr);
                                         zephyr.setBackground(new Color(240, 195, 0));
@@ -808,13 +808,13 @@ public class Vue implements Observe {
 
     public void tresorPris(int a) {
         if (a == 0) {
-            calice.setEnabled(false);
+            calice.setVisible(false);
         } else if (a == 1) {
-            zephyr.setEnabled(false);
+            zephyr.setVisible(false);
         } else if (a == 2) {
-            pierre.setEnabled(false);
+            pierre.setVisible(false);
         } else {
-            crystal.setEnabled(false);
+            crystal.setVisible(false);
         }
     }
 

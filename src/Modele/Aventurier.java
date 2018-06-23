@@ -226,6 +226,8 @@ public abstract class Aventurier {
         int index = 0;
         while(i<4) {
             if(this.getCartePossedees().get(index).getNomCarte().toString()==t.getTresor().toString()) {
+                this.getCartePossedees().remove(index);
+                index--;
                 i++;
             }
             index++;
