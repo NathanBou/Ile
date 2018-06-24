@@ -45,11 +45,13 @@ public class Controleur implements Observateur {
     private boolean assechement;
     private boolean defausser;
     private boolean donnerCarte = false;
+    private boolean carteSpecial;
+    private boolean deplacementHelicoptere = false;
     private int numJoueurCible;
     private int nbTour;
     private int nivEau;
     private int grad;
-    private int numJoueurs = 0;
+    private int numJoueur = 0;
     private ArrayList<Tresor> collectionTresor;
     private boolean heliportPossible;
     private boolean sauvetage;
@@ -81,7 +83,7 @@ public class Controleur implements Observateur {
 
                 if (deplacement) {
                     //if (!sauvetage) {
-                        joueurCourant.setNbAction(joueurCourant.getNbAction() + 1);
+                    joueurCourant.setNbAction(joueurCourant.getNbAction() + 1);
                     //}
                     Tuile tuileAvantDeplacement = joueurCourant.getEstSurTuile();
                     Tuile tuileApresDeplacement = grille.getTuile(m.lig, m.col);
@@ -105,7 +107,18 @@ public class Controleur implements Observateur {
                     deplacement = false;
                     vue.afficherMessage1("Déplacement vers la case :");
                     vue.afficherMessage2(grille.getTuile(m.lig, m.col).toString());
-
+                } else if (deplacementHelicoptere) {
+                    Tuile tuileAvantDeplacement = joueurCourant.getEstSurTuile();
+                    Tuile tuileApresDeplacement = grille.getTuile(m.lig, m.col);
+                    if (tuileApresDeplacement.getASurTuile().isEmpty()) {
+                        joueurCourant.deplacement(tuileApresDeplacement);
+                        vue.afficherDeplacement(m.lig, m.col, joueurCourant, tuileAvantDeplacement);
+                    } else {
+                        joueurCourant.deplacement(tuileApresDeplacement);
+                        vue.afficherDeplacement(m.lig, m.col, joueurCourant, tuileAvantDeplacement, tuileApresDeplacement);
+                    }
+                    deplacementHelicoptere=false;
+                    vue.disableBoutonsMain(numJoueur);
                 } else if (assechement) {
                     if (joueurCourant instanceof Ingenieur) {
                         Ingenieur i = (Ingenieur) joueurCourant;
@@ -129,13 +142,13 @@ public class Controleur implements Observateur {
                     if (joueurCourant.getNbAction() >= 3) {
                         vue.afficherFinTour();
                     } else {
-                        vue.setVueBoutonsEnabled();
+                        vue.setVueBoutonsEnabled(this.numJoueur);
                     }
                 } else { // Si le joueur est un navigateur, il dispose de 4 actions.
                     if (joueurCourant.getNbAction() >= 4) {
                         vue.afficherFinTour();
                     } else {
-                        vue.setVueBoutonsEnabled();
+                        vue.setVueBoutonsEnabled(this.numJoueur);
                     }
                 }
                 break;
@@ -150,7 +163,7 @@ public class Controleur implements Observateur {
                     Utils.afficherInformation("Choisir " + (this.joueurCourant.cartePossedees.size() + 2 - 5) + " carte a défausser");
                     defausser = true;
                     if (joueurCourant.getCartePossedees().size() + 2 > 5) {
-                        vue.activerCarte(numJoueurs);
+                        vue.activerCarte(numJoueur);
                         vue.setVueBoutonsDesactive();
                     }
                 }
@@ -172,7 +185,7 @@ public class Controleur implements Observateur {
                             this.refillPileCarte(pileDefausseTresor);
                         }
                     }
-                    vue.actualiserMain(joueurCourant, numJoueurs);
+                    vue.actualiserMain(joueurCourant, numJoueur);
                 } else {
                     boolean montee = false;
                     montee = joueurCourant.piocherCarte(pileCarteTresor, pileDefausseTresor);
@@ -196,7 +209,7 @@ public class Controleur implements Observateur {
                             this.getPileInondation().add(carte2);
                         }
                     }
-                    vue.actualiserMain(joueurCourant, numJoueurs);
+                    vue.actualiserMain(joueurCourant, numJoueur);
                 }
                 ArrayList<Tuile> joueurCoule = new ArrayList();
                 joueurCoule = joueurCourant.piocherCarteInondation(this.getPileInondation(), this.getPileDefausseInondation(), nivEau);
@@ -226,9 +239,9 @@ public class Controleur implements Observateur {
                     vue.finirJeu(gagner);
                 }
                 if (!defausser) {
-                    numJoueurs++;
+                    numJoueur++;
                 }
-                joueurCourant = joueurs.get(numJoueurs == joueurs.size() ? numJoueurs = 0 : numJoueurs);
+                joueurCourant = joueurs.get(numJoueur == joueurs.size() ? numJoueur = 0 : numJoueur);
                 nbTour++;
                 vue.afficherEtatJeu(nbTour, nivEau, grad, joueurCourant.getRole().getNomRole().toString());
                 joueurCourant.debutTour();
@@ -236,11 +249,11 @@ public class Controleur implements Observateur {
                     if (this.joueurCourant.getCartePossedees().size() > 5) {
                         Utils.afficherInformation("Choisir " + (this.joueurCourant.cartePossedees.size() - 5) + " carte a défausser");
                         defausser = true;
-                        vue.activerCarte(numJoueurs);
+                        vue.activerCarte(numJoueur);
                         vue.setVueBoutonsDesactive();
                     }
                 }
-                vue.afficherDebutTour();
+                vue.afficherDebutTour(numJoueur);
                 vue.afficherMessage1(joueurCourant.toString() + ", a vous de jouer !");
                 vue.afficherMessage2("Choisissez une action à réaliser.");
                 break;
@@ -319,20 +332,21 @@ public class Controleur implements Observateur {
                     joueur.piocherCarte(pileCarteTresor, pileDefausseTresor);
                 }
                 vue.creeJeu(grille, joueurs);
-                vue.setVueBoutonsEnabled();
+                vue.setVueBoutonsEnabled(this.numJoueur);
                 gagner = false;
                 nivEau = m.getNiveauEau();
                 grad = m.getGrad();
                 nbTour = 1;
-                joueurCourant = joueurs.get(numJoueurs);
+                joueurCourant = joueurs.get(numJoueur);
                 vue.afficherEtatJeu(nbTour, nivEau, grad, joueurCourant.getRole().getNomRole().toString());
                 vue.afficherMessage2(joueurCourant.toString() + ", a toi de jouer !");
 
                 break;
 
             case ANNULER:
-                vue.setVueBoutonsEnabled();
+                vue.setVueBoutonsEnabled(this.numJoueur);
                 vue.desactiverJoueur();
+                vue.disableBoutonsMain(numJoueur);
                 vue.reinitialiserGrille();
                 deplacement = false;
                 assechement = false;
@@ -365,15 +379,15 @@ public class Controleur implements Observateur {
                 if (defausser) {
                     this.getPileDefausse().add(joueurCourant.getCartePossedees().get(m.numCarte));
                     joueurCourant.getCartePossedees().remove(joueurCourant.getCartePossedees().get(m.numCarte));
-                    vue.supprimerCarte(numJoueurs, m.numCarte);
-                    vue.actualiserMain(joueurCourant, numJoueurs);
-                    vue.setVueBoutonsEnabled();
+                    vue.supprimerCarte(numJoueur, m.numCarte);
+                    vue.actualiserMain(joueurCourant, numJoueur);
+                    vue.setVueBoutonsEnabled(this.numJoueur);
                     if (joueurCourant.getCartePossedees().size() <= 5) {
-                        vue.disableBoutonsMain(numJoueurs);
-                        vue.actualiserMain(joueurCourant, numJoueurs);
+                        vue.disableBoutonsMain(numJoueur);
+                        vue.actualiserMain(joueurCourant, numJoueur);
                         joueurCourant.debutTour();
-                        numJoueurs++;
-                        joueurCourant = joueurs.get(numJoueurs == joueurs.size() ? numJoueurs = 0 : numJoueurs);
+                        numJoueur++;
+                        joueurCourant = joueurs.get(numJoueur == joueurs.size() ? numJoueur = 0 : numJoueur);
                         nbTour++;
                         vue.afficherEtatJeu(nbTour, joueurCourant.getRole().getNomRole().toString());
                         defausser = false;
@@ -383,21 +397,28 @@ public class Controleur implements Observateur {
                 } else if (donnerCarte) {
                     joueurCourant.donnerCarte(this.getJoueurCible(), joueurCourant.getCartePossedees().get(m.getNumCarte()));
                     vue.actualiserMain(this.getJoueurCible(), this.getNumJoueurCible());
-                    vue.actualiserMain(joueurCourant, numJoueurs);
+                    vue.actualiserMain(joueurCourant, numJoueur);
                     vue.desactiverJoueur();
-                    vue.disableBoutonsMain(numJoueurs);
+                    vue.disableBoutonsMain(numJoueur);
                     if (joueurCourant.getRole().getNomRole() != NomRole.NAVIGATEUR) {
                         if (joueurCourant.getNbAction() >= 3) {
                             vue.afficherFinTour();
                         } else {
-                            vue.setVueBoutonsEnabled();
+                            vue.setVueBoutonsEnabled(this.numJoueur);
                         }
                     } else { // Si le joueur est un navigateur, il dispose de 4 actions.
                         if (joueurCourant.getNbAction() >= 4) {
                             vue.afficherFinTour();
                         } else {
-                            vue.setVueBoutonsEnabled();
+                            vue.setVueBoutonsEnabled(this.numJoueur);
                         }
+                    }
+                } else if (carteSpecial) {
+                    if (this.joueurCourant.getCartePossedees().get(m.getNumCarte()).getNomCarte().toString() == Cartes.HELICOPTERE.toString()) {
+                        vue.activerDeplacementHelicoptere(grille);
+                        joueurCourant.cartePossedees.remove(joueurCourant.getCartePossedees().get(m.getNumCarte()));
+                        vue.actualiserMain(joueurCourant, numJoueur);
+                        deplacementHelicoptere = true;
                     }
                 }
                 break;
@@ -416,13 +437,15 @@ public class Controleur implements Observateur {
                 donnerCarte = true;
                 setJoueurCible(this.joueurs.get(m.getNumJoueur()));
                 numJoueurCible = m.getNumJoueur();
-                vue.activerCarte(this.numJoueurs);
+                vue.activerCarte(this.numJoueur);
                 vue.desactiverJoueur();
                 vue.afficherMessage1("Sélectionnez la carte à donner à");
                 vue.afficherMessage2(this.joueurs.get(m.getNumJoueur()).toString());
                 break;
             case CARTESPECIAL:
-                vue.activerCarteSpecial(this.numJoueurs);
+                vue.activerCarteSpecial(this.numJoueur);
+                vue.setVueCarteSpecial(this.numJoueur);
+                carteSpecial = true;
         }
     }
 

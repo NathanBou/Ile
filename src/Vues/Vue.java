@@ -45,7 +45,7 @@ public class Vue implements Observe {
     private JLabel tour = new JLabel("", SwingConstants.CENTER);
     private JLabel niveau = new JLabel("", SwingConstants.CENTER);
     private JLabel joueur = new JLabel("", SwingConstants.CENTER);
-    private JLabel graduation = new JLabel("",SwingConstants.CENTER);
+    private JLabel graduation = new JLabel("", SwingConstants.CENTER);
     //private Carte carte;
     private JButton[][] tabTuile;
     private JButton[][] tabCarte;
@@ -55,6 +55,7 @@ public class Vue implements Observe {
     private JButton assecher;
     private JButton annuler;
     private JButton finTour;
+    private JButton utiliserCarte;
     private JPanel panelCartes1;
     private JPanel panelCartes2;
     private JPanel panelCartes3;
@@ -71,7 +72,7 @@ public class Vue implements Observe {
     private JButton crystal;
     private JLabel popup1;
     private JLabel popup2;
-    
+    private JButton[] tabUtiliserCarte;
 
     public Vue() {
         fenetreInit.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
@@ -331,7 +332,7 @@ public class Vue implements Observe {
                 // Panel Top
                 JPanel panelBouton = new JPanel(new BorderLayout());
                 JPanel panelInfo = new JPanel(new GridLayout(0, 3));
-                JPanel panelInfoEau = new JPanel(new GridLayout(2,0));
+                JPanel panelInfoEau = new JPanel(new GridLayout(2, 0));
                 JLabel Tour = new JLabel();
                 tour.setText("Tour numéro : ");
                 niveau.setText("Niveau d'eau : ");
@@ -339,7 +340,7 @@ public class Vue implements Observe {
                 joueur.setText("Joueur : ");
                 tour.setPreferredSize(new Dimension(200, 100));
                 niveau.setPreferredSize(new Dimension(200, 50));
-                graduation.setPreferredSize(new Dimension(200,50));
+                graduation.setPreferredSize(new Dimension(200, 50));
                 joueur.setPreferredSize(new Dimension(200, 100));
                 panelInfoEau.add(niveau);
                 panelInfoEau.add(graduation);
@@ -373,6 +374,7 @@ public class Vue implements Observe {
                 // dessin carrés dans panelCartes1,2,3 et 4
                 tabCarte = new JButton[joueurs.size()][9];
                 tabJoueurs = new JButton[joueurs.size()];
+                tabUtiliserCarte = new JButton[joueurs.size()];
                 for (int a = 0; a < joueurs.size(); a++) {
                     for (int i = 0; i < 9; i++) {
                         Carte carte = new Carte(a, i, "");
@@ -403,8 +405,20 @@ public class Vue implements Observe {
                             panelCartes4.add(carte);
                         }
                     }
-                    JButton action = new JButton("Utiliser carte");
-                    action.addActionListener(
+                    boutonJoueur joueur = new boutonJoueur(a, joueurs.get(a).getRole().getNomRole().toString());
+                    joueur.setEnabled(false);
+                    joueur.addActionListener(
+                            new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            Message m = new Message(TypesMessage.JOUEURCIBLE);
+                            m.setNumJoueur(joueur.getNumJoueur());
+                            notifierObservateur(m);
+                        }
+                    });
+                    utiliserCarte = new JButton("Utiliser carte");
+                    utiliserCarte.setEnabled(false);
+                    utiliserCarte.addActionListener(
                             new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
@@ -414,70 +428,29 @@ public class Vue implements Observe {
                     });
                     JPanel panelJoueur = new JPanel(new GridLayout(0, 2));
                     if (a == 0) {
-                        boutonJoueur joueur = new boutonJoueur(a, joueurs.get(a).getRole().getNomRole().toString());
-                        joueur.setEnabled(false);
                         tabJoueurs[a] = joueur;
+                        tabUtiliserCarte[a] = this.utiliserCarte;
                         panelJoueur.add(joueur);
-                        panelJoueur.add(action);
+                        panelJoueur.add(utiliserCarte);
                         BorderCartes1.add(panelJoueur, BorderLayout.NORTH);
-                        joueur.addActionListener(
-                                new ActionListener() {
-                            @Override
-                            public void actionPerformed(ActionEvent e) {
-                                Message m = new Message(TypesMessage.JOUEURCIBLE);
-                                m.setNumJoueur(joueur.getNumJoueur());
-                                notifierObservateur(m);
-                            }
-                        });
                     } else if (a == 1) {
-                        boutonJoueur joueur = new boutonJoueur(a, joueurs.get(a).getRole().getNomRole().toString());
-                        joueur.setEnabled(false);
                         tabJoueurs[a] = joueur;
+                        tabUtiliserCarte[a] = utiliserCarte;
                         panelJoueur.add(joueur);
-                        panelJoueur.add(action);
+                        panelJoueur.add(utiliserCarte);
                         BorderCartes2.add(panelJoueur, BorderLayout.NORTH);
-                        joueur.addActionListener(
-                                new ActionListener() {
-                            @Override
-                            public void actionPerformed(ActionEvent e) {
-                                Message m = new Message(TypesMessage.JOUEURCIBLE);
-                                m.setNumJoueur(joueur.getNumJoueur());
-                                notifierObservateur(m);
-                            }
-                        });
                     } else if (a == 2) {
-                        boutonJoueur joueur = new boutonJoueur(a, joueurs.get(a).getRole().getNomRole().toString());
-                        joueur.setEnabled(false);
                         tabJoueurs[a] = joueur;
+                        tabUtiliserCarte[a] = utiliserCarte;
                         panelJoueur.add(joueur);
-                        panelJoueur.add(action);
+                        panelJoueur.add(utiliserCarte);
                         BorderCartes3.add(panelJoueur, BorderLayout.NORTH);
-                        joueur.addActionListener(
-                                new ActionListener() {
-                            @Override
-                            public void actionPerformed(ActionEvent e) {
-                                Message m = new Message(TypesMessage.JOUEURCIBLE);
-                                m.setNumJoueur(joueur.getNumJoueur());
-                                notifierObservateur(m);
-                            }
-                        });
-
                     } else if (a == 3) {
-                        boutonJoueur joueur = new boutonJoueur(a, joueurs.get(a).getRole().getNomRole().toString());
-                        joueur.setEnabled(false);
                         tabJoueurs[a] = joueur;
+                        tabUtiliserCarte[a] = utiliserCarte;
                         panelJoueur.add(joueur);
-                        panelJoueur.add(action);
+                        panelJoueur.add(utiliserCarte);
                         BorderCartes4.add(panelJoueur, BorderLayout.NORTH);
-                        joueur.addActionListener(
-                                new ActionListener() {
-                            @Override
-                            public void actionPerformed(ActionEvent e) {
-                                Message m = new Message(TypesMessage.JOUEURCIBLE);
-                                m.setNumJoueur(joueur.getNumJoueur());
-                                notifierObservateur(m);
-                            }
-                        });
                     }
                 }
 
@@ -578,18 +551,18 @@ public class Vue implements Observe {
         mainPanel.add(panelMilieu, BorderLayout.CENTER);
         // Panel Bas
         JPanel panelBas = new JPanel();
-        JPanel popups = new JPanel(new GridLayout(2,0));
+        JPanel popups = new JPanel(new GridLayout(2, 0));
         popup1 = new JLabel("Bonne chance ;)", SwingConstants.CENTER);
-        popup1.setFont(new Font("Monospaced",0, 30));
+        popup1.setFont(new Font("Monospaced", 0, 30));
         popup2 = new JLabel("a la ligne", SwingConstants.CENTER);
-        popup2.setFont(new Font("Monospaced",0, 30));
+        popup2.setFont(new Font("Monospaced", 0, 30));
         popup1.setBackground(Color.CYAN);
         popup2.setBackground(Color.CYAN);
         popups.add(popup1);
         popups.add(popup2);
         panelBas.add(popups, SwingConstants.CENTER);
         panelBas.setBackground(Color.CYAN);
-        
+
         panelBas.setPreferredSize(new Dimension(1650, 100));
         mainPanel.add(panelBas, BorderLayout.SOUTH);
         fenetreJeu.setVisible(true);
@@ -654,13 +627,15 @@ public class Vue implements Observe {
             tabCarte[numJoueur][i].setEnabled(true);
         }
     }
-        public void activerCarteSpecial(int numJoueur) {
+
+    public void activerCarteSpecial(int numJoueur) {
         for (int i = 0; i < 9; i++) {
-            if(tabCarte[numJoueur][i].getText()==Cartes.HELICOPTERE.toString() || tabCarte[numJoueur][i].getText()== Cartes.SACDESABLE.toString()){
+            if (tabCarte[numJoueur][i].getText() == Cartes.HELICOPTERE.toString() || tabCarte[numJoueur][i].getText() == Cartes.SACDESABLE.toString()) {
                 tabCarte[numJoueur][i].setEnabled(true);
             }
         }
     }
+
     public void afficherFinTour() {
 
         finTour.setEnabled(true);
@@ -676,17 +651,18 @@ public class Vue implements Observe {
         annuler.setBackground(Color.GREEN);
     }
 
-    public void afficherDebutTour() {
+    public void afficherDebutTour(int numJoueur) {
         deplacer.setEnabled(true);
         assecher.setEnabled(true);
         prendreTresor.setEnabled(true);
         donnerCarte.setEnabled(true);
+        tabUtiliserCarte[numJoueur].setEnabled(true);
     }
 
     public void afficherEtatJeu(int nbTour, int nivEau, int grad, String nomJoueur) {
         tour.setText("Tour numero :" + nbTour);
         niveau.setText("Niveau d'eau :" + nivEau);
-        graduation.setText("Graduation : "+grad);
+        graduation.setText("Graduation : " + grad);
         joueur.setText("Joueur :" + nomJoueur);
     }
 
@@ -698,10 +674,10 @@ public class Vue implements Observe {
         tour.setText("Tour numero :" + nbTour);
         joueur.setText("Joueur :" + nomJoueur);
     }
-    
+
     public void afficherEtatJeu(int nivEau, int grad) {
         niveau.setText("Niveau d'eau : " + nivEau);
-        graduation.setText("Graduation : "+grad);
+        graduation.setText("Graduation : " + grad);
     }
 
     public void setVueDeplacement() {
@@ -746,7 +722,19 @@ public class Vue implements Observe {
         annuler.setEnabled(true);
     }
 
-    public void setVueBoutonsEnabled() {
+    public void setVueCarteSpecial(int numJoueur) {
+        deplacer.setEnabled(false);
+        prendreTresor.setEnabled(false);
+        donnerCarte.setEnabled(false);
+        assecher.setEnabled(false);
+        finTour.setEnabled(false);
+        tabUtiliserCarte[numJoueur].setBackground(Color.BLUE);
+        tabUtiliserCarte[numJoueur].setEnabled(false);
+        annuler.setBackground(Color.RED);
+        annuler.setEnabled(true);
+    }
+
+    public void setVueBoutonsEnabled(int numJoueur) {
         deplacer.setBackground(Color.GREEN);
         deplacer.setEnabled(true);
         prendreTresor.setBackground(Color.GREEN);
@@ -756,6 +744,8 @@ public class Vue implements Observe {
         assecher.setBackground(Color.GREEN);
         assecher.setEnabled(true);
         finTour.setEnabled(true);
+        tabUtiliserCarte[numJoueur].setBackground(Color.GREEN);
+        tabUtiliserCarte[numJoueur].setEnabled(true);
         annuler.setBackground(Color.GREEN);
         annuler.setEnabled(false);
     }
@@ -841,6 +831,16 @@ public class Vue implements Observe {
         }
     }
 
+    public void activerDeplacementHelicoptere(Grille grille) {
+        for (int i = 0; i < 6; i++) {
+            for (int k = 0; k < 6; k++) {
+                if (grille.getTuile(i, k).getEtat() == EtatTuile.ASSECHEE || grille.getTuile(i, k).getEtat() == EtatTuile.INONDEE) {
+                    tabTuile[i][k].setEnabled(true);
+                }
+            }
+        }
+    }
+
     public JButton[] getTabJoueurs() {
         return tabJoueurs;
     }
@@ -860,7 +860,7 @@ public class Vue implements Observe {
     public void afficherMessage1(String msg) {
         popup1.setText(msg);
     }
-    
+
     public void afficherMessage2(String msg) {
         popup2.setText(msg);
     }
