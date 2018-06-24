@@ -11,6 +11,7 @@ import Modele.Grille;
 import Modele.Grille;
 import Modele.NomRole;
 import Modele.NomTuile;
+import Modele.Tresor;
 import Modele.Tuile;
 import Modele.Utils;
 import Modele.Utils.EtatTuile;
@@ -34,6 +35,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import Vues.CelluleTuile;
+import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 
 public class Vue implements Observe {
@@ -69,7 +71,7 @@ public class Vue implements Observe {
     private JComboBox listNivEau;
     private final String[] nivEau = {"Novice (niveau d'eau 2)",
         "Normal (niveau d'eau 2)", "Elite (niveau d'eau 3)", "Légende (niveau d'eau 3)"};
-    private JButton crystal;
+    private JButton Cristal;
     private JLabel popup1;
     private JLabel popup2;
     private JButton[] tabUtiliserCarte;
@@ -225,16 +227,21 @@ public class Vue implements Observe {
         fenetreJeu.add(mainPanel);
         // Panel Haut
         JPanel panelHaut = new JPanel();
-        panelHaut.setBackground(Color.GREEN);
+        panelHaut.setBackground(new Color(0, 51, 102));
+        ImageIcon logo = new ImageIcon("logo");
+        JLabel image = new JLabel(logo, SwingConstants.CENTER);
+        image.setPreferredSize(new Dimension(500, 90));
+        panelHaut.add(image);
         panelHaut.setPreferredSize(new Dimension(1650, 100));
+        panelHaut.repaint();
         mainPanel.add(panelHaut, BorderLayout.NORTH);
         // Panel EST/OUEST
         JPanel panelEst = new JPanel();
         JPanel panelOuest = new JPanel();
         panelEst.setPreferredSize(new Dimension(10, 950));
         panelOuest.setPreferredSize(new Dimension(10, 950));
-        panelEst.setBackground(Color.MAGENTA);
-        panelOuest.setBackground(Color.MAGENTA);
+        panelEst.setBackground(new Color(0, 51, 102));
+        panelOuest.setBackground(new Color(0, 51, 102));
         mainPanel.add(panelEst, BorderLayout.EAST);
         mainPanel.add(panelOuest, BorderLayout.WEST);
 
@@ -258,12 +265,12 @@ public class Vue implements Observe {
                                         calice.setBackground(new Color(0, 149, 182));
                                         calice.setForeground(Color.WHITE);
                                     } else {
-                                        crystal = new CelluleTuile(i, k);
-                                        crystal.setText("Rubis");
-                                        tabTuile[i][k] = crystal;
-                                        panelGrilleTuile.add(crystal);
-                                        crystal.setBackground(Color.RED);
-                                        crystal.setForeground(Color.WHITE);
+                                        Cristal = new CelluleTuile(i, k);
+                                        Cristal.setText("Rubis");
+                                        tabTuile[i][k] = Cristal;
+                                        panelGrilleTuile.add(Cristal);
+                                        Cristal.setBackground(Color.RED);
+                                        Cristal.setForeground(Color.WHITE);
                                     }
                                 } else {
                                     if (k == 0) {
@@ -298,6 +305,10 @@ public class Vue implements Observe {
                             } else if (grille.getTuile(i, k).getEtat() == Utils.EtatTuile.INONDEE) {
                                 bTuile.setBackground(new Color(30, 127, 203));
                             }
+                            if (grille.getTuile(i, k) instanceof Tresor) {
+                                Tresor t = (Tresor) grille.getTuile(i, k);
+                                bTuile.setBorder(BorderFactory.createBevelBorder(1, t.getTresor().getColorTresor(t.getTresor()), Color.LIGHT_GRAY));
+                            }
                             if (!grille.getTuile(i, k).getASurTuile().isEmpty()) {
                                 bTuile.setBorder(BorderFactory.createLineBorder(grille.getTuile(i, k).getASurTuile().get(0).getRole().getCouleur().getCouleur(), 4));
                             }
@@ -321,10 +332,9 @@ public class Vue implements Observe {
                 panelGrille.add(panelGrilleTuile);                         // Ajout de la grille dans le panel
                 JPanel panelEstG = new JPanel();
                 JPanel panelOuestG = new JPanel();
-                panelEstG.setPreferredSize(new Dimension(10, 950));
-                panelOuestG.setPreferredSize(new Dimension(10, 950));
-                panelEstG.setBackground(Color.blue);
-                panelOuestG.setBackground(Color.BLUE);
+                panelEstG.setPreferredSize(new Dimension(2, 950));
+                panelOuestG.setPreferredSize(new Dimension(2, 950));
+                panelEstG.setBackground(Color.DARK_GRAY);
                 panelGrille.add(panelEstG, BorderLayout.EAST);
                 panelGrille.add(panelOuestG, BorderLayout.WEST);
                 panelCentre.add(panelGrille);
@@ -542,10 +552,6 @@ public class Vue implements Observe {
             }
         }
 
-        calice = new JButton("Calice");
-        pierre = new JButton("Pierre");
-        zephyr = new JButton("Zéphyr");
-        crystal = new JButton("Rubis");
 
         panelMilieu.add(panelCentre);
         mainPanel.add(panelMilieu, BorderLayout.CENTER);
@@ -556,12 +562,10 @@ public class Vue implements Observe {
         popup1.setFont(new Font("Monospaced", 0, 30));
         popup2 = new JLabel("a la ligne", SwingConstants.CENTER);
         popup2.setFont(new Font("Monospaced", 0, 30));
-        popup1.setBackground(Color.CYAN);
-        popup2.setBackground(Color.CYAN);
         popups.add(popup1);
         popups.add(popup2);
         panelBas.add(popups, SwingConstants.CENTER);
-        panelBas.setBackground(Color.CYAN);
+        panelBas.setBackground(new Color(0, 51, 102));
 
         panelBas.setPreferredSize(new Dimension(1650, 100));
         mainPanel.add(panelBas, BorderLayout.SOUTH);
@@ -587,6 +591,10 @@ public class Vue implements Observe {
         } else {
             tabTuile[tuileAvantDeplacement.getLig()][tuileAvantDeplacement.getCol()].setBorder((BorderFactory.createLineBorder(Color.LIGHT_GRAY)));
         }
+        if (tuileAvantDeplacement instanceof Tresor) {
+            Tresor t = (Tresor) tuileAvantDeplacement;
+            tabTuile[tuileAvantDeplacement.getLig()][tuileAvantDeplacement.getCol()].setBorder(BorderFactory.createBevelBorder(1, t.getTresor().getColorTresor(t.getTresor()), Color.LIGHT_GRAY));
+        }
         tabTuile[lig][col].setBorder(BorderFactory.createLineBorder(joueur.getRole().getCouleur().getCouleur(), 4));
         this.reinitialiserGrille();
     }
@@ -596,6 +604,10 @@ public class Vue implements Observe {
             tabTuile[tuileAvantDeplacement.getLig()][tuileAvantDeplacement.getCol()].setBorder(BorderFactory.createLineBorder(tuileAvantDeplacement.getASurTuile().get(0).getRole().getCouleur().getCouleur(), 4));
         } else {
             tabTuile[tuileAvantDeplacement.getLig()][tuileAvantDeplacement.getCol()].setBorder((BorderFactory.createLineBorder(Color.LIGHT_GRAY)));
+        }
+        if (tuileAvantDeplacement instanceof Tresor) {
+            Tresor t = (Tresor) tuileAvantDeplacement;
+            tabTuile[tuileAvantDeplacement.getLig()][tuileAvantDeplacement.getCol()].setBorder(BorderFactory.createBevelBorder(1, t.getTresor().getColorTresor(t.getTresor()), Color.LIGHT_GRAY));
         }
         tabTuile[tuileApresDeplacement.getLig()][tuileApresDeplacement.getCol()].setBorder(BorderFactory.createLineBorder(joueur.getRole().getCouleur().getCouleur(), 4));
         this.reinitialiserGrille();
@@ -812,13 +824,13 @@ public class Vue implements Observe {
 
     public void tresorPris(int a) {
         if (a == 0) {
-            calice.setVisible(false);
+            calice.setBackground(null);
         } else if (a == 1) {
-            zephyr.setVisible(false);
+            zephyr.setBackground(null);
         } else if (a == 2) {
-            pierre.setVisible(false);
+            pierre.setBackground(null);
         } else {
-            crystal.setVisible(false);
+            Cristal.setBackground(null);
         }
     }
 

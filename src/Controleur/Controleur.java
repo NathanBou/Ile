@@ -21,6 +21,7 @@ import Modele.Plongeur;
 import Modele.Tresor;
 import Modele.Tuile;
 import Modele.Utils;
+import Modele.Utils.EtatTuile;
 import Vues.Vue;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -248,6 +249,10 @@ public class Controleur implements Observateur {
                     gagner = false;
                     vue.finirJeu(gagner);
                 }
+                if(grille.getTuile(2,3).getEtat() == EtatTuile.COULEE){
+                    gagner = false;
+                    vue.finirJeu(gagner);
+                }
                 vue.desactiverCarteSpecial(this.numJoueur);
                 joueurCourant.setaRecuUneCarte(false);
                 if (!defausser) {
@@ -367,7 +372,6 @@ public class Controleur implements Observateur {
             case PRENDRETRESOR:
                 if (joueurCourant.getEstSurTuile() instanceof Tresor) {
                     Tresor t = (Tresor) joueurCourant.getEstSurTuile();
-
                     NomTresors nt = t.getTresor();
                     if (joueurCourant.containsQuatre(nt)) {
                         this.collectionTresor.add(t);
@@ -375,6 +379,7 @@ public class Controleur implements Observateur {
                             this.heliportPossible = true;
                         }
                         joueurCourant.enleverCartesPourTresor(t);
+                        vue.actualiserMain(joueurCible, numJoueur);
                         vue.tresorPris(nt == NomTresors.CALICE ? 0 : nt == NomTresors.ZEPHYR ? 1 : nt == NomTresors.PIERRE ? 2 : 3);
                         joueurCourant.setNbAction(joueurCourant.getNbAction() + 1);
                     } else {
@@ -431,6 +436,11 @@ public class Controleur implements Observateur {
                     }
                 } else if (carteSpecial) {
                     if (this.joueurCourant.getCartePossedees().get(m.getNumCarte()).getNomCarte().toString() == Cartes.HELICOPTERE.toString()) {
+                        if(heliportPossible && joueurCourant.getEstSurTuile().getASurTuile().size()==joueurs.size()){
+                            gagner = true;
+                            vue.finirJeu(gagner);
+                            
+                        }
                         vue.activerDeplacementHelicoptere(grille);
                         joueurCourant.cartePossedees.remove(joueurCourant.getCartePossedees().get(m.getNumCarte()));
                         vue.actualiserMain(joueurCourant, numJoueur);
@@ -447,6 +457,11 @@ public class Controleur implements Observateur {
                 if (joueurCourant.getEstSurTuile().getASurTuile().size() > 1) {
                     vue.setVueDonnerCarte();
                     vue.activerJoueur(joueurCourant, this.joueurCourant.getEstSurTuile().getASurTuile());
+                    vue.afficherMessage1("Sélectionnez le joueur à qui donner une carte.");
+                    vue.afficherMessage2("Annuler pour changer d'action à réaliser.");
+                }else if(joueurCourant instanceof Messager){
+                    vue.setVueDonnerCarte();
+                    vue.activerJoueur(joueurCourant,this.getJoueurs());
                     vue.afficherMessage1("Sélectionnez le joueur à qui donner une carte.");
                     vue.afficherMessage2("Annuler pour changer d'action à réaliser.");
                 } else {
