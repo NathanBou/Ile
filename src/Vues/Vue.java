@@ -656,9 +656,11 @@ public class Vue implements Observe {
         assecher.setEnabled(true);
         prendreTresor.setEnabled(true);
         donnerCarte.setEnabled(true);
+        finTour.setEnabled(true);
         tabUtiliserCarte[numJoueur].setEnabled(true);
+        tabUtiliserCarte[numJoueur].setBackground(Color.GREEN);
     }
-
+    
     public void afficherEtatJeu(int nbTour, int nivEau, int grad, String nomJoueur) {
         tour.setText("Tour numero :" + nbTour);
         niveau.setText("Niveau d'eau :" + nivEau);
@@ -763,7 +765,9 @@ public class Vue implements Observe {
         annuler.setBackground(Color.GREEN);
         annuler.setEnabled(false);
     }
-
+    public void desactiverCarteSpecial(int numJoueur){
+        tabUtiliserCarte[numJoueur].setEnabled(false);
+    }
     public void reinitialiserGrille() {
         for (int i = 0; i < 6; i++) {
             for (int k = 0; k < 6; k++) {
@@ -840,7 +844,15 @@ public class Vue implements Observe {
             }
         }
     }
-
+    public void activerSacDeSable(Grille grille){
+        for (int i = 0; i < 6; i++) {
+            for (int k = 0; k < 6; k++) {
+                if (grille.getTuile(i, k).getEtat() == EtatTuile.INONDEE) {
+                    tabTuile[i][k].setEnabled(true);
+                }
+            }
+        }
+    }
     public JButton[] getTabJoueurs() {
         return tabJoueurs;
     }
