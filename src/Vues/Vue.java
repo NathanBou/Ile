@@ -582,13 +582,21 @@ public class Vue implements Observe {
     }
 
     public void afficherDeplacement(int lig, int col, Aventurier joueur, Tuile tuileAvantDeplacement) {
-        tabTuile[tuileAvantDeplacement.getLig()][tuileAvantDeplacement.getCol()].setBorder((BorderFactory.createLineBorder(Color.LIGHT_GRAY)));
+        if (!tuileAvantDeplacement.getASurTuile().isEmpty()) {
+            tabTuile[tuileAvantDeplacement.getLig()][tuileAvantDeplacement.getCol()].setBorder(BorderFactory.createLineBorder(tuileAvantDeplacement.getASurTuile().get(0).getRole().getCouleur().getCouleur(), 4));
+        } else {
+            tabTuile[tuileAvantDeplacement.getLig()][tuileAvantDeplacement.getCol()].setBorder((BorderFactory.createLineBorder(Color.LIGHT_GRAY)));
+        }
         tabTuile[lig][col].setBorder(BorderFactory.createLineBorder(joueur.getRole().getCouleur().getCouleur(), 4));
         this.reinitialiserGrille();
     }
 
     public void afficherDeplacement(int lig, int col, Aventurier joueur, Tuile tuileAvantDeplacement, Tuile tuileApresDeplacement) {
-        tabTuile[tuileAvantDeplacement.getLig()][tuileAvantDeplacement.getCol()].setBorder((BorderFactory.createLineBorder(Color.LIGHT_GRAY)));
+        if (!tuileAvantDeplacement.getASurTuile().isEmpty()) {
+            tabTuile[tuileAvantDeplacement.getLig()][tuileAvantDeplacement.getCol()].setBorder(BorderFactory.createLineBorder(tuileAvantDeplacement.getASurTuile().get(0).getRole().getCouleur().getCouleur(), 4));
+        } else {
+            tabTuile[tuileAvantDeplacement.getLig()][tuileAvantDeplacement.getCol()].setBorder((BorderFactory.createLineBorder(Color.LIGHT_GRAY)));
+        }
         tabTuile[tuileApresDeplacement.getLig()][tuileApresDeplacement.getCol()].setBorder(BorderFactory.createLineBorder(joueur.getRole().getCouleur().getCouleur(), 4));
         this.reinitialiserGrille();
     }
@@ -660,7 +668,7 @@ public class Vue implements Observe {
         tabUtiliserCarte[numJoueur].setEnabled(true);
         tabUtiliserCarte[numJoueur].setBackground(Color.GREEN);
     }
-    
+
     public void afficherEtatJeu(int nbTour, int nivEau, int grad, String nomJoueur) {
         tour.setText("Tour numero :" + nbTour);
         niveau.setText("Niveau d'eau :" + nivEau);
@@ -765,9 +773,11 @@ public class Vue implements Observe {
         annuler.setBackground(Color.GREEN);
         annuler.setEnabled(false);
     }
-    public void desactiverCarteSpecial(int numJoueur){
+
+    public void desactiverCarteSpecial(int numJoueur) {
         tabUtiliserCarte[numJoueur].setEnabled(false);
     }
+
     public void reinitialiserGrille() {
         for (int i = 0; i < 6; i++) {
             for (int k = 0; k < 6; k++) {
@@ -844,7 +854,8 @@ public class Vue implements Observe {
             }
         }
     }
-    public void activerSacDeSable(Grille grille){
+
+    public void activerSacDeSable(Grille grille) {
         for (int i = 0; i < 6; i++) {
             for (int k = 0; k < 6; k++) {
                 if (grille.getTuile(i, k).getEtat() == EtatTuile.INONDEE) {
@@ -853,6 +864,7 @@ public class Vue implements Observe {
             }
         }
     }
+
     public JButton[] getTabJoueurs() {
         return tabJoueurs;
     }
