@@ -122,7 +122,7 @@ public class Controleur implements Observateur {
                     vue.afficherMessage2(grille.getTuile(m.lig, m.col).toString());
                     deplacementHelicoptere = false;
                     vue.disableBoutonsMain(numJoueur);
-                }else if (sacDeSable){
+                } else if (sacDeSable) {
                     vue.assecherTuile(m.lig, m.col);
                     grille.getTuile(m.lig, m.col).assecher();
                     sacDeSable = false;
@@ -249,6 +249,7 @@ public class Controleur implements Observateur {
                     vue.finirJeu(gagner);
                 }
                 vue.desactiverCarteSpecial(this.numJoueur);
+                joueurCourant.setaRecuUneCarte(false);
                 if (!defausser) {
                     numJoueur++;
                 }
@@ -396,18 +397,21 @@ public class Controleur implements Observateur {
                     if (joueurCourant.getCartePossedees().size() <= 5) {
                         vue.disableBoutonsMain(numJoueur);
                         vue.actualiserMain(joueurCourant, numJoueur);
-                        vue.desactiverCarteSpecial(numJoueur);
-                        joueurCourant.debutTour();
-                        numJoueur++;
-                        joueurCourant = joueurs.get(numJoueur == joueurs.size() ? numJoueur = 0 : numJoueur);
-                        nbTour++;
-                        vue.afficherEtatJeu(nbTour, joueurCourant.getRole().getNomRole().toString());
-                        defausser = false;
-                        vue.afficherDebutTour(numJoueur);
+                        if (joueurCourant.isaRecuUneCarte() == false) {
+                            vue.desactiverCarteSpecial(numJoueur);
+                            joueurCourant.debutTour();
+                            numJoueur++;
+                            joueurCourant = joueurs.get(numJoueur == joueurs.size() ? numJoueur = 0 : numJoueur);
+                            nbTour++;
+                            vue.afficherEtatJeu(nbTour, joueurCourant.getRole().getNomRole().toString());
+                            defausser = false;
+                            vue.afficherDebutTour(numJoueur);
+                        }
                     }
-
+                    donnerCarte=false;
                 } else if (donnerCarte) {
                     joueurCourant.donnerCarte(this.getJoueurCible(), joueurCourant.getCartePossedees().get(m.getNumCarte()));
+                    this.getJoueurCible().setaRecuUneCarte(true);
                     vue.actualiserMain(this.getJoueurCible(), this.getNumJoueurCible());
                     vue.actualiserMain(joueurCourant, numJoueur);
                     vue.desactiverJoueur();
@@ -431,11 +435,11 @@ public class Controleur implements Observateur {
                         joueurCourant.cartePossedees.remove(joueurCourant.getCartePossedees().get(m.getNumCarte()));
                         vue.actualiserMain(joueurCourant, numJoueur);
                         deplacementHelicoptere = true;
-                    }else if(this.joueurCourant.getCartePossedees().get(m.getNumCarte()).getNomCarte().toString() == Cartes.SACDESABLE.toString()){
+                    } else if (this.joueurCourant.getCartePossedees().get(m.getNumCarte()).getNomCarte().toString() == Cartes.SACDESABLE.toString()) {
                         vue.activerSacDeSable(grille);
                         joueurCourant.cartePossedees.remove(joueurCourant.getCartePossedees().get(m.getNumCarte()));
                         vue.actualiserMain(joueurCourant, numJoueur);
-                        sacDeSable = true;  
+                        sacDeSable = true;
                     }
                 }
                 break;

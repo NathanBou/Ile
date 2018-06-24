@@ -9,6 +9,7 @@ public abstract class Aventurier {
     public Tuile estSurTuile;
     private int nbCarte;
     private Role role;
+    private boolean aRecuUneCarte = false;
     public ArrayList<Tuile> tuilesAdjacentes;
     public ArrayList<CarteTirage> cartePossedees;
 
@@ -237,6 +238,14 @@ public abstract class Aventurier {
         }
     }
 
+    public boolean isaRecuUneCarte() {
+        return aRecuUneCarte;
+    }
+
+    public void setaRecuUneCarte(boolean aRecuUneCarte) {
+        this.aRecuUneCarte = aRecuUneCarte;
+    }
+    
     @Override
     public String toString() {
         return this.role.getNomRole().toString();
